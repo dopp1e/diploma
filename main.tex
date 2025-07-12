@@ -1,0 +1,36 @@
+\documentclass[10pt, twoside, a4paper,openany]{book}
+\usepackage{macra_xelatex}
+
+
+\begin{document}
+% strony generowane z moja.pg
+\includepdf{Chapters/Strona_tytulowa.pdf}
+
+% streszczenie PL, EN
+\input{Chapters/Streszczenie}
+\input{Chapters/Abstract}
+
+% spis treści
+\tableofcontents
+
+% wykaz skrótów
+\input{Chapters/Wykaz_skrotow}
+
+% rozdziały i podrozdziały numerowane
+\input{Chapters/Introduction}
+\input{Chapters/FieldIntroduction}
+\input{Chapters/Technologies}
+\input{Chapters/SystemProject}
+\input{Chapters/Implementation}
+\input{Chapters/Summary}
+
+% bibliografia
+% ieeetr - etykiety numerowane w kolejności wystąpienia w tekście
+\bibliographystyle{ieeetr}
+\bibliography{Chapters/Bibliography}
+
+% wykazy 
+\listoffigures
+\listoftables
+
+\end{document}

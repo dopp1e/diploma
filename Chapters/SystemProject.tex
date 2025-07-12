@@ -1,0 +1,492 @@
+\chapter{SYSTEM PROJECT (Hubert Leszczyński)}
+\label{chap:project}
+
+The objective of the system is to create a trainer for assembling a personal computer, which can also visualize the computer's work.
+This chapter describes the project of the system and all the functional and non-functional requirements. 
+
+\section{Project team}
+
+The project team consists of four students from Gdańsk University of Technology. The table \ref{tab:team} presents the team's competencies.
+
+\begin{table}[!ht]
+\caption{Project team's competencies}
+\label{tab:team}
+\small
+\begin{tabular}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+    %-
+   \begin{center}
+       \textbf{Name and surname}
+   \end{center}  
+   &
+   \begin{center}
+       \textbf{Skills}
+   \end{center}
+   \\\hline
+   %-
+    Jakub Jędrzejczyk 
+    & \begin{itemize}
+        \item Version Control
+        \item Project infrastructure
+        \item Leadership
+        \item C++ and Java programming languages
+    \end{itemize} 
+    \\\hline
+    %-
+    Hubert Leszczyński
+    & \begin{itemize}
+        \item C++ programming language
+        \item Computer graphics
+        \item Software architecture
+        \item Project modeling
+    \end{itemize}
+    \\\hline
+     %-
+    Jakub Kinder
+    & \begin{itemize}
+        \item Creating computer games
+        \item UE 5
+        \item C++ and C\# programming languages
+    \end{itemize}
+    \\\hline
+     %-
+    Mateusz Merda
+    & \begin{itemize}
+        \item Sound management
+        \item Creating UI
+    \end{itemize}
+    \\\hline
+    %-
+\end{tabular}
+\end{table}
+\section{Project timetable}
+
+Table \ref{tab:timetable} presents project's team timetable and objectives for each month
+
+\begin{table}[!ht]
+\caption{Project team's timetable}
+\label{tab:timetable}
+\small
+\begin{tabular}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+    %-
+   \begin{center}
+       \textbf{Month 2025}
+   \end{center}  
+   &
+   \begin{center}
+       \textbf{Objective}
+   \end{center}
+   \\\hline
+   %-
+    April 
+    &
+    Functional requirements analysis
+    \\\hline
+    %-
+    May
+    & System project and modeling
+    \\\hline
+     %-
+    June
+    & Implementation of trainee's movement logic
+    \\\hline
+     %-
+    September-October
+    & Implementation of computer components manipulation and computer assembly logic
+    \\\hline
+    November
+    & Testing of the application's progress and implementation of visualization of components state
+    \\\hline
+    December
+    & Implementation of trainee's score calculation and trainee support, final tests and finalizing documentation
+    \\\hline
+    %-
+\end{tabular}
+\end{table}
+\section{Project assumptions}
+During the work on the system project the team was able to specify the assumptions for the final vision of the application.
+The work on the project must be limited by the following assumptions and the application must meet all requirements.
+\subsubsection{Project characteristics}
+The target application has to be 3D and created using UE 5 game engine.
+The main programming language of the system must be C++.
+The application requires basic UI created using computer graphics and has to fully work for one user.
+\subsubsection{Project work environment}
+The project application has to be working in the VR CAVE system of Gdańsk University of Technology. 
+This system consists of two distinct CAVEs:
+\begin{itemize}
+    \item Small VR CAVE - a set of four monitors with a head movement tracker and VR controllers
+    \item Large VR CAVE - a cube built by six screens, which side length is equal to 3,4 meters, with two sensors for each of the screens.
+\end{itemize}
+The synchronization between the screens and the sensord must be obtained by using free UE 5 assets.
+\subsubsection{Constraints}
+Due to the application's architecture, it will not be working on PCs and mobile devices.
+\subsection{Functional requirements}
+A functional requirement describes what the system should do to properly work.
+Each of them need has to be thoroughly analyzed and prioritized using a scale.
+The priorities for the project were assigned using MoSCoW (Must, Should, Could, Won't) scale.
+The table \ref{tab:functionalRequirements} presents the functional requirements of the project.
+\begin{table}[!ht]
+\caption{Funtional requirements}
+\label{tab:functionalRequirements}
+
+\small
+\begin{tabular}{|p{0.38\textwidth}|p{0.38\textwidth}|p{0.18\textwidth}|}
+\hline
+    %-
+   \begin{center}
+       \textbf{Requirement}
+   \end{center}  
+   &
+   \begin{center}
+       \textbf{Description}
+   \end{center}
+   &
+   \begin{center}
+       \textbf{Priority}
+   \end{center}
+   \\\hline
+   %-
+    Trainee's movement detection
+    & Trainee's movement has to be detected and their position needs to be updated in the application.
+    & Must
+    \\\hline
+     %-
+    Computer component manipulation
+    & The computer component object need to be fully manipulated by the trainer by moving them and emplacing them in the computer slots.
+    & Must
+     \\\hline %-
+    Computer work visualization
+    & The application has to detect if the computer is fully and properly built
+    & Must
+    \\\hline %- 
+    Components state visualization
+    & Trainee should be able to see the parameters of the slots in the build computer. The parameters are temperature, power supply, etc.
+    & Should
+    \\\hline %-
+    Assembly grading
+    & Trainee's score can be calculated by including several factors, such as assembly speed or a number of errors.
+    & Could
+    \\\hline %-
+    Trainee support
+    & The correct slots for a component held by trainee can be highlighted to guide the trainee in the assembly process.
+    & Could
+    \\\hline
+\end{tabular}
+\end{table}
+
+\section{Use cases}
+A use case is a singular unit of system functionality, which can be described as a sequence of interactions between the system and its users.
+Use cases have wide application in software engineering and system design, allowing for extensive planning of system requirements before implementing any functionality.
+The most popular way to use them is to model the UML (Unified Modeling Language) diagram.
+This type of diagram can identify all the system use cases, their dependencies, and also the user groups.
+In our project, we have decided to divide the diagram into two parts.
+\subsection{Trainee Movement Use Cases}
+Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, describing use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
+Each use case requires the VR CAVE sensors to work.
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
+	\caption{Use case diagram for trainee movement}
+	\label{fig:movementDiagram}
+\end{figure}
+\newpage
+The use case descriptions for controlling trainee's movement are detailed in following subsections.
+
+\subsubsection{Head movement detection}
+\begin{itemize}
+\item Actors:Trainee,  VR CAVE Sensors
+\item Description: Trainee's head movement is detected.
+\item Prerequisites: Application is working.
+\item Post-requisites: Data of trainee's head movement is forwarded to application components.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee moves or rotates their head.
+    \item VR CAVE sensors read the updated position and rotation.
+    \item The updated data is forwarded to application component as a position and rotation vectors. 
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Position detection}
+\begin{itemize}
+\item Actors:Trainee,  VR CAVE Sensors
+\item Description: Trainee's position change is detected.
+\item Prerequisites: Application is working.
+\item Post-requisites: Data of trainee's position is forwarded to application components.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee makes a step.
+    \item VR CAVE sensors read the updated trainee's position.
+    \item The updated data is forwarded to application component as a position vector. 
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{VR controllers movement detection}
+\begin{itemize}
+\item Actors:Trainee,  VR CAVE Sensors
+\item Description: Trainee's hand movement is detected.
+\item Prerequisites: Application is working.
+\item Post-requisites: Data of trainee's hand movement is forwarded to application components.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee moves their hand.
+    \item VR CAVE sensors read the updated position of VR controllers.
+    \item The updated data is forwarded to application component as a position vector. 
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Virtual camera movement}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Virtual camera's point of view is updated.
+\item Prerequisites: Trainee's head movement and position change were detected (Use cases: Head movement detection, Position detection).
+\item Post-requisites: Virtual camera's position parameters are changed.
+\item Scenario: 
+\begin{enumerate}
+    \item Updated position vector is read from the player control component.
+    \item Virtual camera's position vector is updated. 
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Virtual camera rotation}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Virtual camera angle of view is updated according to trainee's movement.
+\item Prerequisites: Trainee's head movement was detected (Use cases: Head movement detection).
+\item Post-requisites: Virtual camera's rotation parameters are changed.
+\item Scenario: 
+\begin{enumerate}
+    \item Updated rotation vector is read from the player control component.
+    \item Virtual camera's rotation vector is updated with the read values. 
+\end{enumerate}
+\end{itemize}
+
+\subsubsection{Virtual hands movement}
+
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Virtual hands positions updated according to trainee's movement.
+\item Prerequisites: VR controllers movement and position change were detected (Use cases: VR controllers movement detection, Position detection).
+\item Post-requisites: Virtual hands position parameters are updated.
+\item Scenario: 
+\begin{enumerate}
+    \item Updated position vector is read from the player control component.
+    \item Virtual hands position vectors are updated with the read values. 
+\end{enumerate}
+
+\end{itemize}
+
+\subsection{Computer assembly use cases}
+Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, describing the use cases for the computer assembly process, along with mechanics of trainee's score calculation and the computer work visualization.
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/AssemblyUseCases.png}
+	\caption{Use case diagram for computer assembly}
+	\label{fig:assemblyDiagram}
+\end{figure}
+
+\noindent The following subsections provide the descriptions for the use cases.
+\subsubsection{Pointing to a component}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Computer component is targeted by trainee.
+\item Prerequisites: Virtual hand object is colliding with computer component object
+\item Post-requisites: Computer component becomes highlighted and trainee is able to pick it up.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee moves virtual hand object towards computer component.
+    \item System detects collision between hand and a component.
+    \item Component becomes highlighted.
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Picking up a component}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Trainee picks up a component.
+\item Prerequisites: Trainee points towards a computer component(Use case: Pointing to a component).
+\item Post-requisites: Computer component follows trainee's hand.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee begins holding a controller's trigger.
+    \item System detects trainee's action.
+    \item Component begins following trainee's hand.
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Holding a component}
+\begin{itemize}
+\item Actors: Trainee
+\item Description: Computer component held by trainee follows virtual hand object.
+\item Prerequisites: Trainee picks up a component (Use case: Picking up a component).
+\item Post-requisites: The position of the computer component held by trainee changes
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee holds the trigger
+    \item Computer component reads virtual hand object's position.
+    \item Computer component's position is updated by the virtual hand's object position values.
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Dropping a component}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Component is dropped and returns to it's initial position.
+\item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is outside the assembly station.
+\item Post-requisites: Component returns to it's initial position.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee releases the VR controller's trigger.
+    \item Component stops following trainee's hand.
+    \item Component begins falling down.
+    \item When the component's Y position reaches 0, it returns to it's initial position.
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Placing a component}
+
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Computer component is placed in a slot.
+\item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is inside the assembly station.
+\item Post-requisites: Computer's component counter becomes mounter or the error count increments.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee releases the VR controller's trigger.
+    \item System checks if the component type is compatible with the slot required type.
+    \item The component's position is fixed inside the computer.
+    \item Computer's component counter increments.
+    \end{enumerate}
+\item Alternate scenario: The component is not compatible with the slot
+\begin{enumerate}
+\item Component returns to it's initial position.
+\item Error counter increments (Use case: Counting errors).
+\end{enumerate}
+\end{itemize}
+\subsubsection{Displaying component's temperature}
+
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Component's temperature is displayed to trainee.
+\item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
+\item Post-requisites: Trainee sees component's temperature.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee points to a component.
+    \item System reads component's temperature.
+    \item Component's temperature is displayed on an UI canva.
+\end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Displaying component's power supply}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Component's power supply is displayed to trainee.
+\item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
+\item Post-requisites: Trainee sees component's power supply.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee points to a component.
+    \item System reads component's power supply.
+    \item Component's power supply is displayed on an UI canva.
+\end{enumerate}
+
+\end{itemize}
+\subsubsection{Displaying computer's completeness}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: The state of computer's completeness os displayed to trainee.
+\item Prerequisites: Application is working.
+\item Post-requisites: Trainee sees how much component are left to mount or if the computer is fully built.
+\item Scenario: 
+\begin{enumerate}
+    \item If the computer is not fully built, a counter of elements is displayed as a UI canva.
+\end{enumerate}
+Alternate scenario: Computer is fully built:
+\begin{enumerate}
+    \item The counter on the UI canva changes to a communicate informing about the computer's completeness
+\end{enumerate}
+\end{itemize}
+\subsubsection{Visualizing computer work}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Displaying the state of the computer or a state of it's component to trainee.
+\item Prerequisites: Computer is fully built.
+\item Post-requisites: Trainee sees the state of the computer and it's work.
+\item Scenario: 
+\begin{enumerate}
+    \item System displays the computer completeness state to trainee(Use case: Displaying computer completeness).
+\end{enumerate}
+Alternate scenario: User points to a component(Use case: Pointing to a component).
+\begin{enumerate}
+    \item System displays component's temperature(Use case: Displaying component's temperature).
+    \item System displays component's power supply(Use case: Displaying component's power supply).
+\end{enumerate}
+\end{itemize}
+\subsubsection{Highlighting component slots}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: The correct slot for a component held by trainee is highlighted.
+\item Prerequisites: Trainee holds a component(Use case: Holding a component).
+\item Post-requisites: The slot in the computer is highlighted.
+\item Scenario: 
+\begin{enumerate}
+    \item Trainee holds a component.
+    \item Trainee presses a button on a VR controller.
+    \item System checks held component's type.
+    \item System checks if there are available slots for a component held by trainee.
+    \item System highlights an available slot.
+\end{enumerate}
+Alternate scenario: Component cannot be inserted to any available slot.
+\begin{enumerate}
+    \item System highlights the computer red.
+\end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Counting assembly time}  
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Assembly time is being counted.
+\item Prerequisites: The computer is not fully built.
+\item Post-requisites: Time of asseembly is displayed to trainee.
+\item Scenario: 
+\begin{enumerate}
+    \item System checks if the computer assembly process is not finished.
+    \item System increments the seconds counter.
+    \item The seconds counter value is displayed on a clock object.
+\end{enumerate}
+Alternate scenario: The computer assembly is finished.
+\begin{enumerate}
+    \item The clock counter is not changed.
+\end{enumerate}
+\end{itemize}
+
+\subsubsection{Counting errors}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Trainee's errors are being counted.
+\item Prerequisites: Trainee mounts a component in a wrong slot (Use case: Placing a component). 
+\item Post-requisites: Error counter is updated.
+\item Scenario: 
+\begin{enumerate}
+    \item System increments the errors counter.
+\end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Calculating score}
+\begin{itemize}
+\item Actors:Trainee
+\item Description: Trainee's score is calculated.
+\item Prerequisites: Computer is fully built.
+\item Post-requisites: Trainee sees their score.
+\item Scenario: 
+\begin{enumerate}
+    \item Initial score is decreased by a constant value for each 10 seconds of the assembly process (Use case: Counting assembly time).
+    \item Trainee's score is decreased by a constant value for each error they made (Use case: Counting errors).
+    \item System displays score on an UI canva.
+\end{enumerate}
+
+\end{itemize}
