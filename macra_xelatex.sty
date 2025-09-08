@@ -76,13 +76,17 @@
 %formatowanie spisu treści
 \usepackage[nottoc]{tocbibind}
 \usepackage[toc,page]{appendix}
-\usepackage[titles]{tocloft}
+%\usepackage[titles]{tocloft}
+\usepackage[subfigure,titles]{tocloft}
 \usepackage{titletoc}
-\renewcommand \cftchapdotsep{4.5}
-\renewcommand\cftbeforechapskip{\vskip3pt}
-\renewcommand\cftchapafterpnum{\vskip0pt}
-\renewcommand\cftsecafterpnum{\vskip0pt}
-\renewcommand{\contentsname}{Contents}
+%\renewcommand \cftchapdotsep{4.5}
+% \renewcommand\cftbeforechapskip{\vskip3pt}
+% \renewcommand\cftchapafterpnum{\vskip0pt}
+% \renewcommand\cftsecafterpnum{\vskip0pt}
+\setlength{\cftbeforechapskip}{3pt}
+\setlength{\cftchapafterpnum}{0pt}
+\renewcommand{\cftsecafterpnum}{\par\vspace{0pt}}
+%\renewcommand{\contentsname}{Contents}
 \settocbibname{Bibliography}
 \setlotname{List of tables}
 \setlofname{List of illustrations}
@@ -210,7 +214,7 @@
    \setlength{\itemsep}{0pt}%
     % \setlength{\parskip}{0pt}}%
    \renewcommand{\makelabel}{\descriptionlabel}}
-   \renewcommand*\descriptionlabel[1]{\bfseries #1 --}
+   \renewcommand*\descriptionlabel[1]{\bfseries ##1 --}
   }%
   {\end{list}}
   

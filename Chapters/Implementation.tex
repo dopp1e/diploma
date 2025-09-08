@@ -1,23 +1,110 @@
-\chapter{IMPLEMENTATION, TESTING AND VALIDATION}
+\chapter{IMPLEMENTATION}
 \label{chap:implementation}
 A completed trainer was implemented to provide the trainee with a high quality of a learning experience and a realistic environment.
-The following chapter describes the process of creating the trainer, along with the descriptions of testing and validating methods and their results.
-\subsection{System implementation}
-% TODO : jakis wstep :)
+The following chapter describes the process of creating the trainer.
 
-\subsubsection{3D models (Hubert Leszczyński)}
+\section{Environment setup (Jakub Jędrzejczyk)}
+
+The implementation of the project was carried out using version 5.5.4 of Unreal Engine. The base for the project is the First Person game template, available in the Unreal Engine Editor.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.65\textwidth]{Images/ProjectCreation.png}
+	\caption{Selected preset in the Unreal Engine menu.}
+	\label{fig:projectCreation}
+\end{figure}
+
+This preset was chosen because it provides a basic character first person perspective controller. While this controller will not be used in the final product, due to the nature of the CAVE environment, it allows for easy testing of the project in a non-VR environment.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/FPSProjectStart.png}
+	\caption{Starting point of the project - First Person template.}
+	\label{fig:FPSProjectStart}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/FPSProjectPOV.png}
+	\caption{Starting point of the project - First Person template, from first person perspective.}
+	\label{fig:FPSProjectPOV}
+\end{figure}
+
+
+For the purposes of the project, the default environment was cleared out, leaving only the plane and walls. This provides much more space than is necessary for the CAVE environment, which is a cube with 3.4m sides. This space however allows for much easier testing of the project in a non-VR environment, as the player can move around freely. Throughout the many applications that we have been shown in the CAVE, many applications used rooms exactly the size of the CAVE room, which has at times felt claustrophobic. While it is not something being researched, we also wish to see if this will provide a more comfortable experience.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/ProjectEnvironment.png}
+	\caption{Starting point of the project - First Person template, with cleared environment.}
+	\label{fig:ProjectEnvironment}
+\end{figure}
+
+The next step was to set up the project to be ready for CAVE. Our consultant provided us with a plugin and a preset for it to be used with the tracking system used within the CAVE, called DTrack \cite{DTRACK}. We were also given a few Unreal Engine blueprint files that, when added to the project, allowed it to communicate with the tracking system. They were added to the project and set up so that there would be two hand objects, one for each hand controller. This functionality was tested using an application for desktop PCs we were provided with, which allows to move virtual controllers in 3D space, with their movement being sent to the Unreal Engine project.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/ProjectWithTrackingTools.png}
+	\caption{Starting point of the project - First Person template, with tracking tools added.}
+	\label{fig:ProjectWithTrackingTools}
+\end{figure}
+
+Here, the project's perspective is shown with two spheres representing the hand controllers in 3D space, each set to be in the opposite corner of the CAVE. These two objects in Unreal Engine are centered by default, but moving them in the software, visible on the right side of figure \ref{fig:ProjectWithTrackingTools} also moves them accordingly inside the software.
+
+As an additional measure of ensuring adequate testing for non-CAVE environments, invisible walls were added, replicating the space of the CAVE. This way, the user can still move around freely in a non-VR environment, but will be limited to the size of the CAVE room.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/ProjectInvisibleWalls.png}
+	\caption{Starting point of the project - First Person template, with invisible walls added.}
+	\label{fig:ProjectInvisibleWalls}
+\end{figure}
+
+\section{3D models (Hubert Leszczyński)}
+
 Most of the classes \ref{sec:classes} required creating appropriate 3D models.
 The computer component models were created based on their real counterparts.
 The first step of creating each model of a computer component was measuring it's real dimensions in three axis.
 Then, the prototypes of the models were designed in blender using simple geometric solids.
 The prototypes were then subjected to the necessary modifications, and finally the appropriate materials were applied to them.
 Figure \ref{fig:ModelExample} shows an example model of a computer component, in this case a disk.
-\begin{figure}[!ht]
+
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/3dmodel.png}
 	\caption{Computer component model}
 	\label{fig:ModelExample}
 \end{figure}
-\subsection{System testing}
 
-\subsection{System evaluation}
+\section{Object loading (Jakub Jędrzejczyk)}
+
+Thanks to the modular nature of the designed classes (\ref{sec:classes}), it was deemed possible to load the computer components into the scene at runtime, using a set of model files and descriptions in JSON \cite{brayRFC8259JavaScript2017} format.
+
+For the purposes of preliminary feasibility testing, this functionality was implemented in a basic manner, not yet entirely representing the aforementioned classes.
+
+This functionality is divided into two blueprints - the first one is responsible for scanning the folder with content in search of JSON files. Each folder in the UserContent directory is treated as a category for objects to be sorted into (GPU, CPU, etc.). Each one is then read, and an object is spawned in the scene, after which, a load function of the second blueprint is called on it, passing the contents of the JSON object and the category of the object.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/BasicLoadingBlueprint.png}
+	\caption{Basic object loading blueprint}
+	\label{fig:BasicLoadingBlueprint}
+\end{figure}
+
+The current loading scheme supports loading multiple meshes per object, which gives way to more complex models, such as GPUs with fans. Each mesh is expected to be a glTF 2.0 \cite{ISOIEC12113} model file, which is a modern format for 3D models, supporting PBR materials and animations. Each mesh can also be assigned a type, which is then used to assign specific functionality to it. For example, a mesh of type "Body" is treated as the main mesh of the object, while a mesh of type "Fan" could be rotated when the computer is turned on.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/BasicObjectSelfPreparation.png}
+	\caption{Basic object self-preparation blueprint}
+	\label{fig:BasicObjectSelfPreparation}
+\end{figure}
+
+After placing a this loading object in the scene and preparing a basic JSON description file and a model file, the object is spawned in the scene at runtime.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/BasicGPULoaded.png}
+	\caption{Basic GPU loaded blueprint}
+	\label{fig:BasicGPULoaded}
+\end{figure}
