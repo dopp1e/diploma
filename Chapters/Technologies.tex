@@ -1,11 +1,65 @@
-\chapter{TECHNOLOGIES AND TOOLS}
+\chapter{TECHNOLOGIES AND TOOLS (Mateusz Merda)}
 \label{chap:TechnologiesAndTools}
+
+Our project relies on a combination of collaborative technologies that cover a wide range of needs. These tools helped us streamline asset creation, enabled efficient teamwork, provided extensive programming capabilities, and allowed end users to interact with the virtual scene. The purpose of this chapter is to summarize what these tools are and how we used them throughout the entire process of creating our application.
 
 \section{Game engines}
 \label{sec:GameEngines}
 
+A game engine is a software framework that allows for easier creation of interactive 3D environments. By providing a suite of built-in capabilities such as rendering, physics, input handling, etc., it helped us construct a virtual scene without having to recreate core systems from scratch.
+
+Modern game engines are designed to work seamlessly with 3D models, making the process of importing assets and integrating them into different systems straightforward. This is a key feature that we relied on, as all of our assets representing computer components had to reliably interact with both the user and other virtual objects.
+
+\section{Game engine selection (Jakub Jędrzejczyk)}
+
+The engine our team has chosen is Unreal Engine 5 \cite{MostPowerfulRealtime} developed by Epic Games. Although there are many three-dimensional engines available, the most popular being Unity, Unreal Engine, and Godot \cite{BigGameEngines}, due to the requirement of the final product working within the CAVE environment, we were only able to choose between Unity and Unreal Engine. The main reason for choosing the latter of the two lies in better support for CAVE. Our consultant, Ivan Vakulko has informed us that Unity's latest versions are relatively less supported and are known to cause unexpected issues. With that in mind, the choice was made to proceed with the supposedly more stable Unreal Engine.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/UE5Editor.png}
+	\caption{Unreal Engine 5 editor interface (example image, not from this project)}
+\end{figure}
+
 \section{Movement tracking devices}
 \label{sec:MovementTrackingDevices}
 
+Movement tracking refers to capturing a user's physical motions and translating them into corresponding actions within the game engine. Using specialized input devices, we monitored the position and orientation of the user’s hands and eyes, enabling them to move through and interact with the virtual environment. This allowed the user to engage naturally with the world projected onto the surrounding screens, creating a deeper sense of immersion in the scene and ensuring that movements feel responsive and intuitive. 
+
+In our setup, motion tracking was achieved using a flystick to track the user's hand, allowing precise pointing, selection and manipulation of virtual objects. For head tracking, the user wore glasses fitted with reflective tracking balls, which were detected by external sensors to calculate their position and orientation in real time.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/CAVE.png}
+	\caption{Photo of the CAVE in operation. The person inside is wearing tracked glasses, which let them experience an illusion of a 3D environment.}
+\end{figure}
+
+An important part of the setup was the ability to display the user’s real-time view across multiple screens with correct orientation of the virtual camera. In Unreal Engine 5 this can be achieved using the nDisplay plugin, which synchronizes rendering across a cluster of networked computers, with one acting as the primary node and others as secondary nodes. Each node runs an instance of the engine and drives one or more display devices. This meant that the user could be fully encompassed within the virtual scene, with each screen showing the correct perspective based on its physical position.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/nDisplaySetup.png}
+	\caption{Example nDisplay setup from the official documentation \cite{nDisplayDocumentation}}
+\end{figure}
+
+\section{3D modelling software}
+\label{sec:3DModellingSoftware}
+
+To create assets that were not otherwise available to us, we used a program called Blender. It offers a comprehensive set of tools for modeling, sculpting, and texturing 3D objects. These models can then be exported for use in other applications, such as Unreal Engine 5.
+
 \section{Programming environments}
 \label{sec:ProgrammingEnviroments}
+
+Programming in the project was carried out using a combination of visual scripting and traditional coding. The primary method was Unreal Engine’s Blueprint system, which provided an intuitive, node-based environment for implementing user interaction and interface logic. Blueprints allowed for rapid prototyping and straightforward development of the application's features.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/UE5Material.png}
+	\caption{UE5's material editor relies on blueprints for editing the materials)}
+\end{figure}
+
+In some cases we had to resort to programming in C++ in combination with Blueprints. This was done through Visual Studio, a popular integrated development environment (or IDE) made by Microsoft.
+
+\section{Version control}
+\label{sec:VersionControl}
+
+Lastly, for version control we made use of two different systems suited to specific needs. GitHub was used to manage documents such as this one, providing an organized way for writing and editing for the whole team. For the Unreal Engine project itself, we relied on Diversion, a version control system designed to handle large binary files and engine assets more efficiently.
