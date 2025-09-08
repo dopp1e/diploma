@@ -184,7 +184,7 @@ In our project, we have decided to divide the diagram into two parts.
 \subsection{Trainee Movement Use Cases}
 Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, describing use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
 Each use case requires the VR CAVE sensors to work.
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
 	\caption{Use case diagram for trainee movement}
@@ -278,7 +278,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 
 \subsection{Computer assembly use cases}
 Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, describing the use cases for the computer assembly process, along with mechanics of trainee's score calculation and the computer work visualization.
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/AssemblyUseCases.png}
 	\caption{Use case diagram for computer assembly}
@@ -500,7 +500,7 @@ The following subsections presents the developed classes along with the class di
 A class diagram is an essential element of a system project.
 It allows to visualize the project's structure as well as relationships and dependencies of the classes.
 Figure \ref{fig:movementDiagram} provides a full class diagram for the project.
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/Class_diagram.png}
 	\caption{Class diagram}
@@ -510,40 +510,40 @@ The trainee-related classes (figure \ref{fig:TraineeClasses}) are responsible of
 A Camera class describes the behavior of a virtual camera object, which acts as a trainee's point of view in a VR environment.
 The Hand class is responsible for moving the virtual hands objects.
 Both of the described classes are using the TrackingController class, which is responsible for detecting the movement of a trainee in the VR CAVE and forwarding its data to these classes.
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeRelatedClasses.png}
 	\caption{Trainee-related classes}
 	\label{fig:TraineeClasses}
 \end{figure}
-A HoldableComponent class describes each object, which can be manipulated by trainee by holding it and moving it around.
+A HoldableComponent class (figure \ref{fig:HoldableComponentClasses}) describes each object, which can be manipulated by trainee by holding it and moving it around.
 These classes are elements or tools required to build a virtual computer.
 If the trainee grabs one of these objects and moves, the held object should follow their hands' position.
 Releasing the held object makes it fall to the ground and return to its initial position.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/HoldableComponentClasses.png}
 	\caption{Connector-related classes}
 	\label{fig:HoldableComponentClasses}
 \end{figure}
 
-A connector is an object which acts as an cable in a real-life computer.
+A Connector class (figure \ref{fig:ConnectorRelatedClasses}) describes objects, which connect two or more computer components with eahc other.
 Each connector has one or more ports.
 Every port is described by a type and a contact, which are stored in PortType and Contact enumeration classes.
 To properly mount a connector, all of his ports have to be connected with a port of the same type and an opposite contact. 
 The power flow of the connectors may also be visualized after turning on a fully built computer. 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ConnectorRelatedClasses.png}
 	\caption{Computer-related classes}
 	\label{fig:ConnectorRelatedClasses}
 \end{figure}
-The Screwdriver and Screw classes describe the objects for tools used during the virtual computer assembly.
+Figure \ref{fig:ToolsRelatedClasses} presents the Screwdriver and Screw classes, which describe the objects for tools used during the virtual computer assembly.
 A held screwdriver object can be connected with a screw by contacting them with each other.
 A screw can be emplaced in a ScrewSlot object, when a trainee holds the connected screwdriver and screw objects, moves their hand near the slot and rotates it.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ToolsRelatedClasses.png}
 	\caption{Tools-related classes}
@@ -551,13 +551,13 @@ A screw can be emplaced in a ScrewSlot object, when a trainee holds the connecte
 \end{figure}
 
 
-A virtual computer consists of multiple computer components.
+A virtual computer (figure \ref{fig:ComputerRelatedClasses}) consists of multiple computer components.
 Each computer component object can be mounted in a ComponentSlot object.
 To mount a component in a slot, the types of the component and the slot, which are listed in ComponentType and PortType enumerations, must be equal.
 Some components may contain connector ports and slots for the screws or another components.
 Most of the components have parameters which values may be continously changing and visualized after turning on a fully built computer.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ComputerRelatedClasses.png}
 	\caption{Computer-related classes}
