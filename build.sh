@@ -1,0 +1,1 @@
+latexmk -xelatex -synctex=1 -interaction=nonstopmode -f

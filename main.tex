@@ -1,5 +1,12 @@
 \documentclass[10pt, twoside, a4paper,openany]{book}
 \usepackage{macra_xelatex}
+\usepackage[
+backend=biber,
+style=ieee,
+sorting=ynt
+]{biblatex}
+\addbibresource{Chapters/Bibliography.bib}
+\usepackage{float}
 
 
 \begin{document}
@@ -26,8 +33,9 @@
 
 % bibliografia
 % ieeetr - etykiety numerowane w kolejności wystąpienia w tekście
-\bibliographystyle{ieeetr}
-\bibliography{Chapters/Bibliography}
+% \bibliographystyle{ieeetr}
+% \bibliography{Chapters/Bibliography}
+\printbibliography
 
 % wykazy 
 \listoffigures
