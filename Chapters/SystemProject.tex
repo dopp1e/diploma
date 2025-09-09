@@ -109,6 +109,7 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
 
 During the work on the system project the team was able to specify the assumptions for the final vision of the application.
 The work on the project must be limited by the following assumptions and the application must meet all requirements.
+% może dodać oczekiwaną wydajność - fps, oczekiwania w związku brakiem sprzętu (np. kiedy CAVE nie operuje, itd.)
 
 \subsubsection{Project characteristics}
 
@@ -160,13 +161,14 @@ The table \ref{tab:functionalRequirements} presents the functional requirements 
    \end{center}
    \\\hline
    %-
-    Trainee's movement detection
-    & Trainee's movement has to be detected and their position needs to be updated in the application.
+    Trainee movement detection
+    & Trainee movement has to be detected and their position needs to be updated in the application.
     & Must
     \\\hline
      %-
     Computer component manipulation
     & The computer component object need to be fully manipulated by the trainer by moving them and emplacing them in the computer slots.
+    % ^ fully manipulated??? co to znaczy?
     & Must
      \\\hline %-
     Computer work visualization
@@ -178,7 +180,7 @@ The table \ref{tab:functionalRequirements} presents the functional requirements 
     & Should
     \\\hline %-
     Assembly grading
-    & Trainee's score can be calculated by including several factors, such as assembly speed or a number of errors.
+    & Trainee score can be calculated by including several factors, such as assembly speed or a number of errors.
     & Could
     \\\hline %-
     Trainee support
@@ -387,6 +389,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \item Actors: Trainee
 \item Description: Component's temperature is displayed to trainee.
 \item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
+% ^ określenie co znaczy "fully built"
 \item Post-requisites: Trainee sees component's temperature.
 \item Scenario: 
 \begin{enumerate}
@@ -510,6 +513,8 @@ Alternate scenario: The computer assembly is finished.
     \item Trainee's score is decreased by a constant value for each error they made (Use case: Counting errors).
     \item System displays score on an UI canva.
 \end{enumerate}
+
+% może się przydać jeszcze początek sesji, reset (w przypadku zmiany osoby budującej), może coś o błędach i pauzie
 
 \end{itemize}
 
