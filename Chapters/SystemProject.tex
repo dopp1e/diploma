@@ -104,28 +104,41 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     %-
 \end{tabular}
 \end{table}
+
 \section{Project assumptions}
+
 During the work on the system project the team was able to specify the assumptions for the final vision of the application.
 The work on the project must be limited by the following assumptions and the application must meet all requirements.
+
 \subsubsection{Project characteristics}
+
 The target application has to be 3D and created using UE 5 game engine.
 The main programming language of the system must be C++.
 The application requires basic UI created using computer graphics and has to fully work for one user.
+
 \subsubsection{Project work environment}
+
 The project application has to be working in the VR CAVE system of Gdańsk University of Technology. 
 This system consists of two distinct CAVEs:
+
 \begin{itemize}
     \item Small VR CAVE - a set of four monitors with a head movement tracker and VR controllers
     \item Large VR CAVE - a cube built by six screens, which side length is equal to 3,4 meters, with two sensors for each of the screens.
 \end{itemize}
+
 The synchronization between the screens and the sensord must be obtained by using free UE 5 assets.
+
 \subsubsection{Constraints}
+
 Due to the application's architecture, it will not be working on PCs and mobile devices.
+
 \subsection{Functional requirements}
+
 A functional requirement describes what the system should do to properly work.
 Each of them need has to be thoroughly analyzed and prioritized using a scale.
-The priorities for the project were assigned using MoSCoW (Must, Should, Could, Won't) scale.
+The priorities for the project were assigned using MoSCoW (Must, Should, Could, Won't) \cite{cleggCASEMethodFast1994} scale.
 The table \ref{tab:functionalRequirements} presents the functional requirements of the project.
+
 \begin{table}[!ht]
 \caption{Funtional requirements}
 \label{tab:functionalRequirements}
@@ -184,6 +197,7 @@ In our project, we have decided to divide the diagram into two parts.
 \subsection{Trainee Movement Use Cases}
 Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, describing use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
 Each use case requires the VR CAVE sensors to work.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
@@ -278,6 +292,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 
 \subsection{Computer assembly use cases}
 Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, describing the use cases for the computer assembly process, along with mechanics of trainee's score calculation and the computer work visualization.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/AssemblyUseCases.png}
@@ -286,9 +301,11 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{figure}
 
 \noindent The following subsections provide the descriptions for the use cases.
+
 \subsubsection{Pointing to a component}
+
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Computer component is targeted by trainee.
 \item Prerequisites: Virtual hand object is colliding with computer component object
 \item Post-requisites: Computer component becomes highlighted and trainee is able to pick it up.
@@ -302,7 +319,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{itemize}
 \subsubsection{Picking up a component}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee picks up a component.
 \item Prerequisites: Trainee points towards a computer component(Use case: Pointing to a component).
 \item Post-requisites: Computer component follows trainee's hand.
@@ -330,7 +347,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{itemize}
 \subsubsection{Dropping a component}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Component is dropped and returns to it's initial position.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is outside the assembly station.
 \item Post-requisites: Component returns to it's initial position.
@@ -346,7 +363,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \subsubsection{Placing a component}
 
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Computer component is placed in a slot.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is inside the assembly station.
 \item Post-requisites: Computer's component counter becomes mounter or the error count increments.
@@ -363,10 +380,11 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \item Error counter increments (Use case: Counting errors).
 \end{enumerate}
 \end{itemize}
+
 \subsubsection{Displaying component's temperature}
 
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Component's temperature is displayed to trainee.
 \item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
 \item Post-requisites: Trainee sees component's temperature.
@@ -379,23 +397,24 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 
 \end{itemize}
 
-\subsubsection{Displaying component's power supply}
+\subsubsection{Displaying component's power draw}
+
 \begin{itemize}
-\item Actors:Trainee
-\item Description: Component's power supply is displayed to trainee.
+\item Actors: Trainee
+\item Description: Component's power draw is displayed to trainee.
 \item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
-\item Post-requisites: Trainee sees component's power supply.
+\item Post-requisites: Trainee sees component's power draw.
 \item Scenario: 
 \begin{enumerate}
     \item Trainee points to a component.
-    \item System reads component's power supply.
-    \item Component's power supply is displayed on an UI canva.
+    \item System reads component's power draw.
+    \item Component's power draw is displayed on a UI canvas.
 \end{enumerate}
 
 \end{itemize}
 \subsubsection{Displaying computer's completeness}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: The state of computer's completeness os displayed to trainee.
 \item Prerequisites: Application is working.
 \item Post-requisites: Trainee sees how much component are left to mount or if the computer is fully built.
@@ -408,9 +427,11 @@ Alternate scenario: Computer is fully built:
     \item The counter on the UI canva changes to a communicate informing about the computer's completeness
 \end{enumerate}
 \end{itemize}
-\subsubsection{Visualizing computer work}
+
+\subsubsection{Visualizing computer operation}
+
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Displaying the state of the computer or a state of it's component to trainee.
 \item Prerequisites: Computer is fully built.
 \item Post-requisites: Trainee sees the state of the computer and it's work.
@@ -426,7 +447,7 @@ Alternate scenario: User points to a component(Use case: Pointing to a component
 \end{itemize}
 \subsubsection{Highlighting component slots}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: The correct slot for a component held by trainee is highlighted.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component).
 \item Post-requisites: The slot in the computer is highlighted.
@@ -445,12 +466,13 @@ Alternate scenario: Component cannot be inserted to any available slot.
 
 \end{itemize}
 
-\subsubsection{Counting assembly time}  
+\subsubsection{Counting assembly time}
+
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Assembly time is being counted.
 \item Prerequisites: The computer is not fully built.
-\item Post-requisites: Time of asseembly is displayed to trainee.
+\item Post-requisites: Time of assembly is displayed to trainee.
 \item Scenario: 
 \begin{enumerate}
     \item System checks if the computer assembly process is not finished.
@@ -465,7 +487,7 @@ Alternate scenario: The computer assembly is finished.
 
 \subsubsection{Counting errors}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee's errors are being counted.
 \item Prerequisites: Trainee mounts a component in a wrong slot (Use case: Placing a component). 
 \item Post-requisites: Error counter is updated.
@@ -478,7 +500,7 @@ Alternate scenario: The computer assembly is finished.
 
 \subsubsection{Calculating score}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee's score is calculated.
 \item Prerequisites: Computer is fully built.
 \item Post-requisites: Trainee sees their score.
@@ -510,12 +532,14 @@ The trainee-related classes (figure \ref{fig:TraineeClasses}) are responsible of
 A Camera class describes the behavior of a virtual camera object, which acts as a trainee's point of view in a VR environment.
 The Hand class is responsible for moving the virtual hands objects.
 Both of the described classes are using the TrackingController class, which is responsible for detecting the movement of a trainee in the VR CAVE and forwarding its data to these classes.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeRelatedClasses.png}
 	\caption{Trainee-related classes}
 	\label{fig:TraineeClasses}
 \end{figure}
+
 A HoldableComponent class (figure \ref{fig:HoldableComponentClasses}) describes each object, which can be manipulated by trainee by holding it and moving it around.
 These classes are elements or tools required to build a virtual computer.
 If the trainee grabs one of these objects and moves, the held object should follow their hands' position.
@@ -528,17 +552,19 @@ Releasing the held object makes it fall to the ground and return to its initial 
 	\label{fig:HoldableComponentClasses}
 \end{figure}
 
-A Connector class (figure \ref{fig:ConnectorRelatedClasses}) describes objects, which connect two or more computer components with eahc other.
+A Connector class (figure \ref{fig:ConnectorRelatedClasses}) describes objects, which connect two or more computer components with each other.
 Each connector has one or more ports.
 Every port is described by a type and a contact, which are stored in PortType and Contact enumeration classes.
-To properly mount a connector, all of his ports have to be connected with a port of the same type and an opposite contact. 
-The power flow of the connectors may also be visualized after turning on a fully built computer. 
+To properly mount a connector, all of his ports have to be connected with a port of the same type and an opposite contact.
+The power flow of the connectors may also be visualized after turning on a fully built computer.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ConnectorRelatedClasses.png}
 	\caption{Computer-related classes}
 	\label{fig:ConnectorRelatedClasses}
 \end{figure}
+
 Figure \ref{fig:ToolsRelatedClasses} presents the Screwdriver and Screw classes, which describe the objects for tools used during the virtual computer assembly.
 A held screwdriver object can be connected with a screw by contacting them with each other.
 A screw can be emplaced in a ScrewSlot object, when a trainee holds the connected screwdriver and screw objects, moves their hand near the slot and rotates it.
@@ -549,7 +575,6 @@ A screw can be emplaced in a ScrewSlot object, when a trainee holds the connecte
 	\caption{Tools-related classes}
 	\label{fig:ToolsRelatedClasses}
 \end{figure}
-
 
 A virtual computer (figure \ref{fig:ComputerRelatedClasses}) consists of multiple computer components.
 Each computer component object can be mounted in a ComponentSlot object.
