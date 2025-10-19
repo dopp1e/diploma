@@ -17,58 +17,66 @@ Those facts show that the PC parts market is extremely volatile and rapidly expa
 The aforementioned rapid growth of the PC parts market is a direct result of heightened interest in PC building, which for years now has been supported by web applications that help choose compatible parts for a new machine.
 
 \begin{enumerate}
-    \item PCPartPicker\cite{PCPartPicker}
+    \item PCPartPicker \cite{PCPartPicker}
     
 PCPartPicker is a popular tool for those interested in PC building. 
 Its main features are simplified mechanic of choosing components and automatic compatibility guide which supports user in choosing proper components for their future machine. 
 This solution also features categorized, sortable lists of components to limit the chance of providing too many choices at once.
+The build page's main interface is presented on Figure \ref{fig:partpicker}.
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/PCPartPicker.png}
-	\caption{Screenshot of PCPartPicker build page}
+	\includegraphics[width=0.6\textwidth]{Images/PCPartPicker.png}
+	\caption{Screenshot of PCPartPicker.com build page}
+	\label{fig:partpicker}
     \end{figure}
 
     \item BuildMyPC.net
 
 This tool boasts itself on its simplicity, and while it accomplishes that it still overloads unexperienced users. 
 It does it mainly through use of uncommon names of parts and including less used parts like network adapters, which usually are part of motherboards.
-Those issues are shown on BuildMyPC.net's build page on figures 2.3 and 2.4.
+Those issues are shown on BuildMyPC.net's build page on Figures \ref{fig:buildmypc1} and \ref{fig:buildmypc2}
 Aside from such a shortcoming, it remains as a popular aid tool for choosing a set of compatible PC parts.
 
-\begin{figure}[!ht]
+\begin{figure}[h!]%
 	\centering
-		\includegraphics[width=0.6\textwidth]{Images/BuildMyPC.net1.png}
-	\caption{Screenshot of BuildMyPC.net build page(1)}
-    \end{figure}
-    \begin{figure}[!ht]
-	\centering
-        \includegraphics[width=0.5\textwidth]{Images/BuildMyPC.net2.png}
-	\caption{Screenshot of BuildMyPC.net build page(2)}
-    \end{figure}
+	\subfigure[]{
+		\includegraphics[width=0.48\textwidth]{Images/BuildMyPC.net1.png}
+		\label{fig:buildmypc1}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.48\textwidth]{Images/BuildMyPC.net2.png}
+		\label{fig:buildmypc2}
+	}
+	\caption{Screenshots of BuildMyPC.net build page}
+\end{figure}
 
     \item Logical Increments
 
     This item is a ranked list of PC parts which helps people choose  relatively up-to-date components to prolong longevity of newly built devices.
     The list consists of 16 ranks for each major PC part, like GPU, CPU, motherboard, SSD or HDD storage etc.
     Whats worth noting, is that each component is placed on the list based on many factors, mainly its based on components parameters but as it stands, the price also plays a major role in component's final placement. 
-    Figure 2.4 presents small piece of mentioned list, and its notable feature is that each rank's sub-list can be further extended to view more parts. 
+    Figure \ref{fig:logicalinstruments} presents small piece of mentioned list, and its notable feature is that each rank's sub-list can be further extended to view more parts. 
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.55\textwidth]{Images/Logical_Instruments.png}
+		\includegraphics[width=0.85\textwidth]{Images/Logical_Instruments.png}
 	\caption{Screenshot of a piece of Logical Instruments ranked list}
+	\label{fig:logicalinstruments}
     \end{figure}
     
-    \item PC Builder.
+    \item PC Builder
 
 This tool, while almost identical to PCPartPicker, features a more user friendly interface, ranging from visuals to phrasing of more specialized accessories, like thermal paste.
+Its appearence can be observed on Figure \ref{fig:pcbuilder}.
 
 
 \begin{figure}[!ht]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/PCBuilder.png}
-	\caption{Screenshot of a configuration component of PC Builder website}
+	\caption{Screenshot of a configuration component of pcbuilder.net website}
+	\label{fig:pcbuilder}
     \end{figure}
     
     \item UserBenchmark
@@ -76,11 +84,13 @@ This tool, while almost identical to PCPartPicker, features a more user friendly
 It is a comprehensive collection of over 350 million benchmarks of over 2 million unique components.
 Additionally the website features a custom software for testing already built PC to check how well they will perform under current standards.
 Other interesting features are, a compare module which allows uses to compare various components of given type and the other is voting system which allows users to rank specific components.
+Aforementioned features can be observed on Figure \ref{fig:userbenchmark}.
 
 \begin{figure}[!ht]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/UserBenchmark.png}
 	\caption{Screenshot of a UserBenchmark's CPU compare module}
+	\label{fig:userbenchmark}
     \end{figure}
     
 \end{enumerate}
@@ -99,13 +109,14 @@ However, this game revolutionized the field by introducing actual 3D rendering o
 
 Apart from its origins, it is well known for its wide variety of rather realistically made PC part models.
 Not only that, but this game features licensing from component manufacturers like Intel, AMD, NVIDIA, Corsair, and many others.
-Figure 2.7 presents a little over half of the manufacturers that the game has licenses from.
+Figure \ref{fig:pcbspartners} presents a little over half of the manufacturers that the game has licenses from.
 This allows for the parts to have real-world specifications, which provide extra information for players. 
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.5\textwidth]{Images/PCBuildingLicensing.png}
-	\caption{Screenshot of a part of a list of official hardware partners from Steam product page of PC Building Simulator.}
+		\includegraphics[width=0.4\textwidth]{Images/PCBuildingLicensing.png}
+	\caption{Screenshot of a partial list of hardware partners from Steam page of PC Building Simulator.}
+	\label{fig:pcbspartners}
     \end{figure}
 
 The game emphasizes a rather realistic process of assembling computers, by not only implementing the installation of separate modules, but also including the process of cable management or creation of custom water cooling solutions.
@@ -116,18 +127,21 @@ Not only that, the game features a campaign / story mode, which greatly enhances
 The main advantages of this particular feature are tutorials and early guides for new players, that greatly advance their knowledge and theoretical skills in building a PC.
 As for more advanced and knowledgeable about PC assembly, the game offers the ability to enter a virtual BIOS of in-game computers, allowing for finer tuning of settings.
 
-\begin{figure}[!ht]
+\begin{figure}[h!]%
 	\centering
+	\subfigure[]{
 		\includegraphics[width=0.45\textwidth]{Images/PCbuidlignSimulator1(2).jpg}
-	\caption{Screenshot of a finished PC made in PC Building Simulator from Steam product page}
-    \end{figure}
-    \begin{figure}[!ht]
-	\centering
+		\label{fig:pcbsbuild1}
+	}%
+	\hfil
+	\subfigure[]{
 		\includegraphics[width=0.45\textwidth]{Images/PCbuidlignSimulator1.jpg}
-	\caption{Screenshot of a finished PC made in PC Building Simulator from Steam product page}
-    \end{figure}
+		\label{fig:pcbsbuild2}
+	}
+	\caption{Screenshots of a finished PCs made in PC Building Simulator from its Steam page}
+\end{figure}
 
-Figures 2.8 and 2.9 present possible PCs that can be built both in the game and in the real world, by utilizing mechanics and features described earlier.
+Figures \ref{fig:pcbsbuild1} and \ref{fig:pcbsbuild2} present possible PCs that can be built both in the game and in the real world, by utilizing mechanics and features described earlier.
 Those possibilities are further expanded through the game's use of the Steam workshop feature, allowing players to make their own free DLCs.
 This aspect of the game creates essentially endless options for assembling PCs that are realistic and feasible in the real world.
 
@@ -144,12 +158,13 @@ Also, its selection of components was vastly extended.
 
 Just like the original PC Building Simulator, it has official partnerships with PC part manufacturers. However, this installment introduced many more than before, allowing for more niche parts to be included in an already large selection.
 Also, unlike its predecessor, this game introduced partnerships with accessory producers like Thermal Grizzly, allowing for the players to get familiar with a wide selection of various PC building tools and products other than components like thermal pastes, pads, or even GPU stands.
-Nonetheless, the biggest non-functional improvements upon the original are overhauled, realistic graphics; this is best showcased in figure 2.10.
+Nonetheless, the biggest non-functional improvements upon the original are overhauled, realistic graphics; this is best showcased in Figure \ref{fig:pcbs2build}.
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/PCBuildingSim2.png}
+		\includegraphics[width=0.65\textwidth]{Images/PCBuildingSim2.png}
 	\caption{Screenshot of a finished PC made in PC Building Simulator 2 from Epic Games Store}
+	\label{fig:pcbs2build}
     \end{figure}
 
 The game also improved already revolutionary mechanics from the previous title by enhancing physics and models of all components.
@@ -168,22 +183,24 @@ Given that, PC Building Simulator 2 handles those and even more steps with a lot
 
 Another new feature is the possibility to take apart some components like the GPU to further customize the PC by adding a less used water cooling block.
 Also, it showcases how the GPU chipset actually looks like, giving players a far better understanding of what each component is.
-Figure 2.11 shows the taken apart GPU chipset being cleaned in-game, which is another new and interesting mechanic of this game.
+Figure \ref{fig:pcbs2gpushipset} shows the taken apart GPU chipset being cleaned in-game, which is another new and interesting mechanic of this game.
 
 \begin{figure}[!ht]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/GPUChipsetPCBS2.png}
 	\caption{Screenshot of a GPU chipset in PC Building Simulator 2 from Epic Games Store}
+	\label{fig:pcbs2gpushipset}
     \end{figure}
     
 Similarly to its predecessor, the game offers many tools to further customize virtual PCs.
-Those tools consist of an expanded BIOS and even a fan curve control application; the latter is presented in figure 2.12. 
+Those tools consist of an expanded BIOS and even a fan curve control application; the latter is presented in figure \ref{fig:pcbs2fancurve}. 
 Also, in this installment, the authors included benchmarks that simulate actual testing of assembled computers.
 
 \begin{figure}[!ht]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/PCBS2FanCurveApp.png}
-	\caption{Screenshot of in-game fan curve application in PC Building Simulator 2 from Epic Games Store}
+	\caption{Screenshot of fan curve application in PC Building Simulator 2 from Epic Games Store}
+	\label{fig:pcbs2fancurve}
     \end{figure}
 
 The aforementioned features already place it leagues above its predecessor and make it far better educational material on PC building.
