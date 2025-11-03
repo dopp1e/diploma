@@ -1,0 +1,41 @@
+name: Full Build and Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v2
+        with:
+          texlive_version: '2023'
+          extra_packages: 'latexmk,xetex'
+    
+      - name: Run full build script
+        run: bash ./fullbuild.sh
+
+      - name: Rename PDF files
+        run: |
+          mv 184429/main.pdf 184429/184429.pdf
+          mv 188752/main.pdf 188752/188752.pdf
+          mv 193331/main.pdf 193331/193331.pdf
+          mv 193552/main.pdf 193552/193552.pdf
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Full Build
+          make_latest: true
+          files: |
+            184429/184429.pdf
+            188752/188752.pdf
+            193331/193331.pdf
+            193552/193552.pdf
