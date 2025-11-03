@@ -11,7 +11,24 @@ sorting=none
 
 \begin{document}
 % strony generowane z moja.pg
-\includepdf{Chapters/Strona_tytulowa.pdf}
+\ifthenelse{\isundefined{\JK}}{
+\ifthenelse{\isundefined{\JJ}}{
+\ifthenelse{\isundefined{\MM}}{
+\ifthenelse{\isundefined{\HL}}{
+    \includepdf{Chapters/Strona_tytulowa.pdf}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_193552_HL.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_193331_MM.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_188752_JJ.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_184429_JK.pdf}
+}
+
 
 % streszczenie PL, EN
 \input{Chapters/Streszczenie}
