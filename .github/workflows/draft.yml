@@ -15,15 +15,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-  
+
       - name: Set up TeX Live
-        uses: xu-cheng/latex-action@v2
+        uses: xu-cheng/texlive-action@v3
         with:
-          texlive_version: '2023'
-          extra_packages: 'latexmk,xetex'
-    
-      - name: Run full build script
-        run: bash ./build.sh
+          texlive_version: '2025'
+          run: bash ./build.sh
 
       - name: Rename file
         run: |
