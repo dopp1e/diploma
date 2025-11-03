@@ -52,7 +52,10 @@ sorting=none
 % ieeetr - etykiety numerowane w kolejności wystąpienia w tekście
 % \bibliographystyle{ieeetr}
 % \bibliography{Chapters/Bibliography}
-\printbibliography
+\refstepcounter{chapter}% increment chapter number
+\addcontentsline{toc}{chapter}{Bibliography}% unnumbered ToC entry
+\markboth{Bibliography}{Bibliography}% optional header mark
+\printbibliography[heading=bibheading]
 
 \ifthenelse{\isundefined{\JK}}{
 \ifthenelse{\isundefined{\JJ}}{
