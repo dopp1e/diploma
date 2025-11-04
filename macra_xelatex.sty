@@ -87,7 +87,7 @@
 % \renewcommand\cftchapafterpnum{\vskip0pt}
 % \renewcommand\cftsecafterpnum{\vskip0pt}
 \setlength{\cftbeforechapskip}{3pt}
-\setlength{\cftchapafterpnum}{0pt}
+% \setlength{\cftchapafterpnum}{0pt}
 \renewcommand{\cftsecafterpnum}{\par\vspace{0pt}}
 %\renewcommand{\contentsname}{Contents}
 \settocbibname{Bibliography}
@@ -137,7 +137,7 @@
 \DeclareGraphicsRule{.pdftex}{pdf}{*}{}
 
 %WERSJA ELEKTRONICZNA
-\usepackage[bookmarksnumbered,colorlinks,plainpages,backref]{hyperref} 
+\usepackage[bookmarksnumbered,colorlinks,plainpages]{hyperref} 
 \hypersetup{
 citecolor=blue,
 linkcolor=[rgb]{0,0,0},
@@ -243,11 +243,11 @@ urlcolor=blue}
 \newcommand{\sffont}[1]{\mbox{\sffamily{#1}\rmfamily}}
 
 %odnonik do rysunku
-\newcommand{\zobrys}[1]{(zob. rys. \ref{#1})}
+\newcommand{\zobrys}[1]{(see Fig. \ref{#1})}
 \newcommand{\rys}[1]{Figure. \ref{#1}}
 
 %odnonik do rozdziau
-\newcommand{\zobrozdz}[1]{(zob. rozdz. \ref{#1})}
+\newcommand{\zobrozdz}[1]{(see Ch. \ref{#1})}
 
 
 
