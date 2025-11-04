@@ -1,0 +1,36 @@
+name: Draft Build
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up TeX Live
+        uses: xu-cheng/texlive-action@v3
+        with:
+          texlive_version: '2025'
+          run: bash ./build.sh
+
+      - name: Rename file
+        run: |
+          mv main.pdf draft.pdf
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Draft
+          draft: true
+          files: |
+            draft.pdf

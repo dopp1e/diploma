@@ -11,7 +11,24 @@ sorting=none
 
 \begin{document}
 % strony generowane z moja.pg
-\includepdf{Chapters/Strona_tytulowa.pdf}
+\ifthenelse{\isundefined{\JK}}{
+\ifthenelse{\isundefined{\JJ}}{
+\ifthenelse{\isundefined{\MM}}{
+\ifthenelse{\isundefined{\HL}}{
+    \includepdf{Chapters/Strona_tytulowa.pdf}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_193552_HL.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_193331_MM.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_188752_JJ.pdf}
+}
+}{
+    \includepdf{PerAuthor/StronaTytulowa_184429_JK.pdf}
+}
+
 
 % streszczenie PL, EN
 \input{Chapters/Streszczenie}
@@ -35,7 +52,31 @@ sorting=none
 % ieeetr - etykiety numerowane w kolejności wystąpienia w tekście
 % \bibliographystyle{ieeetr}
 % \bibliography{Chapters/Bibliography}
-\printbibliography
+\refstepcounter{chapter}% increment chapter number
+\addcontentsline{toc}{chapter}{Bibliography}% unnumbered ToC entry
+\markboth{Bibliography}{Bibliography}% optional header mark
+\printbibliography[heading=bibheading]
+
+\ifthenelse{\isundefined{\JK}}{
+\ifthenelse{\isundefined{\JJ}}{
+\ifthenelse{\isundefined{\MM}}{
+\ifthenelse{\isundefined{\HL}}{
+    \input{PerAuthor/GenAI_184429_JK.tex}
+    \input{PerAuthor/GenAI_188752_JJ.tex}
+    \input{PerAuthor/GenAI_193331_MM.tex}
+    \input{PerAuthor/GenAI_193552_HL.tex}
+}{
+    \input{PerAuthor/GenAI_193552_HL.tex}
+}
+}{
+    \input{PerAuthor/GenAI_193331_MM.tex}
+}
+}{
+    \input{PerAuthor/GenAI_188752_JJ.tex}
+}
+}{
+    \input{PerAuthor/GenAI_184429_JK.tex}
+}
 
 % wykazy 
 \listoffigures

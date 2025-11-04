@@ -55,6 +55,9 @@
 \usepackage{amsmath}
 \usepackage{makeidx}
 
+\usepackage{ifthen} % do warunkowego renderowania alternatywnych wersji
+\usepackage{setspace} % do ustawiania interlinii
+
 %formatowanie tytułów rozdziałów 
 \usepackage{indentfirst}
 \setlength{\parindent}{1.25cm}
@@ -93,6 +96,10 @@
 % \renewcommand\appendixname{Dodatek}
 % \renewcommand\appendixtocname{Dodatek}
 
+% Spacing between lines
+\newlength{\toclineskipl}
+\setlength{\toclineskipl}{0.5\baselineskip}
+
 % formatowanie bibliografii
 \newlength{\bibitemsep}\setlength{\bibitemsep}{.2\baselineskip plus .05\baselineskip minus .05\baselineskip}
 \newlength{\bibparskip}\setlength{\bibparskip}{0pt}
@@ -104,7 +111,8 @@
 }
 
 %formatowanie tabel
-\renewcommand\cftbeforetabskip{-10pt} %odległość w wykazie
+\renewcommand\cftbeforetabskip{-6pt} %odległość w wykazie
+\renewcommand\cfttabafterpnum{\vspace{\toclineskipl}}
 \usepackage{caption}
 \usepackage{tablefootnote} % <-- dodałem tablefootnote, bo akurat były mi potrzebne przypisy w tabelach
 \captionsetup[table]{%
@@ -115,7 +123,8 @@
     skip=0pt}
 
 %formatowanie etykiety dla rysunków
-\renewcommand\cftbeforefigskip{-10pt} %odległość w wykazie
+\renewcommand\cftbeforefigskip{-6pt}
+\renewcommand\cftfigafterpnum{\vspace{\toclineskipl}}
 \renewcommand{\fnum@figure}[1]{\small{Figure~\thefigure. }}
 \captionsetup[figure]{%
     font=small,
@@ -128,19 +137,19 @@
 \DeclareGraphicsRule{.pdftex}{pdf}{*}{}
 
 %WERSJA ELEKTRONICZNA
-% \usepackage[bookmarksnumbered,colorlinks,plainpages,backref]{hyperref} 
-% \hypersetup{
-% citecolor=[rgb]{0, 0.5, 0},
-% linkcolor=[rgb]{0.7,0,0},
-% urlcolor=blue}
+\usepackage[bookmarksnumbered,colorlinks,plainpages,backref]{hyperref} 
+\hypersetup{
+citecolor=blue,
+linkcolor=[rgb]{0,0,0},
+urlcolor=blue}
 %--------------------------------------------
 
 %WERSJA DRUKOWANA
-\usepackage[bookmarksnumbered, colorlinks,plainpages]{hyperref} 
-\hypersetup{
- citecolor=black,
- linkcolor=black,
- urlcolor=black}
+% \usepackage[bookmarksnumbered, colorlinks,plainpages]{hyperref} 
+% \hypersetup{
+%  citecolor=black,
+%  linkcolor=black,
+%  urlcolor=black}
 %--------------------------------------------
 
 %wymiary interlinii i marginesów
