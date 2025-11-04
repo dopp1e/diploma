@@ -18,12 +18,17 @@ jobs:
           texlive_version: '2025'
           run: bash ./fullbuild.sh
 
-      - name: Rename PDF files
+      - name: Fix ownership and permissions (workspace)
         run: |
-          mv 184429/main.pdf 184429/184429.pdf
-          mv 188752/main.pdf 188752/188752.pdf
-          mv 193331/main.pdf 193331/193331.pdf
-          mv 193552/main.pdf 193552/193552.pdf
+          sudo chown -R $(id -u):$(id -g) "$GITHUB_WORKSPACE"
+          sudo chmod -R u+rwX "$GITHUB_WORKSPACE"
+
+      - name: Copy PDF files
+        run: |
+          cp 184429/main.pdf 184429/184429.pdf
+          cp 188752/main.pdf 188752/188752.pdf
+          cp 193331/main.pdf 193331/193331.pdf
+          cp 193552/main.pdf 193552/193552.pdf
 
       - name: Create Release
         id: create_release
