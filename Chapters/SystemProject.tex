@@ -219,7 +219,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 
 \subsubsection{Head movement detection}
 \begin{itemize}
-\item Actors:Trainee,  VR CAVE Sensors
+\item Actors: Trainee,  VR CAVE Sensors
 \item Description: Trainee's head movement is detected.
 \item Prerequisites: Application is working.
 \item Post-requisites: Data of trainee's head movement is forwarded to application components.
@@ -233,7 +233,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 \end{itemize}
 \subsubsection{Position detection}
 \begin{itemize}
-\item Actors:Trainee,  VR CAVE Sensors
+\item Actors: Trainee,  VR CAVE Sensors
 \item Description: Trainee's position change is detected.
 \item Prerequisites: Application is working.
 \item Post-requisites: Data of trainee's position is forwarded to application components.
@@ -247,7 +247,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 \end{itemize}
 \subsubsection{VR controllers movement detection}
 \begin{itemize}
-\item Actors:Trainee,  VR CAVE Sensors
+\item Actors: Trainee,  VR CAVE Sensors
 \item Description: Trainee's hand movement is detected.
 \item Prerequisites: Application is working.
 \item Post-requisites: Data of trainee's hand movement is forwarded to application components.
@@ -261,7 +261,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 \end{itemize}
 \subsubsection{Virtual camera movement}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Virtual camera's point of view is updated.
 \item Prerequisites: Trainee's head movement and position change were detected (Use cases: Head movement detection, Position detection).
 \item Post-requisites: Virtual camera's position parameters are changed.
@@ -274,7 +274,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 \end{itemize}
 \subsubsection{Virtual camera rotation}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Virtual camera angle of view is updated according to trainee's movement.
 \item Prerequisites: Trainee's head movement was detected (Use cases: Head movement detection).
 \item Post-requisites: Virtual camera's rotation parameters are changed.
@@ -288,7 +288,7 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 \subsubsection{Virtual hands movement}
 
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Virtual hands positions updated according to trainee's movement.
 \item Prerequisites: VR controllers movement and position change were detected (Use cases: VR controllers movement detection, Position detection).
 \item Post-requisites: Virtual hands position parameters are updated.
@@ -312,7 +312,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \noindent The following subsections provide the descriptions for the use cases.
 \subsubsection{Pointing to a component}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Computer component is targeted by trainee.
 \item Prerequisites: Virtual hand object is colliding with computer component object
 \item Post-requisites: Computer component becomes highlighted and trainee is able to pick it up.
@@ -326,7 +326,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{itemize}
 \subsubsection{Picking up a component}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee picks up a component.
 \item Prerequisites: Trainee points towards a computer component(Use case: Pointing to a component).
 \item Post-requisites: Computer component follows trainee's hand.
@@ -354,7 +354,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{itemize}
 \subsubsection{Dropping a component}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Component is dropped and returns to it's initial position.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is outside the assembly station.
 \item Post-requisites: Component returns to it's initial position.
@@ -370,7 +370,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \subsubsection{Placing a component}
 
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Computer component is placed in a slot.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is inside the assembly station.
 \item Post-requisites: Computer's component counter becomes mounter or the error count increments.
@@ -390,7 +390,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \subsubsection{Displaying component's temperature}
 
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Component's temperature is displayed to trainee.
 \item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
 \item Post-requisites: Trainee sees component's temperature.
@@ -405,7 +405,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 
 \subsubsection{Displaying component's power supply}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Component's power supply is displayed to trainee.
 \item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
 \item Post-requisites: Trainee sees component's power supply.
@@ -419,7 +419,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{itemize}
 \subsubsection{Displaying computer's completeness}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: The state of computer's completeness os displayed to trainee.
 \item Prerequisites: Application is working.
 \item Post-requisites: Trainee sees how much component are left to mount or if the computer is fully built.
@@ -434,7 +434,7 @@ Alternate scenario: Computer is fully built:
 \end{itemize}
 \subsubsection{Visualizing computer work}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Displaying the state of the computer or a state of it's component to trainee.
 \item Prerequisites: Computer is fully built.
 \item Post-requisites: Trainee sees the state of the computer and it's work.
@@ -450,7 +450,7 @@ Alternate scenario: User points to a component(Use case: Pointing to a component
 \end{itemize}
 \subsubsection{Highlighting component slots}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: The correct slot for a component held by trainee is highlighted.
 \item Prerequisites: Trainee holds a component(Use case: Holding a component).
 \item Post-requisites: The slot in the computer is highlighted.
@@ -471,7 +471,7 @@ Alternate scenario: Component cannot be inserted to any available slot.
 
 \subsubsection{Counting assembly time}  
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Assembly time is being counted.
 \item Prerequisites: The computer is not fully built.
 \item Post-requisites: Time of asseembly is displayed to trainee.
@@ -489,7 +489,7 @@ Alternate scenario: The computer assembly is finished.
 
 \subsubsection{Counting errors}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee's errors are being counted.
 \item Prerequisites: Trainee mounts a component in a wrong slot (Use case: Placing a component). 
 \item Post-requisites: Error counter is updated.
@@ -502,7 +502,7 @@ Alternate scenario: The computer assembly is finished.
 
 \subsubsection{Calculating score}
 \begin{itemize}
-\item Actors:Trainee
+\item Actors: Trainee
 \item Description: Trainee's score is calculated.
 \item Prerequisites: Computer is fully built.
 \item Post-requisites: Trainee sees their score.
