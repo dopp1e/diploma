@@ -2,11 +2,12 @@
 \label{chap:project}
 
 The objective of the system is to create a trainer for assembling a personal computer, which can also visualize the computer's work.
-This chapter describes the project of the system and all the functional and non-functional requirements. 
+The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions, which form the implenentation process.
 
 \section{Project team}
 
-The project team consists of four students from Gdańsk University of Technology. The table \ref{tab:team} presents the team's competencies.
+The project team consists of four students from Gdańsk University of Technology.
+Table \ref{tab:team} presents the team's skills and competencies.
 
 \begin{table}[!ht]
 \caption{Project team's competencies}
@@ -30,13 +31,15 @@ The project team consists of four students from Gdańsk University of Technology
         \item Project infrastructure
         \item Leadership
         \item C++ and Java programming languages
+        \item Interface design
+        \item Computer games developement
     \end{itemize} 
     \\\hline
     %-
     Hubert Leszczyński
     & \begin{itemize}
         \item C++ programming language
-        \item Computer graphics
+        \item 3D graphics
         \item Software architecture
         \item Project modeling
     \end{itemize}
@@ -61,9 +64,9 @@ The project team consists of four students from Gdańsk University of Technology
 \end{table}
 \section{Project timetable}
 
-Table \ref{tab:timetable} presents project's team timetable and objectives for each month
+Table \ref{tab:timetable} presents project's team timetable and objectives for each month.
 
-\begin{table}[!ht]
+\begin{table}[H]
 \caption{Project team's timetable}
 \label{tab:timetable}
 \small
@@ -78,8 +81,11 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
        \textbf{Objective}
    \end{center}
    \\\hline
-
-
+    %-
+    March
+    &
+    Team introduction to the CAVE system and its applications
+    \\\hline
    %-
     April 
     &
@@ -106,8 +112,16 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     & Creating 3D models
     \\\hline
      %-
-    September-October
-    & Implementation of computer components manipulation and computer assembly logic
+    September
+    & Implementation of computer components manipulation
+    \\\hline
+     %-
+    October
+    & Implementation of computer assembly logic
+    \\\hline
+    %-
+    October
+    & 3D models validation
     \\\hline
      %-
     October-November
@@ -115,29 +129,40 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     \\\hline
      %-
     November
-    & Testing of the application's progress and implementation of visualization of components state
+    & Testing of the application's progress in CAVE environment
+    \\\hline
+    %-
+    November
+    & Implementation of the component state visualization
     \\\hline
      %-
     November-December
-    & Conducting application's research on a group of users
+    & Conducting application's tests on a group of users
     \\\hline
      %-
     December
-    & Implementation of trainee's score calculation and trainee support, final tests and finalizing documentation
+    & Implementation of trainee's score calculation and trainee support
+    \\\hline
+    %-
+    December
+    & Final tests on CAVE environment
+    \\\hline
+    %-
+    December
+    & Completion of the project's documentation
     \\\hline
     %-
 \end{tabular}
 \end{table}
 \section{Project assumptions}
 During the work on the system project the team was able to specify the assumptions for the final vision of the application.
-The work on the project must be limited by the following assumptions and the application must meet all requirements.
+The work on the project must be limited by the following assumptions and the application must meet all of its requirements.
 \subsubsection{Project characteristics}
 The target application has to be 3D and created using UE 5 game engine.
 The main programming language of the system must be C++.
 The application requires basic UI created using computer graphics and has to fully work for one user.
 \subsubsection{Project work environment}
-The project application has to be working in the VR CAVE system of Gdańsk University of Technology. 
-This system consists of two distinct CAVEs:
+The project application has to be working in the VR CAVE system of Gdańsk University of Technology, which consists of two disctinct CAVEs:
 \begin{itemize}
     \item Small VR CAVE - a set of four monitors with a head movement tracker and VR controllers
     \item Large VR CAVE - a cube built by six screens, which side length is equal to 3,4 meters, with two sensors for each of the screens.
@@ -310,31 +335,31 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{figure}
 
 \noindent The following subsections provide the descriptions for the use cases.
-\subsubsection{Pointing to a component}
+\subsubsection{Pointing to an object}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Computer component is targeted by trainee.
-\item Prerequisites: Virtual hand object is colliding with computer component object
-\item Post-requisites: Computer component becomes highlighted and trainee is able to pick it up.
+\item Description: An object is targeted by trainee.
+\item Prerequisites: Virtual hand object is colliding with another object.
+\item Post-requisites: A holdable object becomes highlighted and trainee is able to pick it up.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee moves virtual hand object towards computer component.
-    \item System detects collision between hand and a component.
-    \item Component becomes highlighted.
+    \item Trainee moves virtual hand object towards a holdable object.
+    \item System detects an overlap between a virtual hand and another object.
+    \item Overlapping object becomes highlighted with virtual hand's color.
 \end{enumerate}
 
 \end{itemize}
-\subsubsection{Picking up a component}
+\subsubsection{Picking up an object}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Trainee picks up a component.
-\item Prerequisites: Trainee points towards a computer component(Use case: Pointing to a component).
-\item Post-requisites: Computer component follows trainee's hand.
+\item Description: Trainee picks up a holdable object.
+\item Prerequisites: Holdable object overlaps with a virtual hand (Use case: Pointing to a component).
+\item Post-requisites: A holdable object follows trainee's hand.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee begins holding a controller's trigger.
+    \item Trainee presses a trigger on the controller.
     \item System detects trainee's action.
-    \item Component begins following trainee's hand.
+    \item A holdable object begins following trainee's hand.
 \end{enumerate}
 
 \end{itemize}
