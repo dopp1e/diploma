@@ -335,17 +335,17 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{figure}
 
 \noindent The following subsections provide the descriptions for the use cases.
-\subsubsection{Pointing to an object}
+\subsubsection{Detecting a holdable object}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: An object is targeted by trainee.
-\item Prerequisites: Virtual hand object is colliding with another object.
-\item Post-requisites: A holdable object becomes highlighted and trainee is able to pick it up.
+\item Description: System detects the overlaps between a virtual hand and holdable objects.
+\item Prerequisites: Virtual hand object is overlapping with another object.
+\item Post-requisites: A holdable object becomes highlighted.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee moves virtual hand object towards a holdable object.
-    \item System detects an overlap between a virtual hand and another object.
-    \item Overlapping object becomes highlighted with virtual hand's color.
+    \item Trainee moves the virtual hand towards a holdable object.
+    \item The system detects an overlap between a virtual hand and another object.
+    \item A holdable object becomes highlighted using the virtual hand's color.
 \end{enumerate}
 
 \end{itemize}
@@ -353,7 +353,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \begin{itemize}
 \item Actors: Trainee
 \item Description: Trainee picks up a holdable object.
-\item Prerequisites: Holdable object overlaps with a virtual hand (Use case: Pointing to a component).
+\item Prerequisites: Holdable object overlaps with a virtual hand (Use case: Detecting a holdable object).
 \item Post-requisites: A holdable object follows trainee's hand.
 \item Scenario: 
 \begin{enumerate}
@@ -363,61 +363,66 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \end{enumerate}
 
 \end{itemize}
-\subsubsection{Holding a component}
+\subsubsection{Holding an object}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Computer component held by trainee follows virtual hand object.
-\item Prerequisites: Trainee picks up a component (Use case: Picking up a component).
-\item Post-requisites: The position of the computer component held by trainee changes
+\item Description: A held object's position and rotation follow the virtual hand.
+\item Prerequisites: Trainee picks up a holdable object (Use case: Picking up an object).
+\item Post-requisites: The held object continuously follows the virtual hand and updates its position and rotation.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee holds the trigger
-    \item Computer component reads virtual hand object's position.
-    \item Computer component's position is updated by the virtual hand's object position values.
+    \item The held object reads virtual hand object's position and rotation.
+    \item The held object's position and rotation are updated with the obtained values.
 \end{enumerate}
-
 \end{itemize}
-\subsubsection{Dropping a component}
+
+\subsubsection{Releasing an object}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Component is dropped and returns to it's initial position.
-\item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is outside the assembly station.
-\item Post-requisites: Component returns to it's initial position.
+\item Description: A holdable object becomes released and stops following trainee's virtual hand.
+\item Prerequisites: Trainee holds an object (Use case: Holding an object).
+\item Post-requisites: A held object either falls to the ground or becomes installed in the virtual computer (Use case: Installing a computer component).
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee releases the VR controller's trigger.
-    \item Component stops following trainee's hand.
-    \item Component begins falling down.
-    \item When the component's Y position reaches 0, it returns to it's initial position.
+    \item Trainee presses a trigger on the controller.
+    \item The released object stops being highlighted.
+    \item The held object stops following trainee's hand.
+    \item The released object falls to the ground.
 \end{enumerate}
-
+\item Alternate scenario: The released object is a computer component.
+\begin{enumerate}
+    \item The system checks whether the male slot of the released component overlaps with a female slot of another component.
+    \item If the condition is met, the system attempts to install the released component in the slot it's overlapping with (Use case: Installing a computer component).
+    \item Otherwise, the released component falls to the ground.
+\end{enumerate}
 \end{itemize}
-\subsubsection{Placing a component}
 
+\subsubsection{Installing a computer component}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Computer component is placed in a slot.
-\item Prerequisites: Trainee holds a component(Use case: Holding a component) and the virtual hand's position is inside the assembly station.
-\item Post-requisites: Computer's component counter becomes mounter or the error count increments.
+\item Description: A computer component becomes intalled in the matching slot.
+\item Prerequisites: Trainee releases the computer component while it overlaps with a component slot (Use case: Releasing an object).
+\item Post-requisites: The computer component is either installed in the component slot or it falls to the ground.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee releases the VR controller's trigger.
-    \item System checks if the component type is compatible with the slot required type.
-    \item The component's position is fixed inside the computer.
-    \item Computer's component counter increments.
-    \end{enumerate}
-\item Alternate scenario: The component is not compatible with the slot
+    \item Trainee releases the held object.
+    \item System checks whether the component type matches the type of the slot it overlaps with.
+    \item If the types match, the computer component's position becomes fixed and it snaps to the slot.
+\end{enumerate}
+\item Alternate scenario: The component is not compatible with the slot.
 \begin{enumerate}
-\item Component returns to it's initial position.
-\item Error counter increments (Use case: Counting errors).
+\item The released computer component falls to the ground.
+\item The error counter increments (Use case: Counting assembly errors).
 \end{enumerate}
 \end{itemize}
 \subsubsection{Displaying component's temperature}
 
+% - miejsce na wyjmowanie komponentu
+
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Component's temperature is displayed to trainee.
-\item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
+\item Description: The temperature of a computer component is displayed to the trainee.
+\item Prerequisites: Computer is fully built and the virtual hand overlaps with one of its components (Use case: Detecting a holdable object).
 \item Post-requisites: Trainee sees component's temperature.
 \item Scenario: 
 \begin{enumerate}
@@ -446,7 +451,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \begin{itemize}
 \item Actors: Trainee
 \item Description: The state of computer's completeness os displayed to trainee.
-\item Prerequisites: Application is working.
+\item Prerequisites: None.
 \item Post-requisites: Trainee sees how much component are left to mount or if the computer is fully built.
 \item Scenario: 
 \begin{enumerate}
@@ -457,6 +462,7 @@ Alternate scenario: Computer is fully built:
     \item The counter on the UI canva changes to a communicate informing about the computer's completeness
 \end{enumerate}
 \end{itemize}
+
 \subsubsection{Visualizing computer work}
 \begin{itemize}
 \item Actors: Trainee
@@ -473,6 +479,7 @@ Alternate scenario: User points to a component(Use case: Pointing to a component
     \item System displays component's power supply(Use case: Displaying component's power supply).
 \end{enumerate}
 \end{itemize}
+
 \subsubsection{Highlighting component slots}
 \begin{itemize}
 \item Actors: Trainee
