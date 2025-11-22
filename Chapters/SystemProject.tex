@@ -182,6 +182,7 @@ The table \ref{tab:functionalRequirements} presents the functional requirements 
 \small
 \begin{tabular}{|p{0.38\textwidth}|p{0.38\textwidth}|p{0.18\textwidth}|}
 \hline
+
     %-
    \begin{center}
        \textbf{Requirement}
@@ -230,8 +231,8 @@ Use cases have wide application in software engineering and system design, allow
 The most popular way to use them is to model the UML (Unified Modeling Language) diagram.
 This type of diagram can identify all the system use cases, their dependencies, and also the user groups.
 In our project, we have decided to divide the diagram into two parts.
-\subsection{Trainee Movement Use Cases}
-Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, describing use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
+\subsection{Trainee movement use cases}
+Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, which describes the use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
 Each use case requires the VR CAVE sensors to work.
 \begin{figure}[H]
 	\centering
@@ -244,56 +245,55 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 
 \subsubsection{Head movement detection}
 \begin{itemize}
-\item Actors: Trainee,  VR CAVE Sensors
-\item Description: Trainee's head movement is detected.
-\item Prerequisites: Application is working.
-\item Post-requisites: Data of trainee's head movement is forwarded to application components.
+\item Actors: Trainee, VR CAVE Sensors
+\item Description: The system detects the trainee's head movement.
+\item Prerequisites: None.
+\item Post-requisites: Data of the trainee's head movement is forwarded to the application's components.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee moves or rotates their head.
-    \item VR CAVE sensors read the updated position and rotation.
-    \item The updated data is forwarded to application component as a position and rotation vectors. 
+    \item The trainee moves or rotates their head.
+    \item VR CAVE sensors read the trainee's head position and rotation.
+    \item The updated data is forwarded to the application's components. 
 \end{enumerate}
 
 \end{itemize}
-\subsubsection{Position detection}
+\subsubsection{Trainee's position detection}
 \begin{itemize}
-\item Actors: Trainee,  VR CAVE Sensors
-\item Description: Trainee's position change is detected.
-\item Prerequisites: Application is working.
-\item Post-requisites: Data of trainee's position is forwarded to application components.
+\item Actors: Trainee, VR CAVE Sensors
+\item Description: The system detects the change of the trainee's position.
+\item Prerequisites: None.
+\item Post-requisites: Data of the trainee's position is forwarded to the application's components.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee makes a step.
-    \item VR CAVE sensors read the updated trainee's position.
-    \item The updated data is forwarded to application component as a position vector. 
+    \item The trainee makes a step.
+    \item VR CAVE sensors read the trainee's position.
+    \item The updated data is forwarded to the application's components.
 \end{enumerate}
 
 \end{itemize}
 \subsubsection{VR controllers movement detection}
 \begin{itemize}
-\item Actors: Trainee,  VR CAVE Sensors
-\item Description: Trainee's hand movement is detected.
-\item Prerequisites: Application is working.
-\item Post-requisites: Data of trainee's hand movement is forwarded to application components.
+\item Actors: Trainee, VR CAVE Sensors
+\item Description: The system detects the change of the position or rotation of the VR controller.
+\item Prerequisites: None.
+\item Post-requisites: Data of the trainee's hand movement is forwarded to the application's components.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee moves their hand.
+    \item The trainee moves or rotates their hand.
     \item VR CAVE sensors read the updated position of VR controllers.
-    \item The updated data is forwarded to application component as a position vector. 
+    \item The updated data is forwarded to the application's components.
 \end{enumerate}
 
 \end{itemize}
 \subsubsection{Virtual camera movement}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Virtual camera's point of view is updated.
-\item Prerequisites: Trainee's head movement and position change were detected (Use cases: Head movement detection, Position detection).
-\item Post-requisites: Virtual camera's position parameters are changed.
+\item Description: The trainee's point of view is updated in the application accordingly to their movement.
+\item Prerequisites: The system detected the trainee's movement (Use cases: Head movement detection, Position detection).
+\item Post-requisites: The position and rotation of the trainee's point of view are updated.
 \item Scenario: 
 \begin{enumerate}
-    \item Updated position vector is read from the player control component.
-    \item Virtual camera's position vector is updated. 
+    \item 
 \end{enumerate}
 
 \end{itemize}
@@ -339,7 +339,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \begin{itemize}
 \item Actors: Trainee
 \item Description: System detects the overlaps between a virtual hand and holdable objects.
-\item Prerequisites: Virtual hand object is overlapping with another object.
+\item Prerequisites: Virtual hand object is overlapping with one or more holdable objects.
 \item Post-requisites: A holdable object becomes highlighted.
 \item Scenario: 
 \begin{enumerate}
@@ -347,8 +347,13 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
     \item The system detects an overlap between a virtual hand and another object.
     \item A holdable object becomes highlighted using the virtual hand's color.
 \end{enumerate}
-
+\item Alternate scenario: The virtual hand object overlaps with multiple holdable objects at once.
+\begin{enumerate}
+    \item The system compares all of the objects overlapping with a virtual hand.
+    \item The object with the smallest volume becomes selected and highlighted.
+\end{enumerate}
 \end{itemize}
+
 \subsubsection{Picking up an object}
 \begin{itemize}
 \item Actors: Trainee
@@ -412,137 +417,118 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \item Alternate scenario: The component is not compatible with the slot.
 \begin{enumerate}
 \item The released computer component falls to the ground.
-\item The error counter increments (Use case: Counting assembly errors).
+\item The error counter increments (Use case: Counting trainee's errors).
 \end{enumerate}
 \end{itemize}
-\subsubsection{Displaying component's temperature}
 
-% - miejsce na wyjmowanie komponentu
 
+\subsubsection{Removing the computer component}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: The temperature of a computer component is displayed to the trainee.
-\item Prerequisites: Computer is fully built and the virtual hand overlaps with one of its components (Use case: Detecting a holdable object).
-\item Post-requisites: Trainee sees component's temperature.
+\item Decription: A computer component is removed from the slot.
+\item Prerequisites: A computer component selected for removal is installed into one of the slots.
+\item Post-requisites: Removed computer component falls down and can be picked up again.
+\begin{enumerate}
+    \item Trainee's virtual hand overlaps with an installed component (Use case: Detecting a holdable object).
+    \item Trainee presses the button on a controller.
+    \item System detects trainee's action.
+    \item Removed component stops following the slot it was removed from.
+\end{enumerate}
+
+
+\end{itemize}
+
+\subsubsection{Visualizing component's state}
+\begin{itemize}
+\item Actors: Trainee
+\item Description: The parameters of a computer component is displayed to the trainee.
+\item Prerequisites: Computer is fully built.
+\item Post-requisites: Trainee sees component's state.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee points to a component.
-    \item System reads component's temperature.
-    \item Component's temperature is displayed on an UI canva.
+    \item The trainee's virtual hand overlaps with a computer component installed in the virtual computer (Use case: Detecting a holdable object).
+    \item System reads component's data.
+    \item Read data is displayed to the trainee using an application's interface.
 \end{enumerate}
 
 \end{itemize}
 
-\subsubsection{Displaying component's power supply}
+\subsubsection{Displaying assembly progress}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Component's power supply is displayed to trainee.
-\item Prerequisites: Computer is fully built, trainee points to a component(Use case: Pointing to a component).
-\item Post-requisites: Trainee sees component's power supply.
+\item Description: The system informs the trainee about the progress of the virtual computer assembly as a list of objectives.
+\item Prerequisites: The trainee installs a computer component (Use case: Installing a computer component).
+\item Post-requisites: The system updates and displays the list of objectives according to the virtual computer assembly progress.
 \item Scenario: 
 \begin{enumerate}
-    \item Trainee points to a component.
-    \item System reads component's power supply.
-    \item Component's power supply is displayed on an UI canva.
-\end{enumerate}
-
-\end{itemize}
-\subsubsection{Displaying computer's completeness}
-\begin{itemize}
-\item Actors: Trainee
-\item Description: The state of computer's completeness os displayed to trainee.
-\item Prerequisites: None.
-\item Post-requisites: Trainee sees how much component are left to mount or if the computer is fully built.
-\item Scenario: 
-\begin{enumerate}
-    \item If the computer is not fully built, a counter of elements is displayed as a UI canva.
-\end{enumerate}
-Alternate scenario: Computer is fully built:
-\begin{enumerate}
-    \item The counter on the UI canva changes to a communicate informing about the computer's completeness
+    \item The system checks which components are installed in the virtual computer.
+    \item The system updates the list of objectives accordingly to the progress of the virtual computer assembly.
+    \item The system displays the updated list of objectives in an application's interface.
 \end{enumerate}
 \end{itemize}
 
 \subsubsection{Visualizing computer work}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Displaying the state of the computer or a state of it's component to trainee.
-\item Prerequisites: Computer is fully built.
-\item Post-requisites: Trainee sees the state of the computer and it's work.
+\item Description: The system displays information about the virtual computer assembly progress or a state of the computer components to the trainee.
+\item Prerequisites: None.
+\item Post-requisites: The system presents necessary information using an application's interface.
 \item Scenario: 
 \begin{enumerate}
-    \item System displays the computer completeness state to trainee(Use case: Displaying computer completeness).
+    \item The system validates the state of the virtual computer.
+    \item If the virtual computer is not fully assembled, the system displays information about the progress of the assembly process (Use case: Displaying assembly progress).
 \end{enumerate}
-Alternate scenario: User points to a component(Use case: Pointing to a component).
+Alternate scenario: The virtual computer is fully assembled and the virtual hand object is overlapping with one of its components (Use case: Detecting a holdable object).
 \begin{enumerate}
-    \item System displays component's temperature(Use case: Displaying component's temperature).
-    \item System displays component's power supply(Use case: Displaying component's power supply).
+    \item The system displays information about the component's state to the trainee (Use case: Visualizing component's state).
 \end{enumerate}
 \end{itemize}
 
-\subsubsection{Highlighting component slots}
-\begin{itemize}
-\item Actors: Trainee
-\item Description: The correct slot for a component held by trainee is highlighted.
-\item Prerequisites: Trainee holds a component(Use case: Holding a component).
-\item Post-requisites: The slot in the computer is highlighted.
-\item Scenario: 
-\begin{enumerate}
-    \item Trainee holds a component.
-    \item Trainee presses a button on a VR controller.
-    \item System checks held component's type.
-    \item System checks if there are available slots for a component held by trainee.
-    \item System highlights an available slot.
-\end{enumerate}
-Alternate scenario: Component cannot be inserted to any available slot.
-\begin{enumerate}
-    \item System highlights the computer red.
-\end{enumerate}
-
-\end{itemize}
 
 \subsubsection{Counting assembly time}  
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Assembly time is being counted.
-\item Prerequisites: The computer is not fully built.
-\item Post-requisites: Time of asseembly is displayed to trainee.
+\item Description: Time of the assembly is presented to the trainee.
+\item Prerequisites: Trainee picks up a computer component for the first time (Use case: Picking up an object).
+\item Post-requisites: Time becomes displayed in the application's interface.
 \item Scenario: 
 \begin{enumerate}
     \item System checks if the computer assembly process is not finished.
-    \item System increments the seconds counter.
-    \item The seconds counter value is displayed on a clock object.
+    \item System calculates the elapsed assembly time.
+    \item The time value becomes displayed in the application's interface clock object.
 \end{enumerate}
 Alternate scenario: The computer assembly is finished.
 \begin{enumerate}
-    \item The clock counter is not changed.
+    \item The clock object stops updating the time.
 \end{enumerate}
 \end{itemize}
 
-\subsubsection{Counting errors}
+\subsubsection{Counting trainee's errors}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Trainee's errors are being counted.
-\item Prerequisites: Trainee mounts a component in a wrong slot (Use case: Placing a component). 
-\item Post-requisites: Error counter is updated.
+\item Description: The system counts the trainee's mistakes during the virtual computer assembly process.
+\item Prerequisites: Trainee installs a computer component in an incompatible slot (Use case: Installing a computer component). 
+\item Post-requisites: Error counter is updated and displayed in the application's interface.
 \item Scenario: 
 \begin{enumerate}
-    \item System increments the errors counter.
+    \item System increments the error counter.
+    \item The updated error count becomes displayed in the application's interface.
 \end{enumerate}
 
 \end{itemize}
 
-\subsubsection{Calculating score}
+\subsubsection{Tracking trainee's score}
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Trainee's score is calculated.
-\item Prerequisites: Computer is fully built.
-\item Post-requisites: Trainee sees their score.
+\item Description: Trainee's score is calculated based on the time and quality of a computer assembly process.
+\item Prerequisites: The virtual computer is fully assembled.
+\item Post-requisites: The trainee's score is displayed in an application's interface.
 \item Scenario: 
 \begin{enumerate}
-    \item Initial score is decreased by a constant value for each 10 seconds of the assembly process (Use case: Counting assembly time).
-    \item Trainee's score is decreased by a constant value for each error they made (Use case: Counting errors).
-    \item System displays score on an UI canva.
+    \item The trainee's score is initialized with a constant value.
+    \item The system decreases the score by a constant value for each 10 seconds of the assembly process (Use case: Counting assembly time).
+    \item The system decreases the score by a constant value for each mistake made by the trainee (Use case: Counting trainee's errors).
+    \item System displays score in the application's interface.
 \end{enumerate}
 
 \end{itemize}
