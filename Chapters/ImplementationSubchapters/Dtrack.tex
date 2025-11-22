@@ -1,0 +1,16 @@
+\section{DTRACK integration (Jakub Jędrzejczyk)}
+
+Gdańsk University of Technology's CAVE system makes use of DTRACK \cite{DTRACK} tracking system to monitor the position and orientation of the user within the CAVE.
+This system uses infrared cameras to track markers placed on the user's headset and hand controllers, allowing for accurate replication of user's movement in the virtual environment.
+% tu zdjęcia kontrolera i zestawu z laboratorium pod cave'em
+
+Integration is seamless thanks to the provided Unreal Engine plugin exposing a few components to be used within the engine.
+Most importantly, allowing the virtual representation of the user's controllers (treated as hand objects within the application) to move within the space was as easy as adding two components to the pre-existing Hand actor blueprints - one allows input from the controller to be received, while the other transforms the actor's position and rotation based on the detected movement.
+For the sake of the functionality necessary in this application, both of these are required, however, should it be necessary to either only receive input, with the object remaining stationary, or to have an object move within the space without any input being processed, only one of these components could be used.
+Paired with a preset for the DTRACK plugin provided by our CAVE consultant, after selecting a particular part of the preset for the aforementioned components to represent, the hand objects followed the movement of a controller, be it in the CAVE or when using the desktop testing application.
+
+At this point, it's possible to use the \lstinline[language=C]|OnLiveLinkUpdated()| event to process any input from the player, for the purpose of which we were also provided with a snippet of blueprint code for discerning different inputs.
+
+Originally, the hand was a standalone actor placed within the scene. 
+Due to the way the tests were being conducted, using the first player controller character provided with the preset, as none of the team members possess a VR headset, it was necessary to move this hand actor to be a child of the \lstinline[language=C]|BP_FirstPersonCharacter| class provided with the used preset.
+This way it was possible to use the Unreal Engine's player controller and for the inputs of the hand controllers to simulate buttons being pressed on the keyboard, allowing for the same functionality to be tied to both VR controllers and keyboard input.
