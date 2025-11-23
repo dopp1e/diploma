@@ -67,7 +67,8 @@ Table \ref{tab:team} presents the team's skills and competencies.
 \section{Project timetable}
 
 Table \ref{tab:timetable} presents project's team timetable and objectives for each month.
-
+The timetable outlines the planned key objectives, activities and milestones for the duration of the project work.
+Each month of the year 2025 is associated with specific objectives, includuding research, project developement and testing of the target application.
 \begin{table}[H]
 \caption{Project team's timetable}
 \label{tab:timetable}
@@ -156,14 +157,14 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     %-
 \end{tabular}
 \end{table}
-% popraw
+
 \section{Project assumptions}
 During the work on the system project the team was able to establish the assumptions for the final vision of the application.
 The work on the project must be limited by the following assumptions and the application must comply with all of its requirements.
 \subsubsection{Project characteristics}
 The target application must be developed as a 3D system developed using the UE 5 game engine.
 The system's architecture must follow a hybrid approach, where the logic of the application is implemented using both C++ programming language and UE5 Blueprints scripts.
-The application requires a basic UI created using computer graphics.
+The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
 The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two disctinct CAVEs:
@@ -283,20 +284,21 @@ Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional 
 
 \section{Use cases}
 A use case is a singular unit of system functionality, which can be described as a sequence of interactions between the system and its users.
-Use cases have wide application in software engineering and system design, allowing for extensive planning of system requirements before implementing any functionality.
-The most popular way to use them is to model the UML (Unified Modeling Language) diagram.
-This type of diagram can identify all the system use cases, their dependencies, and also the user groups.
-In our project, we have decided to divide the diagram into two parts.
+Use cases are widely used in software engineering and system design, as they enable extensive planning and analysis of system requirements before any project funtionality is implemented.
+The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
+This type of diagram can identify all the system use cases, their dependencies, as well as the user groups involved.
+in this project, the use case diagram was divided into two separate parts represent the system functionality in a clear and organized way.
 \subsection{Trainee movement use cases}
-Figure \ref{fig:movementDiagram} illustrates the first use case diagram of the two, which describes the use cases for detecting the movement of the trainee and its dependence on the components of the trainer. 
-Each use case requires the VR CAVE sensors to work.
+Figure \ref{fig:movementDiagram} illustrates the first of the two use case diagrams.
+The presented diagram describes the use cases related to the trainee's movement detection and their dependencies on the trainer's components. 
+Each use case requires the CAVE sensors to work.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
 	\caption{Use case diagram for trainee movement}
 	\label{fig:movementDiagram}
 \end{figure}
-The use case descriptions for controlling trainee's movement are detailed in following subsections.
+\noindent The use case descriptions for controlling the trainee's movement are detailed in the following subsections.
 
 \subsubsection{Detecting trainee's position}
 \begin{itemize}
@@ -552,12 +554,12 @@ Alternate scenario: The computer assembly is finished.
 \section{Classes}
 \label{sec:classes}
 A class is a fundamental element of OOP (Object-Oriented Programming).
-It's a definition describing an object's state or behaviour using certain attributes or methods. 
+It serves as a definition of an object's state or behaviour using certain attributes or methods. 
 The following subsections presents the developed classes along with the class diagram.
 \subsection{Class diagram}
 A class diagram is an essential element of a system project.
 It allows to visualize the project's structure as well as relationships and dependencies of the classes.
-Figure \ref{fig:movementDiagram} provides a full class diagram for the project.
+Figure \ref{fig:movementDiagram} provides a full class diagram for the project, which was created using UML.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/Class_diagram.png}
