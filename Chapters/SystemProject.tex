@@ -2,7 +2,7 @@
 \label{chap:project}
 
 The objective of the system is to create a trainer for assembling a personal computer, which can also visualize the computer's work.
-The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions, which form the implenentation process.
+The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions which were the foundation for all of the implenentation processes.
 
 \section{Project team}
 
@@ -32,15 +32,15 @@ Table \ref{tab:team} presents the team's skills and competencies.
         \item Leadership
         \item C++ and Java programming languages
         \item Interface design
-        \item Computer games developement
+        \item Computer games development
     \end{itemize} 
     \\\hline
     %-
     Hubert Leszczyński
     & \begin{itemize}
         \item C++ programming language
+        \item Computer games development
         \item 3D graphics
-        \item Software architecture
         \item Project modeling
     \end{itemize}
     \\\hline
@@ -55,6 +55,8 @@ Table \ref{tab:team} presents the team's skills and competencies.
      %-
     Mateusz Merda
     & \begin{itemize}
+        \item Creating computer games
+        \item Programming
         \item Sound management
         \item Creating UI
     \end{itemize}
@@ -89,7 +91,7 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
    %-
     April 
     &
-    Functional requirements analysis
+    Functional and non-functional requirements specification
     \\\hline
     %-
     April-May
@@ -129,7 +131,7 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     \\\hline
      %-
     November
-    & Testing of the application's progress in CAVE environment
+    & Testing of the application's progress in CAVE
     \\\hline
     %-
     November
@@ -145,7 +147,7 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     \\\hline
     %-
     December
-    & Final tests on CAVE environment
+    & Final tests on CAVE
     \\\hline
     %-
     December
@@ -154,29 +156,32 @@ Table \ref{tab:timetable} presents project's team timetable and objectives for e
     %-
 \end{tabular}
 \end{table}
+% popraw
 \section{Project assumptions}
-During the work on the system project the team was able to specify the assumptions for the final vision of the application.
-The work on the project must be limited by the following assumptions and the application must meet all of its requirements.
+During the work on the system project the team was able to establish the assumptions for the final vision of the application.
+The work on the project must be limited by the following assumptions and the application must comply with all of its requirements.
 \subsubsection{Project characteristics}
-The target application has to be 3D and created using UE 5 game engine.
-The main programming language of the system must be C++.
-The application requires basic UI created using computer graphics and has to fully work for one user.
+The target application must be developed as a 3D system developed using the UE 5 game engine.
+The system's architecture must follow a hybrid approach, where the logic of the application is implemented using both C++ programming language and UE5 Blueprints scripts.
+The application requires a basic UI created using computer graphics.
+The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
-The project application has to be working in the VR CAVE system of Gdańsk University of Technology, which consists of two disctinct CAVEs:
+The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two disctinct CAVEs:
 \begin{itemize}
-    \item Small VR CAVE - a set of four monitors with a head movement tracker and VR controllers
-    \item Large VR CAVE - a cube built by six screens, which side length is equal to 3,4 meters, with two sensors for each of the screens.
+    \item Small CAVE - a setup of four monitors equiped with a head movement tracker and two hand controllers,
+    \item Large CAVE - a cube composed of six screens, each with the side length of 3,4 meters, equipped with two tracking sensors on each side.
 \end{itemize}
-The synchronization between the screens and the sensord must be obtained by using free UE 5 assets.
+The synchronization between the screens and tracking sensors must be achieved using freely available UE 5 assets.
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
+
 \subsection{Functional requirements}
-A functional requirement describes what the system should do to properly work.
-Each of them need has to be thoroughly analyzed and prioritized using a scale.
-The priorities for the project were assigned using MoSCoW (Must, Should, Could, Won't) scale.
-The table \ref{tab:functionalRequirements} presents the functional requirements of the project.
+The functional requirements describe the actions that the system must perform to work correctly.
+Each functional requirement has to be thoroughly specified, analyzed, and assigned with an appropriate priority.
+The priorities in this project were determined using the  MoSCoW (Must, Should, Could, Won't) scale.
+Table \ref{tab:functionalRequirements} presents the functional requirements of the target application.
 \begin{table}[!ht]
-\caption{Funtional requirements}
+\caption{Functional requirements}
 \label{tab:functionalRequirements}
 
 \small
@@ -198,29 +203,80 @@ The table \ref{tab:functionalRequirements} presents the functional requirements 
    \\\hline
    %-
     Trainee's movement detection
-    & Trainee's movement has to be detected and their position needs to be updated in the application.
+    & Trainee's movement has to be detected by the CAVE system, and their position must be updated in the application.
     & Must
     \\\hline
      %-
     Computer component manipulation
-    & The computer component object need to be fully manipulated by the trainer by moving them and emplacing them in the computer slots.
+    & The trainee must be able to fully manipulate the computer components by moving them and installing them into the compatible slots.
     & Must
      \\\hline %-
-    Computer work visualization
-    & The application has to detect if the computer is fully and properly built
+    Tracking the progress of virtual computer assembly
+    & The application must inform the trainee about the progress of the virtual computer assembly and detect the completion of this process.
     & Must
     \\\hline %- 
     Components state visualization
-    & Trainee should be able to see the parameters of the slots in the build computer. The parameters are temperature, power supply, etc.
+    & The application should allow to visualize the state of the computer components in a fully assembled virtual computer.
     & Should
     \\\hline %-
     Assembly grading
-    & Trainee's score can be calculated by including several factors, such as assembly speed or a number of errors.
+    & The trainee's score can be calculated using several factors, such as assembly speed or a number of their mistakes.
     & Could
     \\\hline %-
     Trainee support
-    & The correct slots for a component held by trainee can be highlighted to guide the trainee in the assembly process.
+    & The computer component slots can be highlighted to guide the trainee in the virtual computer assembly process.
     & Could
+    \\\hline
+\end{tabular}
+\end{table}
+
+\subsection{Non-functional reuirements}
+
+Non-functional requirements are the factors that determine the quality attributes of a software system, such as its portability, performance or maintainability.
+Rather than defining how the system works, they describe how it performs under specific conditions.
+These requirements play an important role during software development, as they serve as criteria for selecting different designs and approaches \cite{NonFunctionalRequirements}.
+Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
+
+\begin{table}[!ht]
+\caption{Non-functional requirements}
+\label{tab:nonFunctionalRequirements}
+
+\small
+\begin{tabular}{|p{0.38\textwidth}|p{0.38\textwidth}|}
+\hline
+
+    %-
+    \begin{center}
+       \textbf{Requirement category}
+    \end{center}  
+    &
+    \begin{center}
+        \textbf{Description}
+    \end{center}
+    \\\hline
+    %-
+    Performance
+    & The trainer must support multiple screens without visual artifacts. The application should also provide the trainee with a smooth frame rate above 60 frames per second.
+    \\\hline
+    %-
+    Responsiveness
+    & A latency between the trainee's actions and an application's reaction must not exceed 20 ms.
+    \\\hline
+    %-
+    Reliability
+    & The application must behave correctly for a single trainee.
+    \\\hline
+    %-
+    Usability
+    & The application's interface should be intuitive and easy to use for the trainee.
+    \\\hline
+    %-
+    Maintainability
+    & The application's code and resources should be easy to maintain by the developers.
+    \\\hline
+    %-
+    Extensibility
+    & The application should allow developers to easily add new functionalities and objects.
     \\\hline
 \end{tabular}
 \end{table}
@@ -240,73 +296,33 @@ Each use case requires the VR CAVE sensors to work.
 	\caption{Use case diagram for trainee movement}
 	\label{fig:movementDiagram}
 \end{figure}
-\newpage
 The use case descriptions for controlling trainee's movement are detailed in following subsections.
 
-\subsubsection{Head movement detection}
+\subsubsection{Detecting trainee's position}
 \begin{itemize}
-\item Actors: Trainee, VR CAVE Sensors
-\item Description: The system detects the trainee's head movement.
-\item Prerequisites: None.
-\item Post-requisites: Data of the trainee's head movement is forwarded to the application's components.
-\item Scenario: 
-\begin{enumerate}
-    \item The trainee moves or rotates their head.
-    \item VR CAVE sensors read the trainee's head position and rotation.
-    \item The updated data is forwarded to the application's components. 
-\end{enumerate}
-
-\end{itemize}
-\subsubsection{Trainee's position detection}
-\begin{itemize}
-\item Actors: Trainee, VR CAVE Sensors
+\item Actors: Trainee, CAVE Sensors
 \item Description: The system detects the change of the trainee's position.
 \item Prerequisites: None.
 \item Post-requisites: Data of the trainee's position is forwarded to the application's components.
 \item Scenario: 
 \begin{enumerate}
-    \item The trainee makes a step.
-    \item VR CAVE sensors read the trainee's position.
+    \item The trainee moves inside CAVE.
+    \item CAVE sensors read the trainee's movement data based on the VR controllers and glasses positions.
     \item The updated data is forwarded to the application's components.
 \end{enumerate}
 
 \end{itemize}
-\subsubsection{VR controllers movement detection}
+\subsubsection{Tracking VR controllers}
 \begin{itemize}
-\item Actors: Trainee, VR CAVE Sensors
+\item Actors: Trainee, CAVE Sensors
 \item Description: The system detects the change of the position or rotation of the VR controller.
 \item Prerequisites: None.
 \item Post-requisites: Data of the trainee's hand movement is forwarded to the application's components.
 \item Scenario: 
 \begin{enumerate}
     \item The trainee moves or rotates their hand.
-    \item VR CAVE sensors read the updated position of VR controllers.
+    \item CAVE sensors read the updated position of VR controllers.
     \item The updated data is forwarded to the application's components.
-\end{enumerate}
-
-\end{itemize}
-\subsubsection{Virtual camera movement}
-\begin{itemize}
-\item Actors: Trainee
-\item Description: The trainee's point of view is updated in the application accordingly to their movement.
-\item Prerequisites: The system detected the trainee's movement (Use cases: Head movement detection, Position detection).
-\item Post-requisites: The position and rotation of the trainee's point of view are updated.
-\item Scenario: 
-\begin{enumerate}
-    \item 
-\end{enumerate}
-
-\end{itemize}
-\subsubsection{Virtual camera rotation}
-\begin{itemize}
-\item Actors: Trainee
-\item Description: Virtual camera angle of view is updated according to trainee's movement.
-\item Prerequisites: Trainee's head movement was detected (Use cases: Head movement detection).
-\item Post-requisites: Virtual camera's rotation parameters are changed.
-\item Scenario: 
-\begin{enumerate}
-    \item Updated rotation vector is read from the player control component.
-    \item Virtual camera's rotation vector is updated with the read values. 
 \end{enumerate}
 \end{itemize}
 
@@ -314,13 +330,13 @@ The use case descriptions for controlling trainee's movement are detailed in fol
 
 \begin{itemize}
 \item Actors: Trainee
-\item Description: Virtual hands positions updated according to trainee's movement.
-\item Prerequisites: VR controllers movement and position change were detected (Use cases: VR controllers movement detection, Position detection).
+\item Description: Virtual hands' position and rotation are updated according to trainee's movement.
+\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Detecting trainee's position, Tracking VR controllers).
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}
-    \item Updated position vector is read from the player control component.
-    \item Virtual hands position vectors are updated with the read values. 
+    \item The updated position and rotation vectors are read from the player control component.
+    \item Virtual hands' position and rotation vectors are updated with the read values. 
 \end{enumerate}
 
 \end{itemize}
@@ -532,7 +548,7 @@ Alternate scenario: The computer assembly is finished.
 \end{enumerate}
 
 \end{itemize}
-
+% popraw
 \section{Classes}
 \label{sec:classes}
 A class is a fundamental element of OOP (Object-Oriented Programming).
