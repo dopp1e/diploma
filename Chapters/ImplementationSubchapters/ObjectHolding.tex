@@ -34,6 +34,7 @@ The hand most notably makes use of the \lstinline[language=C]|OnActorBeginOverla
 The hand includes an array of references to all currently overlapping holdable objects, the former of the events adding objects to it, and the latter removing them, highlighting one of these objects.
 
 For the sake of intuitiveness, ease of use, and ease of development, the hand only ever highlights one object at a time, prioritizing the smallest one.
+Additionally, an object can only be highlighted by one hand at a time - should both hands overlap with the same object, only the first hand to have overlapped with it will be able to highlight it.
 Should multiple objects be allowed to be highlighted at once, it would require further testing, on top of being potentially overwhelming and confusing for the user.
 This decision is based on the assumption that a smaller object will be more difficult to pick, particularly in a tight environment, which is often encountered when building a PC due to the components' sizes.
 Should the user instead mean to pick up a larger object, it should be relatively easy to find a spot where it is not overlapping with any smaller objects.
@@ -76,4 +77,21 @@ To combat this issue, after being converted to quaternions, the two quaternions 
 As multiplication of quaternions is not commutative \cite{kuipers1999quaternions}, it's important to note which quaternion is conjugated.
 With quaternion multiplication being equal to the composition of rotations \cite{kuipers1999quaternions}, and the latter of the two angles being inverted, the resulting quaternion effectively represents the difference between the two rotations, at which point it is converted back to Euler angles to be stored and used again in the next cycle.
 
-The second hand functionality was disabled in the final product, 
+Once an object has been highlighted, the user can pick it up by pressing the trigger button on the controller (or the button H on the keyboard for testing purposes).
+The logic for the picking up is handled in the hand blueprint itself.
+It launches only when the highlighted object is valid (i.e., there is one), setting the hand's currently held object variable to a reference to the highlighted object and calls the object's \lstinline[language=C]|Follow()| function, passing a reference to itself (the hand) as an argument.
+
+This \lstinline[language=C]|Follow()| function, implemented in the holdable object's blueprint, sets the object's state to "being held", disabling physics simulation and attaching the object to the hand's position updates via the previously mentioned event dispatcher.
+Thus, the object "listens" for the hand's position updates, transforming its own position and rotation accordingly.
+The physics simulation needs to be disabled, as otherwise gravity would pull the object down, even while being held.
+It additionally serves the purpose of disabling collisions with other objects, which, somewhat counterintuitively, decreases the intuitiveness of the application.
+While retaining collisions would follow real-world physics, in this virtual environment there is no way to provide real feedback to the user when a collision occurs.
+Collisions in the virtual space would lead to the hand's and the held object's positions being separated, and even visual or audio feedback would most likely not be sufficient to convey the sensation of a collision.
+
+Tied to the same button but launching in alternating fashion with the \lstinline[language=C]|Follow()| function is the \lstinline[language=C]|StopFollowing()| function, which effectively nullifies the previously described behavior, clearing all references and re-enabling physics simulation.
+An interesting observation is that despite the simulation only being enabled after the button was pressed, the released held object retained its acceleration and velocity from while it was being held, allowing for objects to be thrown quite realistically, an action done quite often for stress relief or joke purposes during the testing.
+
+This allows the user to pick up, move, and drop holdable objects at will.
+
+While the usage of two hands in the application has been tested throughout the development process, these hands were largely separate.
+While it was possible to, for example, connect one component to another component held by the other hand, due to general preference of CAVE apps to only be used with one hand, and lack of interactions involving two hands (e.g. requiring both hands to pick up a large or otherwise heavy object), the second hand was removed from the final testing phase.
