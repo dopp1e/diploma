@@ -91,7 +91,29 @@ Collisions in the virtual space would lead to the hand's and the held object's p
 Tied to the same button but launching in alternating fashion with the \lstinline[language=C]|Follow()| function is the \lstinline[language=C]|StopFollowing()| function, which effectively nullifies the previously described behavior, clearing all references and re-enabling physics simulation.
 An interesting observation is that despite the simulation only being enabled after the button was pressed, the released held object retained its acceleration and velocity from while it was being held, allowing for objects to be thrown quite realistically, an action done quite often for stress relief or joke purposes during the testing.
 
-This allows the user to pick up, move, and drop holdable objects at will.
+A transitive side effect of this throwing ability is that holdable objects can end their overlap with the hand much more abruptly than when simply being let go.
+Based on our observations, this speed can in fact be high enough to skip the \lstinline[language=C]|OnActorEndOverlap| event entirely, skipping the logic that would remove the object from the hand's overlapping objects array.
+This would lead to the hand highlighting an object placed somewhere else in the environment, potentially far away from the hand itself.
+Moreover, if the component was particularly small, due to the priority introduced, it could lead to the hand being unable to highlight any other object at all, requiring a restart of the application to fix.
+
+A crude, but effective solution to this issue was implemented, which ensures that the currently highlighted object is within distance equal to 2.5 times the size of the object in a given dimension each tick.
+Should a highlighted object leave this range, it is removed from the hand's overlapping objects array.
+By then using the standard \lstinline[language=C]|updateHighlight()| function, the highlight materials are also updated accordingly.
+This gives enough leeway for both fast movements (as object position updates lag behind just slightly) and the rotation in-place described later, while still removing objects that have, one way or another, managed to skip the end overlap event.
+
+This allows the user to pick up, move, and drop holdable objects at will,
+however preliminary development testing found a limitation in this system.
+
+Though the rotation of the hand was relayed to the held object, if this scope of available manipulation (dependant entirely on the physical hand's rotation) proved to be insufficient, the user would have to let go of the object and pick it up again at a different angle.
+This does represent how a real-world hand can't rotate an object indefinitely without letting go, but providing a way to rotate the object while holding it was deemed necessary and more intuitive in the virtual environment.
+
+For this purpose, a Rotating Movement component was added to the base holdable object.
+This component, as per Unreal Engine's documentation, "performs continuous rotation of a Component at a specific rotation rate" \cite{MovementComponentsUnreal}.
+By tying the movement of the controller's joystick to the action of setting the rotation rate of this component in the currently held object, it's possibly to rotate the object around its local axes while holding it.
+Because a joystick provides two axes of input, only two axes of rotation can be controlled at once, with the third axis being left to the physical rotation of the hand.
+% tutaj rzeczy o tym jakie osie zostały wybrane, zdjęcia, itd.
+
+
 
 While the usage of two hands in the application has been tested throughout the development process, these hands were largely separate.
 While it was possible to, for example, connect one component to another component held by the other hand, due to general preference of CAVE apps to only be used with one hand, and lack of interactions involving two hands (e.g. requiring both hands to pick up a large or otherwise heavy object), the second hand was removed from the final testing phase.
