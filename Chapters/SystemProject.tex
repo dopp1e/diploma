@@ -167,12 +167,12 @@ The system's architecture must follow a hybrid approach, where the logic of the 
 The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
-The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two distinct CAVEs:
+The target application must operate in the CAVE system of Gdańsk University of Technology, which consists of three distinct configurations:
 \begin{itemize}
-    \item Small CAVE - a setup of four monitors equipped with a head movement tracker and two hand controllers,
-    \item Large CAVE - a cube composed of six screens, each with the side length of 3,4 meters, equipped with two tracking sensors on each side.
+    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3,4 meters, equipped with a tracking sensor on each wall,
+    \item \textbf{MiniCAVE} and \textbf{MidiCAVE} - smaller screen and tracking devices setups, primarily serving for applications development.
 \end{itemize}
-The synchronization between the screens and tracking sensors must be achieved using freely available UE 5 assets.
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
 
@@ -300,23 +300,9 @@ Each use case requires the CAVE sensors to work.
 \end{figure}
 \noindent The use case descriptions for controlling the trainee's movement are detailed in the following subsections.
 
-\subsubsection{Detecting trainee's position}
-\begin{itemize}
-\item Actors: Trainee, CAVE Sensors
-\item Description: The system detects the change of the trainee's position.
-\item Prerequisites: None.
-\item Post-requisites: Data of the trainee's position is forwarded to the application's components.
-\item Scenario: 
-\begin{enumerate}
-    \item The trainee moves inside CAVE.
-    \item CAVE sensors read the trainee's movement data based on the VR controllers and glasses positions.
-    \item The updated data is forwarded to the application's components.
-\end{enumerate}
-
-\end{itemize}
 \subsubsection{Tracking VR controllers}
 \begin{itemize}
-\item Actors: Trainee, CAVE Sensors
+\item Actors: Trainee, CAVE
 \item Description: The system detects the change of the position or rotation of the VR controller.
 \item Prerequisites: None.
 \item Post-requisites: Data of the trainee's hand movement is forwarded to the application's components.
@@ -333,7 +319,7 @@ Each use case requires the CAVE sensors to work.
 \begin{itemize}
 \item Actors: Trainee
 \item Description: Virtual hands' position and rotation are updated according to trainee's movement.
-\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Detecting trainee's position, Tracking VR controllers).
+\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Tracking VR controllers).
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}

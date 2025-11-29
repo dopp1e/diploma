@@ -3,34 +3,15 @@
 A completed trainer was implemented to provide the trainee with a high quality of a learning experience and a realistic environment.
 The following chapter describes the process of creating the trainer.
 
-\section{Environment setup (Jakub Jędrzejczyk)}
-
-The implementation of the project was carried out using version 5.5.4 of Unreal Engine. The base for the project is the First Person game template, available in the Unreal Engine Editor.
-
-\begin{figure}[!ht]
-	\centering
-		\includegraphics[width=0.65\textwidth]{Images/ProjectCreation.png}
-	\caption{Selected preset in the Unreal Engine menu.}
-	\label{fig:projectCreation}
-\end{figure}
-
-This preset was chosen because it provides a basic character first person perspective controller. While this controller will not be used in the final product, due to the nature of the CAVE environment, it allows for easy testing of the project in a non-VR environment.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.7\textwidth]{Images/FPSProjectStart.png}
-	\caption{Starting point of the project - First Person template.}
-	\label{fig:FPSProjectStart}
-\end{figure}
-
 \section{3D models (Hubert Leszczyński)}
 
-Most of the classes (\ref{sec:classes}) required creating appropriate 3D models.
+Most of the classes (Section \ref{sec:classes}) required the creation of appropriate 3D models for their objects.
 The computer component models were created based on their real counterparts.
-The first step of creating each model of a computer component was measuring it's real dimensions in three axis.
-Then, the prototypes of the models were designed in Blender as static mesh objects, which are composed of vertices, faces and edges forming a geometric shapes \cite{10.1007/978-3-030-77442-4_35}.
-The prototypes were then subjected to the necessary modifications, and finally the appropriate materials were applied to them.
-After finishing the work with designing the 3D models, they were exported to the GLB (Graphics Library Transmission Binary) format.
+The first step of creating the models was measuring their real dimensions along all three axes.
+Then, the prototypes were designed in Blender as static mesh objects, built from multiple edges, vertices and faces forming geometric structures.
+Each prototype was then subsequently refined and modified, after which the appropriate materials were applied.
+Once the modeling phase was finished, the objects were exported to the GLB (Graphics Library Transmission Binary) format.
+The GLB format was chosen due to its simple binary structure, native support in Blender, and its excellent handling of materials and textures \cite{10.1007/978-3-030-77442-4_35}.
 Figure \ref{fig:ModelExample} presents an example model of a computer component, in this case a cooling system.
 
 \begin{figure}[H]
@@ -40,70 +21,48 @@ Figure \ref{fig:ModelExample} presents an example model of a computer component,
 	\label{fig:ModelExample}
 \end{figure}
 
-\section{Object loading (Jakub Jędrzejczyk)}
-
-Thanks to the modular nature of the designed classes (\ref{sec:classes}), it was deemed possible to load the computer components into the scene at runtime, using a set of model files and descriptions in JSON \cite{brayRFC8259JavaScript2017} format.
-
-For the purposes of preliminary feasibility testing, this functionality was implemented in a basic manner, not yet entirely representing the aforementioned classes.
-
-This functionality is divided into two blueprints - the first one is responsible for scanning the folder with content in search of JSON files. Each folder in the UserContent directory is treated as a category for objects to be sorted into (GPU, CPU, etc.). Each one is then read, and an object is spawned in the scene, after which, a load function of the second blueprint is called on it, passing the contents of the JSON object and the category of the object.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=1.0\textwidth]{Images/BasicLoadingBlueprint.png}
-	\caption{Basic object loading blueprint}
-	\label{fig:BasicLoadingBlueprint}
-\end{figure}
-
-The current loading scheme supports loading multiple meshes per object, which gives way to more complex models, such as GPUs with fans. Each mesh is expected to be a glTF 2.0 \cite{ISOIEC12113} model file, which is a modern format for 3D models, supporting PBR materials and animations. Each mesh can also be assigned a type, which is then used to assign specific functionality to it. For example, a mesh of type "Body" is treated as the main mesh of the object, while a mesh of type "Fan" could be rotated when the computer is turned on.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=1.0\textwidth]{Images/BasicObjectSelfPreparation.png}
-	\caption{Basic object self-preparation blueprint}
-	\label{fig:BasicObjectSelfPreparation}
-\end{figure}
-
-After placing a this loading object in the scene and preparing a basic JSON description file and a model file, the object is spawned in the scene at runtime.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.7\textwidth]{Images/BasicGPULoaded.png}
-	\caption{Basic GPU loaded blueprint}
-	\label{fig:BasicGPULoaded}
-\end{figure}
+After exporting the 3D models to the GLB format, they were ready to be integrated into the project.
+Since UE 5 provides native support for the GLB format \cite{10.1007/978-3-030-77442-4_35}, the models could be imported as assets.
+This process required combining every static mesh into one object, and Nanite support had to be disabled.
+Nanite's virtual geometry system optimizes rendering by simplifying geometry \cite{NaniteDocumentation}, but this process negatively affected various fonts and details, as it was degrading their quality.
 
 \section{Dynamic object generation (Hubert Leszczyński)}
 
-Having multiple objects, which position can change during an application runtime, may cause the trainee to encounter difficulties tracking them within the game scene.
-To address that issue, each holdable object can be dynamically generated by an object spawner.
+Having multiple objects, whose positions can change during an application runtime, may cause the trainee to encounter difficulties tracking them within the game scene.
+To address this issue, each holdable object can be dynamically generated by an object spawner.
 Figure \ref{fig:SpawnObject} presents the blueprint for the function responsible for object generation.
-The most important parameter of the function is a reference to the subclass of HoldableComponent class (\ref{fig:HoldableComponentClasses}).
-This reference allows the spawner to create an object of a specific type at the same position as the spawner.
+The key parameter of the function is a reference to the subclass of HoldableComponent class (\ref{fig:HoldableObjectAbstraction}).
+This reference allows the spawner to create an object of a specific type at its own location.
+
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/SpawnObjectlOGIC.png}
-	\caption{Dynamic object creation logic}
+		\includegraphics[width=0.6\textwidth]{Images/SpawnObjectlOGIC.png}
+	\caption{Blueprint illustrating the logic of a new object creation.}
 	\label{fig:SpawnObject}
 \end{figure}
 
-The second function (figure \ref{fig:SpawnObjectConditions}) determines if the conditions of the object generation are met.
-During each tick, the spawner is calculating the position from the previously generated object.
-If the distance exceeds a fixed value defined separately for each spawner in the game scene for the certain amount of time, a new object will be created in the scene. 
+The second function (Figure \ref{fig:SpawnObjectConditions}) determines whether the conditions of an object generation are met.
+During each tick, the spawner calculates its distance from the previously generated object.
+If the distance exceeds a configured threshold value, the spawner's timer variable begins incrementing.
+Alternatively, if the object remains within the range limit, the timer is set to zero and it stops accumulating.
+A new object can spawn only if the tracked object remains beyond the threshold distance for more than ten seconds.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ObjectSpawningConditions.png}
-	\caption{Conditions for the new object to spawn}
+	\caption{Blueprint illustrating the logic of checking the conditions for new object generation.}
 	\label{fig:SpawnObjectConditions}
 \end{figure}
 
-\section{Game object configuration (Hubert Leszczyński)}
+The spawner mechanism ensures that the trainee always has access to the holdable objects, even if they were misplaced or lost during application runtime.
 
+\section{Game object configuration (Hubert Leszczyński)}
 To increase the realism of the application, it was first necessary to correctly configure the physics and collision settings of the game objects.
-As most of the game objects were created as a static meshes, they are treated by UE as rigid bodies, so the physics engine considers them as a whole and determines how they move and rotate \cite{MILLINGTON20071}.
+As most of the game objects were created as a static meshes, they are treated by UE as rigid bodies, so the physics engine considers them as a single entity and determines their movement and rotation \cite{MILLINGTON20071}.
 The most important aspect of objects physics configuration was properly setting up how they are affected by gravity.
 To appropriately set up the collision parameters, it was required to define new collision objects in the project settings for hands and holdable objects.
 Next, it was necessary to create a custom collision preset for each blueprint in the UE editor.
+The methods of handling the collisions had to be properly assigned depending on the role of the objects to provide their appropriate interactions with each other.
 Figure \ref{fig:CollisionSetup} presents the collision configuration for the computer component's mesh.
 
 \begin{figure}[H]
@@ -113,13 +72,15 @@ Figure \ref{fig:CollisionSetup} presents the collision configuration for the com
 	\label{fig:CollisionSetup}
 \end{figure}
 
-The completed physics and collision configuration allows objects to fall freely and stop their fall on predefined surfaces.
-To simplify he gameplay, some of the objects were allowed to overlap with each other.
+The completed physics and collision configuration allows objects to fall freely and stop upon hitting predefined surfaces.
+To simplify the learning experience, some objects were intentionally allowed to overlap with each other.
 
-Real-world computer components differ from each other in their structure and socket arrangement.
-To provide the trainee with a more realistic experience, the computer component classes had to be configured to reflect these differences.
-The key element of this configuration was placing the component slots directly on the computer components objects.
-The position, scale and rotation of each slot was then adjusted to match the fitting components.
+Real-world computer components differ in their structure and socket arrangement.
+To provide the trainee with more realistic experience, the computer component objects had to be configured to reflect these differences.
+A key part of this process was placing the component slots directly on the meshes of the computer parts.
+The position, scale and rotation of each slot were then manually adjusted to match the compatible components.
+Additionally, each slot had to be configured with appropriate proper enumaration values to address the compatibility constraints.
+A bright red material was then applied to the slots to improve their visibility.
 Figure \ref{fig:ComponentConfiguration} presents a full configuration of a computer component, in this case a motherboard.
 
 \begin{figure}[H]
@@ -132,15 +93,42 @@ Figure \ref{fig:ComponentConfiguration} presents a full configuration of a compu
 \section{Game scene design (Hubert Leszczyński)}
 
 After completing the creation of 3D models and the game object configuration, the game scene was ready for design.
-The game field size was configured to match the dimensions of the CAVE, and then the background was created to reduce the perceived claustrophobia of the scene.
+The game field was scaled to match the physical dimensions of the CAVE.
+To reduced the perceived claustrophobia of the environement, the scene was enlarged and surrounded by four walls, a floor and a ceiling.
+Every element of the background was properly configured to provide the necessary collisions, preventing objects from accidentally leaving the scene.
 The walls, floor and ceiling were decorated using freely available materials to make the scene resemble a real-world room.
-The main objects intalled inside the gamefield were four shelves for computer component spawners, and a desk providing a workspace for a trainee.
-To ensure greater order, the spawners on the shelves were sorted by the type of the generated component.
-There was also a digital clock object placed above the desk to indicate the time elapsed during the virtual computer assembly process.
-The objective log was created as a 2D plane on one of the room's walls, so it can presented to the trainee in a simple manner.
-To provide intuitive division between a game field and the background, they were separeted using glowing purple elements. 
-To ensure grater visibility of the game objects, there was a a system of multiple point lights intstalled throughout the scene.
-Figure \ref{fig:GameScene} presents the completed desing of te game scene.
+
+Another essential set of objects placed in the game scene were the necessary pieces of furniture: four shelves and a desk acting as a workspace for the trainee.
+To ensure order, the shelves were filled with object spawners, sorted by the type of component they generate.
+Due to the large size of the computer case objects, they had to be placed under the desk.
+To improve the realism of the workstation, the desk was decorated with the models of a monitor, keyboard and mouse.
+The furniture orientation was adjusted to the CAVE, placing the desk against the front wall and the shelves against the side walls.
+
+To ensure greater visibility of the game objects, a system of multiple point lights was installed throughout the scene.
+The main light source was placed under the virtual ceiling to illuminate the entire room.
+Hovewer, this placement caused computer components on the shelves to become less visible, due to the shadows cast by the furniture.
+To address this issue, additional light sources were installed on each shelf.
+Figure \ref{fig:LightSetup} presents the complete light configuration of the shelves.
+After these updates, each object placed in the game scene was evenly and well lit, which improved the visibility of all components.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/LightSetup.png}
+	\caption{Setup of the shelves light}
+	\label{fig:LightSetup}
+\end{figure}
+
+Some of the objects in the scene were designed to provide a visual support for a trainee.
+To ensure that less experienced trainees would not get lost when surrounded by a large amount of components of various types, every shelf was labeled with the the type of component it contains.
+A digital clock object was also placed above the desk to display the time elapsed during the virtual computer assembly process.
+Additionally, the objective log was created as a 2D (two-dimensional) plane on one of the room's walls, providing step-by-step guidance and ensuring that the trainee can efficiently follow the assembly process.
+
+To provide intuitive division between a virtual space and the real, physical CAVE, these two spaces were separated using glowing purple elements.
+The chosen color ensured high contrast with the rest of the elements, making the boundary clearly visible from any position.
+The material used to create these elements was configured to be emissive and translucent so they do not affect the stage lighting system.
+This division was required to help the trainee distinguish the virtual walls from the CAVE screens, avoiding potential collisions with the physical CAVE walls. 
+
+Figure \ref{fig:GameScene} presents the completed desing of the game scene.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/GameScene.png}
