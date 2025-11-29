@@ -167,12 +167,29 @@ The system's architecture must follow a hybrid approach, where the logic of the 
 The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
+<<<<<<< HEAD
 The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two distinct CAVEs:
+=======
+<<<<<<< HEAD
+The target application must operate in the CAVE system of I3DVL at GUT, which consists of three distinct configurations:
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 \begin{itemize}
     \item Small CAVE - a setup of four monitors equipped with a head movement tracker and two hand controllers,
     \item Large CAVE - a cube composed of six screens, each with the side length of 3,4 meters, equipped with two tracking sensors on each side.
 \end{itemize}
+<<<<<<< HEAD
 The synchronization between the screens and tracking sensors must be achieved using freely available UE 5 assets.
+=======
+Each CAVE is also equipped with a set of glasses and one or two flysticks.
+=======
+The target application must operate in the CAVE system of Gdańsk University of Technology, which consists of three distinct configurations:
+\begin{itemize}
+    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3,4 meters, equipped with a tracking sensor on each wall,
+    \item \textbf{MiniCAVE} and \textbf{MidiCAVE} - smaller screen and tracking devices setups, primarily serving for applications development.
+\end{itemize}
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
 
@@ -333,7 +350,15 @@ Each use case requires the CAVE sensors to work.
 \begin{itemize}
 \item Actors: Trainee
 \item Description: Virtual hands' position and rotation are updated according to trainee's movement.
+<<<<<<< HEAD
 \item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Detecting trainee's position, Tracking VR controllers).
+=======
+<<<<<<< HEAD
+\item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
+=======
+\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Tracking VR controllers).
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}

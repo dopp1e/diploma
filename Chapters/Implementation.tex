@@ -3,7 +3,12 @@
 A completed trainer was implemented to provide the trainee with a high quality of a learning experience and a realistic environment.
 The following chapter describes the process of creating the trainer.
 
+<<<<<<< HEAD
 \section{Environment setup (Jakub Jędrzejczyk)}
+=======
+<<<<<<< HEAD
+\section{3D models creation (Hubert Leszczyński)}
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 
 The implementation of the project was carried out using version 5.5.4 of Unreal Engine. The base for the project is the First Person game template, available in the Unreal Engine Editor.
 
@@ -27,10 +32,27 @@ This preset was chosen because it provides a basic character first person perspe
 
 Most of the classes (\ref{sec:classes}) required creating appropriate 3D models.
 The computer component models were created based on their real counterparts.
+<<<<<<< HEAD
 The first step of creating each model of a computer component was measuring it's real dimensions in three axis.
 Then, the prototypes of the models were designed in Blender as static mesh objects, which are composed of vertices, faces and edges forming a geometric shapes \cite{10.1007/978-3-030-77442-4_35}.
 The prototypes were then subjected to the necessary modifications, and finally the appropriate materials were applied to them.
 After finishing the work with designing the 3D models, they were exported to the GLB (Graphics Library Transmission Binary) format.
+=======
+The first step was measuring their dimensions along all three axes.
+Then, the prototypes were created in Blender as static mesh objects, composed of multiple polygons.
+Additionally, every prototype was refined by beveling and by applying appropriate materials and modifiers.
+=======
+\section{3D models (Hubert Leszczyński)}
+
+Most of the classes (Section \ref{sec:classes}) required the creation of appropriate 3D models for their objects.
+The computer component models were created based on their real counterparts.
+The first step of creating the models was measuring their real dimensions along all three axes.
+Then, the prototypes were designed in Blender as static mesh objects, built from multiple edges, vertices and faces forming geometric structures.
+Each prototype was then subsequently refined and modified, after which the appropriate materials were applied.
+Once the modeling phase was finished, the objects were exported to the GLB (Graphics Library Transmission Binary) format.
+The GLB format was chosen due to its simple binary structure, native support in Blender, and its excellent handling of materials and textures \cite{10.1007/978-3-030-77442-4_35}.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 Figure \ref{fig:ModelExample} presents an example model of a computer component, in this case a cooling system.
 
 \begin{figure}[H]
@@ -40,6 +62,7 @@ Figure \ref{fig:ModelExample} presents an example model of a computer component,
 	\label{fig:ModelExample}
 \end{figure}
 
+<<<<<<< HEAD
 \section{Object loading (Jakub Jędrzejczyk)}
 
 Thanks to the modular nature of the designed classes (\ref{sec:classes}), it was deemed possible to load the computer components into the scene at runtime, using a set of model files and descriptions in JSON \cite{brayRFC8259JavaScript2017} format.
@@ -72,6 +95,22 @@ After placing a this loading object in the scene and preparing a basic JSON desc
 	\caption{Basic GPU loaded blueprint}
 	\label{fig:BasicGPULoaded}
 \end{figure}
+=======
+<<<<<<< HEAD
+Once the modeling phase was finished, the objects were exported to the Graphics Library Transmission Binary (GLB) format.
+According to Pokorn{\'y}, "Blender's importer/exporter supports the following .glb/.gltf features: mesh objects, simple materials and shadeless textures [...]. Export options contain properties like merge vertices, pack images, shading type" \cite{10.1007/978-3-030-77442-4_35}.
+These Blender functionalities allowed the models to be exported without losing their quality.
+After exporting the 3D models to this format, they were ready to be integrated into the project.
+Since UE5 provides native support for the GLB format, the models could be imported as assets.
+This process required combining every static mesh into one object, and disabling Nanite support.
+Nanite's virtual geometry system optimizes rendering by managing geometry \cite{NaniteDocumentation}, but this process negatively affected various fonts and details, as it was degrading their quality.
+=======
+After exporting the 3D models to the GLB format, they were ready to be integrated into the project.
+Since UE 5 provides native support for the GLB format \cite{10.1007/978-3-030-77442-4_35}, the models could be imported as assets.
+This process required combining every static mesh into one object, and Nanite support had to be disabled.
+Nanite's virtual geometry system optimizes rendering by simplifying geometry \cite{NaniteDocumentation}, but this process negatively affected various fonts and details, as it was degrading their quality.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 
 \section{Dynamic object generation (Hubert Leszczyński)}
 
@@ -98,11 +137,27 @@ If the distance exceeds a fixed value defined separately for each spawner in the
 \end{figure}
 
 \section{Game object configuration (Hubert Leszczyński)}
+<<<<<<< HEAD
 
 To increase the realism of the application, it was first necessary to correctly configure the physics and collision settings of the game objects.
 As most of the game objects were created as a static meshes, they are treated by UE as rigid bodies, so the physics engine considers them as a whole and determines how they move and rotate \cite{MILLINGTON20071}.
 The most important aspect of objects physics configuration was properly setting up how they are affected by gravity.
 To appropriately set up the collision parameters, it was required to define new collision objects in the project settings for hands and holdable objects.
+=======
+To increase the realism of the application, it was first necessary to correctly configure the physics and collision settings of the game objects.
+<<<<<<< HEAD
+As most of the game objects were created as static meshes, they are treated by UE as rigid bodies.
+According to Millington, "Rigid-body engines treat objects as a whole and work out the way they move and rotate" \cite{MILLINGTON20071}.
+This functionality significantly simplified the process of physics setup, as it allowed UE5 to automatically perform most of the calculations.
+The gravity applied to the objects was adjusted to approximate Earth-like gravity, providing natural motion.
+
+To appropriately set up the collision parameters, it was required to define new collision objects in the project settings for hands, slots and holdable objects.
+=======
+As most of the game objects were created as a static meshes, they are treated by UE as rigid bodies, so the physics engine considers them as a single entity and determines their movement and rotation \cite{MILLINGTON20071}.
+The most important aspect of objects physics configuration was properly setting up how they are affected by gravity.
+To appropriately set up the collision parameters, it was required to define new collision objects in the project settings for hands and holdable objects.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 Next, it was necessary to create a custom collision preset for each blueprint in the UE editor.
 Figure \ref{fig:CollisionSetup} presents the collision configuration for the computer component's mesh.
 
@@ -116,10 +171,23 @@ Figure \ref{fig:CollisionSetup} presents the collision configuration for the com
 The completed physics and collision configuration allows objects to fall freely and stop their fall on predefined surfaces.
 To simplify he gameplay, some of the objects were allowed to overlap with each other.
 
+<<<<<<< HEAD
 Real-world computer components differ from each other in their structure and socket arrangement.
 To provide the trainee with a more realistic experience, the computer component classes had to be configured to reflect these differences.
 The key element of this configuration was placing the component slots directly on the computer components objects.
 The position, scale and rotation of each slot was then adjusted to match the fitting components.
+=======
+Real-world computer components differ in their structure and socket arrangement.
+To provide the trainee with more realistic experience, the computer component objects had to be configured to reflect these differences.
+A key part of this process was placing the component slots directly on the meshes of the computer parts.
+The position, scale and rotation of each slot were then manually adjusted to match the compatible components.
+<<<<<<< HEAD
+Additionally, each slot had to be configured with proper enumeration values to address the compatibility constraints.
+=======
+Additionally, each slot had to be configured with appropriate proper enumaration values to address the compatibility constraints.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+A bright red material was then applied to the slots to improve their visibility.
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 Figure \ref{fig:ComponentConfiguration} presents a full configuration of a computer component, in this case a motherboard.
 
 \begin{figure}[H]
@@ -132,6 +200,7 @@ Figure \ref{fig:ComponentConfiguration} presents a full configuration of a compu
 \section{Game scene design (Hubert Leszczyński)}
 
 After completing the creation of 3D models and the game object configuration, the game scene was ready for design.
+<<<<<<< HEAD
 The game field size was configured to match the dimensions of the CAVE, and then the background was created to reduce the perceived claustrophobia of the scene.
 The walls, floor and ceiling were decorated using freely available materials to make the scene resemble a real-world room.
 The main objects intalled inside the gamefield were four shelves for computer component spawners, and a desk providing a workspace for a trainee.
@@ -141,6 +210,60 @@ The objective log was created as a 2D plane on one of the room's walls, so it ca
 To provide intuitive division between a game field and the background, they were separeted using glowing purple elements. 
 To ensure grater visibility of the game objects, there was a a system of multiple point lights intstalled throughout the scene.
 Figure \ref{fig:GameScene} presents the completed desing of te game scene.
+=======
+The game field was scaled to match the physical dimensions of the CAVE.
+<<<<<<< HEAD
+To reduce the perceived claustrophobia of the environment, the scene was enlarged and surrounded by four walls, a floor and a ceiling.
+=======
+To reduced the perceived claustrophobia of the environement, the scene was enlarged and surrounded by four walls, a floor and a ceiling.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+Every element of the background was properly configured to provide the necessary collisions, preventing objects from accidentally leaving the scene.
+The walls, floor and ceiling were decorated using freely available materials to make the scene resemble a real-world room.
+
+Another essential set of objects placed in the game scene were the necessary pieces of furniture: four shelves and a desk acting as a workspace for the trainee.
+To ensure order, the shelves were filled with object spawners, sorted by the type of component they generate.
+Due to the large size of the computer case objects, they had to be placed under the desk.
+To improve the realism of the workstation, the desk was decorated with the models of a monitor, keyboard and mouse.
+The furniture orientation was adjusted to the CAVE, placing the desk against the front wall and the shelves against the side walls.
+
+To ensure greater visibility of the game objects, a system of multiple point lights was installed throughout the scene.
+The main light source was placed under the virtual ceiling to illuminate the entire room.
+<<<<<<< HEAD
+However, this placement caused computer components on the shelves to become less visible, due to the shadows cast by the furniture.
+=======
+Hovewer, this placement caused computer components on the shelves to become less visible, due to the shadows cast by the furniture.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+To address this issue, additional light sources were installed on each shelf.
+Figure \ref{fig:LightSetup} presents the complete light configuration of the shelves.
+After these updates, each object placed in the game scene was evenly and well lit, which improved the visibility of all components.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/LightSetup.png}
+	\caption{Setup of the shelves light}
+	\label{fig:LightSetup}
+\end{figure}
+
+Some of the objects in the scene were designed to provide a visual support for a trainee.
+<<<<<<< HEAD
+To ensure that less experienced trainees would not get lost when surrounded by a large amount of components of various types, every shelf was labeled with the type of component it contains.
+=======
+To ensure that less experienced trainees would not get lost when surrounded by a large amount of components of various types, every shelf was labeled with the the type of component it contains.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+A digital clock object was also placed above the desk to display the time elapsed during the virtual computer assembly process.
+Additionally, the objective log was created as a 2D (two-dimensional) plane on one of the room's walls, providing step-by-step guidance and ensuring that the trainee can efficiently follow the assembly process.
+
+To provide intuitive division between a virtual space and the real, physical CAVE, these two spaces were separated using glowing purple elements.
+The chosen color ensured high contrast with the rest of the elements, making the boundary clearly visible from any position.
+The material used to create these elements was configured to be emissive and translucent so they do not affect the stage lighting system.
+This division was required to help the trainee distinguish the virtual walls from the CAVE screens, avoiding potential collisions with the physical CAVE walls. 
+
+<<<<<<< HEAD
+Figure \ref{fig:GameScene} presents the completed design of the game scene.
+=======
+Figure \ref{fig:GameScene} presents the completed desing of the game scene.
+>>>>>>> d52c91f (Extended subsections of Implementation chapter)
+>>>>>>> 154955f (Extended subsections of Implementation chapter)
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/GameScene.png}
