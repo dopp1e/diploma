@@ -1,10 +1,99 @@
 \chapter{FIELD INTRODUCTION (Jakub Kinder)}
 \label{chap:FieldIntroduction}
 
-The main goal of this chapter is to present current information about the PC building market.
-It consists of descriptions of the most popular tools used to aid people both new and advanced in the field.
+The main goal of this chapter is to present current information about PC building and its market.
+It consists of descriptions of components and their compatibility, the assembly process as well as the most popular tools used to aid people both novice and experienced in the field.
 However, it also explores currently available simulators, and how advanced and precise they are.
 Another topic of this chapter is how VR as an environment is used and what advantages it has in the context of hardware assembly and visualization.
+
+\section{PC building}
+Nowadays, computers are built using modular components, which simplifies their construction and allows for immense flexibility regarding choice of components.
+However, as mentioned in \autoref{chap:Introduction}, PC building still requires comprehensive knowledge not only about the process itself, but also the parts, their ports and physical dimensions.
+
+\subsection{Components, ports and compatibility}
+Every single component used in PC building possesses either a port, socket or connector with specific version or standard, which dictates compatibility with other components.
+Furthermore, some parts have even stricter rules, requiring specific parametric matching to ensure proper function and physical fit within the enclosure.
+
+\subsubsection{CPU}
+Commonly known as the brain of a PC, the CPU is connected to a dedicated socket on the motherboard.
+Compatibility is fundamentally spit across to manufacturers, Intel and AMD, which utilize incompatible connections standards.
+Intel uses Land Grid Array (LGA), while AMD uses Pin Grid Array (PGA) or derived technology.
+In addition, both types have their versions and sets of supported architectures, which means not every CPU will fit the same socket even if the type and version is matched.
+
+Critical compatibility parameters:
+\begin{itemize}
+	\item Socket type: As mentioned above, For CPU to be compatible with a motherboard, the socket must match CPU's type, version and architecture.
+	\item RAM controller limit: CPUs can support only specified amount of RAM, number of channels and RAM module's frequencies.
+\end{itemize}
+
+\subsubsection{RAM}
+This component serves as system's primary volatile storage.
+Its compatibility is perhaps the most nuanced of all parts used in PC building, as it is not only limited by CPU, but also RAM module's physical dimensions are a major factor in its compatibility with other components.
+In addition, RAM uses Double Data Rate Synchronous Dynamic Random-Access Memory (DDR SDRAM or commonly referred to as DDR) technology, which uses Dual In-Line Memory Module (DIMM) slots.
+
+Critical compatibility parameters:
+\begin{itemize}
+	\item Generation: Currently there are several generations of DDR available, most recent are DDR4 and DDR5. 
+	Unfortunately, DDR technology is not compatible across its generations, so if port utilizes DDR4, RAM of no other generation can be installed in it, as is stated in Micron Technology's article \cite{noauthor_whats_2025}.
+	\item RAM frequency: This aspect is the reason why RAM is considered one of the more nuanced components. 
+	As mentioned earlier, CPU can support only specified values of this parameter, but the range of accepted frequencies is also limited by the motherboard, which also supports only specified values.
+	In addition, all installed sticks of RAM must have the same value of this parameter, however, unlike CPU, they do not have the manufacturer constraint.
+\end{itemize}
+
+\subsubsection{GPU}
+A specialized piece of hardware responsible for rendering graphics, which is more often than not, a critical component in most PCs.
+It utilizes Peripheral Component Interconnect Express (PCIe) x16 interface for connection with the motherboard.
+Unlike previously mentioned CPU sockets or RAM slots, PCIe is forwards and backwards compatible standard as is stated in Intel's article titled "What Are PCIe 4.0 and 5.0?" \cite{noauthor_what_nodate}.
+This means that GPU with currently the newest PCIe version 5 can be connected to a version 4 slot and vice versa.
+The only drawback with such connection is loss of performance, due to lower bandwidth on the side with lower version.
+
+\subsubsection{Memory drive}
+This component is usually either a Solid State Drive (SSD) or Hard Disk Drive (HDD), regardless of the type, its purpose is to store data long term.
+The main differences between the two types are read/write speeds, in which SSDs are superior, and total amount of storage, which HDDs excel at.
+Despite their differences, both types of memory drives utilize the same connection standard, Serial Advanced Technology Attachment (SATA).
+Currently, there are three versions of this standard, SATA I, SATA II and SATA III, and just like PCIe, this standard is backwards compatible, with the drawback being drop of bandwidth to that of the lower standard. \cite{noauthor_what_2023}
+Additionally, there is another type of memory drive called Non-Volatile Memory Express (NVMe), which instead of SATA, uses M.2, a PCIe x4 interface form factor.
+These drives have even higher read/write speeds than regular SSDs, while offering similar amount of storage with the drawbacks being slightly shorter lifespan of the drive and the fact that not all motherboards have PCIe x4 slots.
+
+\subsubsection{Motherboard}
+This is the most crucial component in terms of compatibility, because every component mentioned above connects to it.
+The motherboard determines, which CPUs, RAM modules, and memory drives can be installed.
+Another important aspect for the motherboard is its form factor, the physical dimensions of the component.
+The most common standard is Advanced Technology Extended (ATX), which states that motherboard should be 305 x 244 mm.
+However, there are smaller standards like mini- Information Technology Extended (ITX) with dimensions of 170 x 170 mm.
+
+Critical compatibility parameters:
+\begin{itemize}
+	\item CPU socket: As mentioned in CPU's compatibility, the connected CPU's connector must match the socket as well as CPU's architecture must be included in supported list of architectures of the motherboard.
+	\item RAM: In this case compatibility is the most complicated as it was stated in RAM description. 
+	Not only RAM modules must meet previously discussed requirements, but also they should be included in Qualified Vendor List (QVL) of the particular motherboard.
+	\item Form factor: Motherboard's size, critically affects how other components are compatible with it on a more physical level, with ATX standard there might not be any issues, however, mini-ITX offers far less space which can prove problematic for components like RAM modules or GPUs.
+
+\end{itemize}
+
+\subsubsection{Power supply}
+Power supply as the name suggests provides power to all the other components, which makes determining its compatibility straightforward.
+It must deliver enough power to the computer, but while condition is simple it is one of the most important ones as not meeting it might result in damaging other components caused by improper function due to lack of power.
+
+\subsection{The process of PC assembly}
+Due to modular design of modern day computers, assembly in itself is straightforward, but still requires caution as some components require counterintuitive strength to be installed.
+Most books and guides such as "Montaż komputera {PC}. {Ilustrowany} przewodnik" \cite{chabinski_montaz_2012} or Intel's guide on PC building \cite{noauthor_how_nodate} agree on general procedure of PC assembly, which is as follows:
+
+\begin{enumerate}
+	\item Before the actual assembly procedure, the case, that is to be used in the process must be prepared by removing its side and often front panels as well as screwing in separators on which the motherboard will be mounted.
+	\item The first step of the building process is to install the CPU in the dedicated socket on the motherboard.
+	It is done by opening the latch on the socket and very gently dropping CPU into it, followed by closing the opened latch.
+	\item Optionally, after installing the CPU, NVMe drive can be installed if the motherboard possesses an M.2 slot.
+	\item Next is to install RAM, first latches need to be unlocked on both sides of slots pointed out by motherboard's manual.
+	Then, RAM modules are to be inserted into the slots, this operation requires counterintuitive amounts of force, thus prior to applying it, one must make sure that the modules are properly oriented, so as not to damage them or the slots.
+	\item Afterward, the most common practice is to mount the power supply in previously prepared case, which is done according to case's manual.
+	\item Subsequently, the partially assembled motherboard is to be installed in the case, be gentling placing it on the separators and screwing it in. 
+	\item Next, the GPU must be installed, which is done by simply inserting it into the PCIe x16 slot on the motherboard and securing the component to the case using provided screws.
+	\item The last components to be installed are the memory drives, if M.2 drives were already installed this step is optional.
+	It is done be mounting the SSD or HDD drives in spots pointed out by the case manual, followed by connecting SATA cables to bot the drives and the ports on the motherboard.
+	\item The final step of the assembly is to connect the power supply cables to the appropriate slots on other components, as well as connect smaller connectors leading from some components to the motherboard.
+	These should be attached according to manuals of each component and the schematic included with the motherboard.
+\end{enumerate}
 
 \section{PC building market}
 In recent years, PC building has become increasingly popular, majorly due to people's demand for customized and potentially more powerful devices.
