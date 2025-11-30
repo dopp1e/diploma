@@ -2,7 +2,7 @@
 \label{chap:project}
 
 The objective of the system is to create a trainer for assembling a personal computer, which can also visualize the computer's work.
-The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions which were the foundation for all of the implementation processes.
+The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions which were the starting point for all of the implementation processes.
 
 \section{Project team}
 
@@ -68,7 +68,7 @@ Table \ref{tab:team} presents the team's skills and competencies.
 
 Table \ref{tab:timetable} presents project's team timetable and objectives for each month.
 The timetable outlines the planned key objectives, activities and milestones for the duration of the project work.
-Each month of the year 2025 is associated with specific objectives, includuding research, project developement and testing of the target application.
+Each month of the year 2025 is associated with specific objectives, including research, project developement and testing of the target application.
 \begin{table}[H]
 \caption{Project team's timetable}
 \label{tab:timetable}
@@ -139,12 +139,16 @@ Each month of the year 2025 is associated with specific objectives, includuding 
     & Implementation of the component state visualization
     \\\hline
      %-
+    November
+    & Implementation of the trainee support functionalities
+    \\\hline
+    %-
     November-December
     & Conducting application's tests on a group of users
     \\\hline
      %-
     December
-    & Implementation of trainee's score calculation and trainee support
+    & Implementation of trainee's score calculation
     \\\hline
     %-
     December
@@ -167,15 +171,16 @@ The system's architecture must follow a hybrid approach, where the logic of the 
 The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
-The target application must operate in the CAVE system of Gdańsk University of Technology, which consists of three distinct configurations:
+The target application must operate in the CAVE system of Immersive 3D Visualization Lab at Gdańsk University of Technology, which consists of three distinct configurations:
 \begin{itemize}
-    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3,4 meters, equipped with a tracking sensor on each wall,
-    \item \textbf{MiniCAVE} and \textbf{MidiCAVE} - smaller screen and tracking devices setups, primarily serving for applications development.
+    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3.4 meters, equipped with stereoscopic projectors on every wall and multiple tracking sensors,
+    \item \textbf{MidiCAVE} - a smaller CAVE, composed of three screens and a floor, supporting motion capture technology,
+    \item \textbf{MiniCAVE} - composed of four stereoscopic monitors, used mostly for applications development \cite{PG_ABOUT_CAVE}.
 \end{itemize}
-To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
+Each CAVE is also equipped with a set of glasses and one or two flysticks.
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
-
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
 \subsection{Functional requirements}
 The functional requirements describe the actions that the system must perform to work correctly.
 Each functional requirement has to be thoroughly specified, analyzed, and assigned with an appropriate priority.
@@ -233,9 +238,9 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
 
 \subsection{Non-functional requirements}
 
-Non-functional requirements are the factors that determine the quality attributes of a software system, such as its portability, performance or maintainability.
-Rather than defining how the system works, they describe how it performs under specific conditions.
-These requirements play an important role during software development, as they serve as criteria for selecting different designs and approaches \cite{NonFunctionalRequirements}.
+According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
+These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
+Rather than defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
 Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
 
 \begin{table}[!ht]
@@ -257,7 +262,7 @@ Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional 
     \\\hline
     %-
     Performance
-    & The trainer must support multiple screens without visual artifacts. The application should also provide the trainee with a smooth frame rate above 60 frames per second.
+    & The trainer must support multiple screens without visual artifacts. The application should also provide the trainee with a smooth frame rate above 60 FPS (frames per second).
     \\\hline
     %-
     Responsiveness
@@ -265,7 +270,7 @@ Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional 
     \\\hline
     %-
     Reliability
-    & The application must behave correctly for a single trainee.
+    & The application must behave correctly for a single trainee, minimizing errors or incorrect results.
     \\\hline
     %-
     Usability
@@ -286,12 +291,11 @@ Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional 
 A use case is a singular unit of system functionality, which can be described as a sequence of interactions between the system and its users.
 Use cases are widely used in software engineering and system design, as they enable extensive planning and analysis of system requirements before any project functionality is implemented.
 The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
-This type of diagram can identify all the system use cases, their dependencies, as well as the user groups involved.
+This type of diagram can identify all the system use cases, their dependencies, as well as the involved users or systems.
 in this project, the use case diagram was divided into two separate parts represent the system functionality in a clear and organized way.
 \subsection{Trainee movement use cases}
 Figure \ref{fig:movementDiagram} illustrates the first of the two use case diagrams.
 The presented diagram describes the use cases related to the trainee's movement detection and their dependencies on the trainer's components. 
-Each use case requires the CAVE sensors to work.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
@@ -314,17 +318,47 @@ Each use case requires the CAVE sensors to work.
 \end{enumerate}
 \end{itemize}
 
-\subsubsection{Virtual hands movement}
+\subsubsection{Tracking glasses position}
+\begin{itemize}
+\item Actors: Trainee, CAVE
+\item Description: The system detects the change of the position or rotation of the glasses.
+\item Prerequisites: None.
+\item Post-requisites: Data of the trainee's head movement is forwarded to the application's components.
+\item Scenario: 
+\begin{enumerate}
+    \item The trainee moves or rotates their head.
+    \item CAVE sensors read the updated position of the glasses.
+    \item The updated data is forwarded to the application's components.
+\end{enumerate}
+\end{itemize}
+
+
+\subsubsection{Moving virtual hands}
 
 \begin{itemize}
 \item Actors: Trainee
 \item Description: Virtual hands' position and rotation are updated according to trainee's movement.
-\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Tracking VR controllers).
+\item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}
     \item The updated position and rotation vectors are read from the player control component.
     \item Virtual hands' position and rotation vectors are updated with the read values. 
+\end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Moving virtual camera}
+
+\begin{itemize}
+\item Actors: Trainee
+\item Description: Trainee's point of view is updated accding to their head movement.
+\item Prerequisites: Trainee's head movement was detected (Use case: Tracking glasses position).
+\item Post-requisites: Virtual camera position and rotation are updated.
+\item Scenario: 
+\begin{enumerate}
+    \item The updated position and rotation vectors are read from the player control component.
+    \item Virtual camera's position and rotation vectors are updated with the read values. 
 \end{enumerate}
 
 \end{itemize}
@@ -429,7 +463,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \subsubsection{Removing the computer component}
 \begin{itemize}
 \item Actors: Trainee
-\item Decription: A computer component is removed from the slot.
+\item Description: A computer component is removed from the slot.
 \item Prerequisites: A computer component selected for removal is installed into one of the slots.
 \item Post-requisites: Removed computer component falls down and can be picked up again.
 \begin{enumerate}
