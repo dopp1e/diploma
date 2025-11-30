@@ -168,8 +168,11 @@ The application requires a basic UI created using computer graphics and free ass
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
 <<<<<<< HEAD
+<<<<<<< HEAD
 The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two distinct CAVEs:
 =======
+=======
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 <<<<<<< HEAD
 The target application must operate in the CAVE system of I3DVL at GUT, which consists of three distinct configurations:
 >>>>>>> 154955f (Extended subsections of Implementation chapter)
@@ -183,16 +186,31 @@ The synchronization between the screens and tracking sensors must be achieved us
 Each CAVE is also equipped with a set of glasses and one or two flysticks.
 =======
 The target application must operate in the CAVE system of Gdańsk University of Technology, which consists of three distinct configurations:
+=======
+The target application must operate in the CAVE system of Immersive 3D Visualization Lab at Gdańsk University of Technology, which consists of three distinct configurations:
+>>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
 \begin{itemize}
-    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3,4 meters, equipped with a tracking sensor on each wall,
-    \item \textbf{MiniCAVE} and \textbf{MidiCAVE} - smaller screen and tracking devices setups, primarily serving for applications development.
+    \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3.4 meters, equipped with stereoscopic projectors on every wall and multiple tracking sensors,
+    \item \textbf{MidiCAVE} - a smaller CAVE, composed of three screens and a floor, supporting motion capture technology,
+    \item \textbf{MiniCAVE} - composed of four stereoscopic monitors, used mostly for applications development \cite{PG_ABOUT_CAVE}.
 \end{itemize}
+<<<<<<< HEAD
 To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
 >>>>>>> d52c91f (Extended subsections of Implementation chapter)
 >>>>>>> 154955f (Extended subsections of Implementation chapter)
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
+<<<<<<< HEAD
 
+=======
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE5 plugins.  
+=======
+Each CAVE is also equipped with a set of glasses and one or two flysticks.
+\subsubsection{Constraints}
+Due to the application's architecture, it will not be working on PCs and mobile devices.
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
+>>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 \subsection{Functional requirements}
 The functional requirements describe the actions that the system must perform to work correctly.
 Each functional requirement has to be thoroughly specified, analyzed, and assigned with an appropriate priority.
@@ -249,11 +267,27 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
 \end{table}
 
 \subsection{Non-functional requirements}
+<<<<<<< HEAD
 
 Non-functional requirements are the factors that determine the quality attributes of a software system, such as its portability, performance or maintainability.
 Rather than defining how the system works, they describe how it performs under specific conditions.
 These requirements play an important role during software development, as they serve as criteria for selecting different designs and approaches \cite{NonFunctionalRequirements}.
 Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
+=======
+<<<<<<< HEAD
+The following subsection describes the non-functional requirements of the project.
+According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
+These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
+Instead of defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
+The project's non-functional requirements are summarized in Table \ref{tab:nonFunctionalRequirements}.
+=======
+
+According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
+These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
+Rather than defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
+Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
+>>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 
 \begin{table}[!ht]
 \caption{Non-functional requirements}
@@ -302,8 +336,17 @@ Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional 
 \section{Use cases}
 A use case is a singular unit of system functionality, which can be described as a sequence of interactions between the system and its users.
 Use cases are widely used in software engineering and system design, as they enable extensive planning and analysis of system requirements before any project functionality is implemented.
+<<<<<<< HEAD
 The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
 This type of diagram can identify all the system use cases, their dependencies, as well as the user groups involved.
+=======
+<<<<<<< HEAD
+The most common method of presenting them is through a Unified Modeling Language (UML) use case diagram.
+=======
+The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
+>>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
+This type of diagram can identify all the system use cases, their dependencies, as well as the involved users or systems.
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 in this project, the use case diagram was divided into two separate parts represent the system functionality in a clear and organized way.
 \subsection{Trainee movement use cases}
 Figure \ref{fig:movementDiagram} illustrates the first of the two use case diagrams.
@@ -351,14 +394,23 @@ Each use case requires the CAVE sensors to work.
 \item Actors: Trainee
 \item Description: Virtual hands' position and rotation are updated according to trainee's movement.
 <<<<<<< HEAD
+<<<<<<< HEAD
 \item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Detecting trainee's position, Tracking VR controllers).
 =======
+=======
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 <<<<<<< HEAD
 \item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
 =======
 \item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Tracking VR controllers).
 >>>>>>> d52c91f (Extended subsections of Implementation chapter)
+<<<<<<< HEAD
 >>>>>>> 154955f (Extended subsections of Implementation chapter)
+=======
+=======
+\item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
+>>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
+>>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}
