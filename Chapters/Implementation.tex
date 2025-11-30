@@ -23,43 +23,6 @@ This preset was chosen because it provides a basic character first person perspe
 	\label{fig:FPSProjectStart}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.8\textwidth]{Images/FPSProjectPOV.png}
-	\caption{Starting point of the project - First Person template, from first person perspective.}
-	\label{fig:FPSProjectPOV}
-\end{figure}
-
-
-For the purposes of the project, the default environment was cleared out, leaving only the plane and walls. This provides much more space than is necessary for the CAVE environment, which is a cube with 3.4m sides. This space however allows for much easier testing of the project in a non-VR environment, as the player can move around freely. Throughout the many applications that we have been shown in the CAVE, many applications used rooms exactly the size of the CAVE room, which has at times felt claustrophobic. While it is not something being researched, we also wish to see if this will provide a more comfortable experience.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.8\textwidth]{Images/ProjectEnvironment.png}
-	\caption{Starting point of the project - First Person template, with cleared environment.}
-	\label{fig:ProjectEnvironment}
-\end{figure}
-
-The next step was to set up the project to be ready for CAVE. Our consultant provided us with a plugin and a preset for it to be used with the tracking system used within the CAVE, called DTrack \cite{DTRACK}. We were also given a few Unreal Engine blueprint files that, when added to the project, allowed it to communicate with the tracking system. They were added to the project and set up so that there would be two hand objects, one for each hand controller. This functionality was tested using an application for desktop PCs we were provided with, which allows to move virtual controllers in 3D space, with their movement being sent to the Unreal Engine project.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.8\textwidth]{Images/ProjectWithTrackingTools.png}
-	\caption{Starting point of the project - First Person template, with tracking tools added.}
-	\label{fig:ProjectWithTrackingTools}
-\end{figure}
-
-Here, the project's perspective is shown with two spheres representing the hand controllers in 3D space, each set to be in the opposite corner of the CAVE. These two objects in Unreal Engine are centered by default, but moving them in the software, visible on the right side of figure \ref{fig:ProjectWithTrackingTools} also moves them accordingly inside the software.
-
-As an additional measure of ensuring adequate testing for non-CAVE environments, invisible walls were added, replicating the space of the CAVE. This way, the user can still move around freely in a non-VR environment, but will be limited to the size of the CAVE room.
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.8\textwidth]{Images/ProjectInvisibleWalls.png}
-	\caption{Starting point of the project - First Person template, with invisible walls added.}
-	\label{fig:ProjectInvisibleWalls}
-\end{figure}
-
 \section{3D models (Hubert Leszczyński)}
 
 Most of the classes (\ref{sec:classes}) required creating appropriate 3D models.
@@ -131,6 +94,25 @@ Figure \ref{fig:ComponentConfiguration} presents a full configuration of a compu
 		\includegraphics[width=0.7\textwidth]{Images/MotherboardConfiguration.png}
 	\caption{Example of a computer component configuration}
 	\label{fig:ComponentConfiguration}
+\end{figure}
+
+\section{Game scene design (Hubert Leszczyński)}
+
+After completing the creation of 3D models and the game object configuration, the game scene was ready for design.
+The game field size was configured to match the dimensions of the CAVE, and then the background was created to reduce the perceived claustrophobia of the scene.
+The walls, floor and ceiling were decorated using freely available materials to make the scene resemble a real-world room.
+The main objects intalled inside the gamefield were four shelves for computer component spawners, and a desk providing a workspace for a trainee.
+To ensure greater order, the spawners on the shelves were sorted by the type of the generated component.
+There was also a digital clock object placed above the desk to indicate the time elapsed during the virtual computer assembly process.
+The objective log was created as a 2D plane on one of the room's walls, so it can presented to the trainee in a simple manner.
+To provide intuitive division between a game field and the background, they were separeted using glowing purple elements. 
+To ensure grater visibility of the game objects, there was a a system of multiple point lights intstalled throughout the scene.
+Figure \ref{fig:GameScene} presents the completed desing of te game scene.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/GameScene.png}
+	\caption{Final design of the game scene}
+	\label{fig:GameScene}
 \end{figure}
 
 \input{Chapters/ImplementationSubchapters/ObjectHolding.tex}
