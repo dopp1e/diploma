@@ -89,7 +89,18 @@ While retaining collisions would follow real-world physics, in this virtual envi
 Collisions in the virtual space would lead to the hand's and the held object's positions being separated, and even visual or audio feedback would most likely not be sufficient to convey the sensation of a collision.
 
 Tied to the same button but launching in alternating fashion with the \lstinline[language=C]|Follow()| function is the \lstinline[language=C]|StopFollowing()| function, which effectively nullifies the previously described behavior, clearing all references and re-enabling physics simulation.
-An interesting observation is that despite the simulation only being enabled after the button was pressed, the released held object retained its acceleration and velocity from while it was being held, allowing for objects to be thrown quite realistically, an action done quite often for stress relief or joke purposes during the testing.
+
+Once an object has been either picked up or dropped, an appropriate sound is played.
+This makes use of the \lstinline[language=C]|PlaySound2D()| function, which "plays a sound directly with no attenuation, perfect for UI sounds" \cite{PlaySound2D}.
+Unreal Engine provides a number of built-in sounds, many of which are used for interactions within the engine itself.
+In the list seen in figure \ref{fig:PickingSounds}, two sounds which were chosen for picking and dropping objects can be seen - the "Dockable_Window_Open" and "Dockable_Window_Close" sounds respectively.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.80\textwidth]{Images/PickingSounds.png}
+	\caption{Sound picking menu with the two sounds used for picking up and dropping holdable objects visible.}
+	\label{fig:PickingSounds}
+\end{figure}
 
 A transitive side effect of this throwing ability is that holdable objects can end their overlap with the hand much more abruptly than when simply being let go.
 Based on our observations, this speed can in fact be high enough to skip the \lstinline[language=C]|OnActorEndOverlap| event entirely, skipping the logic that would remove the object from the hand's overlapping objects array.
@@ -109,11 +120,19 @@ This does represent how a real-world hand can't rotate an object indefinitely wi
 
 For this purpose, a Rotating Movement component was added to the base holdable object.
 This component, as per Unreal Engine's documentation, "performs continuous rotation of a Component at a specific rotation rate" \cite{MovementComponentsUnreal}.
-By tying the movement of the controller's joystick to the action of setting the rotation rate of this component in the currently held object, it's possibly to rotate the object around its local axes while holding it.
+By tying the movement of the controller's joystick to the action of setting the rotation rate of this component in the currently held object, it's possible to rotate the object around its local axes while holding it.
 Because a joystick provides two axes of input, only two axes of rotation can be controlled at once, with the third axis being left to the physical rotation of the hand.
-% tutaj rzeczy o tym jakie osie zostały wybrane, zdjęcia, itd.
+The choice was made to tie the joystick's X axis to the object's yaw (rotation around the vertical axis), and the joystick's Y axis to the object's roll (rotation around the forward axis), represented visually in figure \ref{fig:RotationAxes}.
 
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/RotationAxes.png}
+	\caption{Intel CPU object with visualized available rotation axes when held, where blue represents the axis controlled by the joystick's X axis, and yellow represents the axis controlled by the joystick's Y axis.}
+	\label{fig:RotationAxes}
+\end{figure}
 
+Thus, the example CPU object visible in figure \ref{fig:RotationAxes} would be rotated around its vertical axis (blue) by pushing the joystick up or down, and around its forward axis (yellow) by pushing the joystick left or right, though the same axes are applicable to all holdable objects.
+As most of them are made lying down, similarly to the CPU, this mapping was deemed intuitive.
 
 While the usage of two hands in the application has been tested throughout the development process, these hands were largely separate.
 While it was possible to, for example, connect one component to another component held by the other hand, due to general preference of CAVE apps to only be used with one hand, and lack of interactions involving two hands (e.g. requiring both hands to pick up a large or otherwise heavy object), the second hand was removed from the final testing phase.
