@@ -1,1 +1,21 @@
 \subsection{Bugfixes (Jakub Jędrzejczyk)}
+
+Despite our best efforts to test the code before finalizing the release for user testing purposes, a few bugs have been identified that ought to be addressed, should work continue on this project.
+
+The most glaring issue is the fact that the AMD CPU compatible motherboard's RAM slots fail to connect to any of the available RAM modules.
+This is likely caused by misconfiguration of either of the problematic components' slot definitions, and should be relatively straightforward to fix.
+% to się poprawi szybko i zmieni na czas przeszły
+
+Another issue is that sometimes if a slot overlaps two slots (one valid, one invalid to place the part in), the connected component might end up attached to the invalid slot instead of the valid one, if the user decides to make the connection.
+During testing, users were instructed to do their best to ensure a component's slot only overlapped a single, valid slot, but we recognize that this is not a viable, long-term solution.
+This issue may stem from unexpected behavior in the event binding algorithm, and will require further investigation.
+% tutaj pewnie obrazk z porównaniem dobrego i złego zachowania
+
+While connections between components work as intended, there is a very rare bug in which the component being connected may end up moving not towards the slot it is being connected to, but rather towards the very centre of the target component (i.e. the parent of the target slot).
+Given how otherwise reliable this functionality is, this may again be an issue in the event binding, as it appears as though the would-be parent is instead treated as the released component, making it the child of the connection.
+% przykład, dobry byłby procesor który się połączył do środka płyty głównej zamiast do slotu
+
+These are all the bugs that have been identified so far.
+Whereas the first was easy to fix and has already been addressed, the other two will require further investigation and testing to ensure they are properly resolved.
+Fortunately, none of these bugs make it impossible to use the application, though in the context of an otherwise polised product, they do detract from the overall user experience.
+As known and documented issues, these would be the first to be addressed, should further development of the project be undertaken.
