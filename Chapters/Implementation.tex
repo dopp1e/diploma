@@ -177,3 +177,7 @@ TargetCount defines threshold value that must be met for the goal to be complete
 Another important structure is, presented on figure \ref{fig:fquestpic}, FQuest, which far simpler in construction than FGoal.
 It defines a quest in the tracking system, and consists of array of FGoal structures symbolizing goals needed to complete the quest.
 Apart from that, it possesses description field, a text displayed to the player, and ID which is used identify particular FQuest instance, mainly for communication with component objects or GUI element displaying current game state.
+
+Both of the aforementioned structures were used to create UE5 Data Table, named QuestTemplate, with purpose of housing quest templates for ease of modifying existing ones or creating brand-new quests.
+There are other benefit to this approach, it simplifies the process of creating FQuest instances during runtime as well as ensures desired order of elements in FGoal array each time a template is copied.
+However, at the current stage of the developed application the Data Table holds only one quest, whose goals are individual steps of PC assembly explained in \autoref{sec:pcassembly}.
