@@ -2,11 +2,11 @@
 \label{chap:project}
 
 The objective of the system is to create a trainer for assembling a personal computer, which can also visualize the computer's work.
-The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions which were the foundation for all of the implementation processes.
+The following chapter describes the project's functional and non-functional requirements, the necessary models and decisions which were the starting point for all of the implementation processes.
 
 \section{Project team}
 
-The project team consists of four students from Gdańsk University of Technology.
+The project team consists of four students from GUT.
 Table \ref{tab:team} presents the team's skills and competencies.
 
 \begin{table}[!ht]
@@ -48,7 +48,7 @@ Table \ref{tab:team} presents the team's skills and competencies.
     Jakub Kinder
     & \begin{itemize}
         \item Creating computer games
-        \item UE 5
+        \item UE5
         \item C++ and C\# programming languages
     \end{itemize}
     \\\hline
@@ -68,7 +68,7 @@ Table \ref{tab:team} presents the team's skills and competencies.
 
 Table \ref{tab:timetable} presents project's team timetable and objectives for each month.
 The timetable outlines the planned key objectives, activities and milestones for the duration of the project work.
-Each month of the year 2025 is associated with specific objectives, includuding research, project developement and testing of the target application.
+Each month of the year 2025 is associated with specific objectives, including research, project developement and testing of the target application.
 \begin{table}[H]
 \caption{Project team's timetable}
 \label{tab:timetable}
@@ -139,12 +139,16 @@ Each month of the year 2025 is associated with specific objectives, includuding 
     & Implementation of the component state visualization
     \\\hline
      %-
+    November
+    & Implementation of the trainee support functionalities
+    \\\hline
+    %-
     November-December
     & Conducting application's tests on a group of users
     \\\hline
      %-
     December
-    & Implementation of trainee's score calculation and trainee support
+    & Implementation of trainee's score calculation
     \\\hline
     %-
     December
@@ -161,73 +165,26 @@ Each month of the year 2025 is associated with specific objectives, includuding 
 \section{Project assumptions}
 During the work on the system project the team was able to establish the assumptions for the final vision of the application.
 The work on the project must be limited by the following assumptions and the application must comply with all of its requirements.
-\subsubsection{Project characteristics}
-The target application must be developed as a 3D system developed using the UE 5 game engine.
+\subsection{Project characteristics}
+The target application must be developed as a 3D system developed using the UE5 game engine.
 The system's architecture must follow a hybrid approach, where the logic of the application is implemented using both C++ programming language and UE5 Blueprints scripts.
 The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
 \subsubsection{Project work environment}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-The project application must operate in the CAVE system of Gdańsk University of Technology, which consists of two distinct CAVEs:
-=======
-=======
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 6a3b88f (Abbreaviations updates)
->>>>>>> d2aecd6 (Abbreaviations updates)
 The target application must operate in the CAVE system of I3DVL at GUT, which consists of three distinct configurations:
->>>>>>> 154955f (Extended subsections of Implementation chapter)
-\begin{itemize}
-    \item Small CAVE - a setup of four monitors equipped with a head movement tracker and two hand controllers,
-    \item Large CAVE - a cube composed of six screens, each with the side length of 3,4 meters, equipped with two tracking sensors on each side.
-\end{itemize}
-<<<<<<< HEAD
-The synchronization between the screens and tracking sensors must be achieved using freely available UE 5 assets.
-=======
-Each CAVE is also equipped with a set of glasses and one or two flysticks.
-=======
-The target application must operate in the CAVE system of Gdańsk University of Technology, which consists of three distinct configurations:
-=======
-The target application must operate in the CAVE system of Immersive 3D Visualization Lab at Gdańsk University of Technology, which consists of three distinct configurations:
->>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
 \begin{itemize}
     \item \textbf{BigCAVE} - a cube composed of six screens, each with the side length of 3.4 meters, equipped with stereoscopic projectors on every wall and multiple tracking sensors,
     \item \textbf{MidiCAVE} - a smaller CAVE, composed of three screens and a floor, supporting motion capture technology,
     \item \textbf{MiniCAVE} - composed of four stereoscopic monitors, used mostly for applications development \cite{PG_ABOUT_CAVE}.
 \end{itemize}
-<<<<<<< HEAD
-To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
->>>>>>> d52c91f (Extended subsections of Implementation chapter)
->>>>>>> 154955f (Extended subsections of Implementation chapter)
-\subsubsection{Constraints}
-Due to the application's architecture, it will not be working on PCs and mobile devices.
-<<<<<<< HEAD
-
-=======
-To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE5 plugins.  
-=======
 Each CAVE is also equipped with a set of glasses and one or two flysticks.
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
-<<<<<<< HEAD
-To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
->>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
-<<<<<<< HEAD
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
-=======
-=======
 To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE5 plugins.  
->>>>>>> e3e3a4d (Style, typos, etc.)
->>>>>>> 35e51e6 (Style, typos, etc.)
 \subsection{Functional requirements}
 The functional requirements describe the actions that the system must perform to work correctly.
 Each functional requirement has to be thoroughly specified, analyzed, and assigned with an appropriate priority.
-The priorities in this project were determined using the  MoSCoW (Must, Should, Could, Won't) scale.
+The priorities in this project were determined using the Must, Should, Could, Won't (MoSCoW) scale.
 Table \ref{tab:functionalRequirements} presents the functional requirements of the target application.
 \begin{table}[!ht]
 \caption{Functional requirements}
@@ -252,16 +209,16 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
    \\\hline
    %-
     Trainee's movement detection
-    & Trainee's movement has to be detected by the CAVE system, and their position must be updated in the application.
+    & Trainee's movement has to be detected by the CAVE system, and the position of their hands and head must be updated in the application.
     & Must
     \\\hline
      %-
     Computer component manipulation
-    & The trainee must be able to fully manipulate the computer components by moving them and installing them into the compatible slots.
+    & The trainee must be able to fully control the computer components by moving them and installing them into the compatible slots.
     & Must
      \\\hline %-
     Tracking the progress of virtual computer assembly
-    & The application must inform the trainee about the progress of the virtual computer assembly and detect the completion of this process.
+    & The application must inform the trainee about the progress of the virtual computer assembly and detect its completion.
     & Must
     \\\hline %- 
     Components state visualization
@@ -280,47 +237,18 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
 \end{table}
 
 \subsection{Non-functional requirements}
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-Non-functional requirements are the factors that determine the quality attributes of a software system, such as its portability, performance or maintainability.
-Rather than defining how the system works, they describe how it performs under specific conditions.
-These requirements play an important role during software development, as they serve as criteria for selecting different designs and approaches \cite{NonFunctionalRequirements}.
-Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
-=======
-=======
->>>>>>> 35e51e6 (Style, typos, etc.)
-<<<<<<< HEAD
 The following subsection describes the non-functional requirements of the project.
 According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
 These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
 Instead of defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
 The project's non-functional requirements are summarized in Table \ref{tab:nonFunctionalRequirements}.
-=======
-
-According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
-These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
-Rather than defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
-Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
->>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
-<<<<<<< HEAD
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
-=======
-=======
-The following subsection describes the non-functional requirements of the project.
-According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
-These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
-Instead of defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
-The project's non-functional requirements are summarized in Table \ref{tab:nonFunctionalRequirements}.
->>>>>>> e3e3a4d (Style, typos, etc.)
->>>>>>> 35e51e6 (Style, typos, etc.)
 
 \begin{table}[!ht]
 \caption{Non-functional requirements}
 \label{tab:nonFunctionalRequirements}
 
 \small
-\begin{tabular}{|p{0.38\textwidth}|p{0.38\textwidth}|}
+\begin{tabular}{|p{0.47\textwidth}|p{0.47\textwidth}|}
 \hline
 
     %-
@@ -334,7 +262,7 @@ The project's non-functional requirements are summarized in Table \ref{tab:nonFu
     \\\hline
     %-
     Performance
-    & The trainer must support multiple screens without visual artifacts. The application should also provide the trainee with a smooth frame rate above 60 frames per second.
+    & The trainer must support multiple screens without visual artifacts. The application should also provide the trainee with a smooth frame rate above 60 frames per second (FPS).
     \\\hline
     %-
     Responsiveness
@@ -342,7 +270,7 @@ The project's non-functional requirements are summarized in Table \ref{tab:nonFu
     \\\hline
     %-
     Reliability
-    & The application must behave correctly for a single trainee.
+    & The application must behave correctly for a single trainee, minimizing errors or incorrect results.
     \\\hline
     %-
     Usability
@@ -362,53 +290,23 @@ The project's non-functional requirements are summarized in Table \ref{tab:nonFu
 \section{Use cases}
 A use case is a singular unit of system functionality, which can be described as a sequence of interactions between the system and its users.
 Use cases are widely used in software engineering and system design, as they enable extensive planning and analysis of system requirements before any project functionality is implemented.
-<<<<<<< HEAD
-<<<<<<< HEAD
-The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
-This type of diagram can identify all the system use cases, their dependencies, as well as the user groups involved.
-=======
-=======
->>>>>>> d2aecd6 (Abbreaviations updates)
-<<<<<<< HEAD
 The most common method of presenting them is through a Unified Modeling Language (UML) use case diagram.
-=======
-The most common method of presenting them is through a UML (Unified Modeling Language) use case diagram.
->>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
-=======
-The most common method of presenting them is through a Unified Modeling Language (UML) use case diagram.
->>>>>>> 6a3b88f (Abbreaviations updates)
 This type of diagram can identify all the system use cases, their dependencies, as well as the involved users or systems.
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 in this project, the use case diagram was divided into two separate parts represent the system functionality in a clear and organized way.
 \subsection{Trainee movement use cases}
 Figure \ref{fig:movementDiagram} illustrates the first of the two use case diagrams.
 The presented diagram describes the use cases related to the trainee's movement detection and their dependencies on the trainer's components. 
-Each use case requires the CAVE sensors to work.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/TraineeMovementUseCases.png}
 	\caption{Use case diagram for trainee movement}
 	\label{fig:movementDiagram}
 \end{figure}
-\noindent The use case descriptions for controlling the trainee's movement are detailed in the following subsections.
+\noindent The structured use case descriptions for controlling the trainee's movement are detailed in the following subsections.
 
-\subsubsection{Detecting trainee's position}
-\begin{itemize}
-\item Actors: Trainee, CAVE Sensors
-\item Description: The system detects the change of the trainee's position.
-\item Prerequisites: None.
-\item Post-requisites: Data of the trainee's position is forwarded to the application's components.
-\item Scenario: 
-\begin{enumerate}
-    \item The trainee moves inside CAVE.
-    \item CAVE sensors read the trainee's movement data based on the VR controllers and glasses positions.
-    \item The updated data is forwarded to the application's components.
-\end{enumerate}
-
-\end{itemize}
 \subsubsection{Tracking VR controllers}
 \begin{itemize}
-\item Actors: Trainee, CAVE Sensors
+\item Actors: Trainee, CAVE
 \item Description: The system detects the change of the position or rotation of the VR controller.
 \item Prerequisites: None.
 \item Post-requisites: Data of the trainee's hand movement is forwarded to the application's components.
@@ -420,34 +318,47 @@ Each use case requires the CAVE sensors to work.
 \end{enumerate}
 \end{itemize}
 
-\subsubsection{Virtual hands movement}
+\subsubsection{Tracking glasses position}
+\begin{itemize}
+\item Actors: Trainee, CAVE
+\item Description: The system detects the change of the position or rotation of the glasses.
+\item Prerequisites: None.
+\item Post-requisites: Data of the trainee's head movement is forwarded to the application's components.
+\item Scenario: 
+\begin{enumerate}
+    \item The trainee moves or rotates their head.
+    \item CAVE sensors read the updated position of the glasses.
+    \item The updated data is forwarded to the application's components.
+\end{enumerate}
+\end{itemize}
+
+
+\subsubsection{Moving virtual hands}
 
 \begin{itemize}
 \item Actors: Trainee
 \item Description: Virtual hands' position and rotation are updated according to trainee's movement.
-<<<<<<< HEAD
-<<<<<<< HEAD
-\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Detecting trainee's position, Tracking VR controllers).
-=======
-=======
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
-<<<<<<< HEAD
 \item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
-=======
-\item Prerequisites: VR controllers movement or the trainee's position change were detected (Use cases: Tracking VR controllers).
->>>>>>> d52c91f (Extended subsections of Implementation chapter)
-<<<<<<< HEAD
->>>>>>> 154955f (Extended subsections of Implementation chapter)
-=======
-=======
-\item Prerequisites: VR controllers movement was detected (Use case: Tracking VR controllers).
->>>>>>> 0664001 (Jaca's suggestions and upgraded some of the citations)
->>>>>>> bdc4b9a (Jaca's suggestions and upgraded some of the citations)
 \item Post-requisites: Virtual hands position parameters are updated.
 \item Scenario: 
 \begin{enumerate}
     \item The updated position and rotation vectors are read from the player control component.
     \item Virtual hands' position and rotation vectors are updated with the read values. 
+\end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Moving virtual camera}
+
+\begin{itemize}
+\item Actors: Trainee
+\item Description: Trainee's point of view is updated accding to their head movement.
+\item Prerequisites: Trainee's head movement was detected (Use case: Tracking glasses position).
+\item Post-requisites: Virtual camera position and rotation are updated.
+\item Scenario: 
+\begin{enumerate}
+    \item The updated position and rotation vectors are read from the player control component.
+    \item Virtual camera's position and rotation vectors are updated with the read values. 
 \end{enumerate}
 
 \end{itemize}
@@ -461,7 +372,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 	\label{fig:assemblyDiagram}
 \end{figure}
 
-\noindent The following subsections provide the descriptions for the use cases.
+\noindent The following subsections provide the structured descriptions for the use cases.
 \subsubsection{Detecting a holdable object}
 \begin{itemize}
 \item Actors: Trainee
@@ -552,7 +463,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 \subsubsection{Removing the computer component}
 \begin{itemize}
 \item Actors: Trainee
-\item Decription: A computer component is removed from the slot.
+\item Description: A computer component is removed from the slot.
 \item Prerequisites: A computer component selected for removal is installed into one of the slots.
 \item Post-requisites: Removed computer component falls down and can be picked up again.
 \begin{enumerate}
@@ -661,7 +572,7 @@ Alternate scenario: The computer assembly is finished.
 \end{itemize}
 \section{Classes}
 \label{sec:classes}
-A class is a fundamental element of OOP (Object-Oriented Programming).
+A class is a fundamental element of Object-Oriented Programming (OOP).
 It serves as a definition of an object's state or behaviour using certain attributes or methods. 
 The following subsections presents the developed classes along with the class diagram.
 \subsection{Class diagram}
@@ -674,13 +585,24 @@ Figure \ref{fig:ClassDiagram} provides a full class diagram created using UML.
 	\caption{Class diagram}
 	\label{fig:ClassDiagram}
 \end{figure}
-The Hand class \ref{fig:HandClass} is responsible for a virtual hand's movement and actions it performs.
+
+Figure \ref{fig:CameraClass} presents the VirtualCamera class, which represents the object responsible for updating the trainee's point of view within CAVE.
+Because of its role, it is independent from the other classes in the project.
+Its position and rotation are continuously updated along with the trainee's movement during application runtime.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.4\textwidth]{Images/CameraClass.png}
+	\caption{VirtualCamera class}
+	\label{fig:CameraClass}
+\end{figure}
+
+The Hand class (Figure \ref{fig:HandClass}) is responsible for a virtual hand's movement and actions it performs.
 Its key functionality is to freely move objects in the game scene, and to apply proper highlights into them.
 The virtual hand also serves as a controller to the game timer, starting it after its first interaction with a virtual computer component.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/HandClass.png}
-	\caption{Trainee-related classes}
+	\caption{Hand-related classes}
 	\label{fig:HandClass}
 \end{figure}
 A HoldableObject (Figure \ref{fig:HoldableComponentClasses}) is an abstract class, which describes each object, that can be manipulated by trainee by holding it and freely moving it around.
@@ -704,16 +626,16 @@ A diagram illustrated on Figure \ref{fig:HoldableObjectAbstraction} presents the
 
 Figure \ref{fig:ToolsRelatedClasses} presents the classes required for implementing the tools required for assembling a virtual computer.
 The objects of Screwdriver and Screw classes can be freely manipulated by the trainee and combined upon bringing them close enough to each other.
-A screw can be inserted into a ScrewSlot object when the trainee holds the connected pair of Screwdriver and Screw objects, moves their hand near the slot and performs the required hand rotation movement.
+A screw can be inserted into a ScrewSlot object when the trainee holds the connected pair of Screwdriver and Screw objects, moves their hand near the slot and performs the required hand rotation.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/ToolsRelatedClasses.png}
-	\caption{Tools-related classes}
+		\includegraphics[width=0.5\textwidth]{Images/ToolsRelatedClasses.png}
+	\caption{Tools classes}
 	\label{fig:ToolsRelatedClasses}
 \end{figure}
 
-The key objects designed for the virtual computer assembly process are the instances of ComputerComponent and ComponentSlot classes \ref{fig:ComputerRelatedClasses}.
+The key objects designed for the virtual computer assembly process are the instances of ComputerComponent and ComponentSlot classes (Figure \ref{fig:ComputerRelatedClasses}).
 Every computer component should be inserted into its corresponding slot.
 To provide a more realistic learning experience, every component and slot pair must be matched using enumerated values: 
 \begin{itemize}
@@ -726,11 +648,11 @@ Every component slot can be also highlighted to provide a visual support for the
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ComputerRelatedClasses.png}
-	\caption{Computer-related classes}
+	\caption{Classes related to computer components}
 	\label{fig:ComputerRelatedClasses}
 \end{figure}
 
-The BuildManager class \ref{fig:BuildManagerClasses} was designed to guide the trainee through the virtual computer assembly process and to track their overall progress.
+The BuildManager class (Figure \ref{fig:BuildManagerClasses}) was designed to guide the trainee through the virtual computer assembly process and to track their overall progress.
 Every connection established between the computer component and its corresponding slot can be tracked using a quest system.
 Each quest includes a specific description, progress counters used to track the trainee's actions, and flags determining whether the quest is finished or required for the virtual computer to work.
 The quests are also described by a specific enumerated value to make them easier to distinguish within the system.
