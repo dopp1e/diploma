@@ -48,7 +48,7 @@ Table \ref{tab:team} presents the team's skills and competencies.
     Jakub Kinder
     & \begin{itemize}
         \item Creating computer games
-        \item UE 5
+        \item UE5
         \item C++ and C\# programming languages
     \end{itemize}
     \\\hline
@@ -165,8 +165,8 @@ Each month of the year 2025 is associated with specific objectives, including re
 \section{Project assumptions}
 During the work on the system project the team was able to establish the assumptions for the final vision of the application.
 The work on the project must be limited by the following assumptions and the application must comply with all of its requirements.
-\subsubsection{Project characteristics}
-The target application must be developed as a 3D system developed using the UE 5 game engine.
+\subsection{Project characteristics}
+The target application must be developed as a 3D system developed using the UE5 game engine.
 The system's architecture must follow a hybrid approach, where the logic of the application is implemented using both C++ programming language and UE5 Blueprints scripts.
 The application requires a basic UI created using computer graphics and free assets available in the game engine.
 The system is intented to be used by a single trainee.
@@ -180,7 +180,7 @@ The target application must operate in the CAVE system of Immersive 3D Visualiza
 Each CAVE is also equipped with a set of glasses and one or two flysticks.
 \subsubsection{Constraints}
 Due to the application's architecture, it will not be working on PCs and mobile devices.
-To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE 5 plugins.  
+To ensure correct system behaviour, the application must support synchronized display and tracking data processing using the available UE5 plugins.  
 \subsection{Functional requirements}
 The functional requirements describe the actions that the system must perform to work correctly.
 Each functional requirement has to be thoroughly specified, analyzed, and assigned with an appropriate priority.
@@ -209,16 +209,16 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
    \\\hline
    %-
     Trainee's movement detection
-    & Trainee's movement has to be detected by the CAVE system, and their position must be updated in the application.
+    & Trainee's movement has to be detected by the CAVE system, and the position of their hands and head must be updated in the application.
     & Must
     \\\hline
      %-
     Computer component manipulation
-    & The trainee must be able to fully manipulate the computer components by moving them and installing them into the compatible slots.
+    & The trainee must be able to fully control the computer components by moving them and installing them into the compatible slots.
     & Must
      \\\hline %-
     Tracking the progress of virtual computer assembly
-    & The application must inform the trainee about the progress of the virtual computer assembly and detect the completion of this process.
+    & The application must inform the trainee about the progress of the virtual computer assembly and detect its completion.
     & Must
     \\\hline %- 
     Components state visualization
@@ -237,18 +237,18 @@ Table \ref{tab:functionalRequirements} presents the functional requirements of t
 \end{table}
 
 \subsection{Non-functional requirements}
-
+The following subsection describes the non-functional requirements of the project.
 According to Chung, "The complexity of a software system is determined [...] partly by global requirements on its development or operational costs, performance, reliability, maintainability, portability, robustness and the like.
 These non-functional requirements [...] play a critical role during system development, serving as selection criteria for choosing among myriads of alternative designs and ultimate implementations." \cite{NonFunctionalRequirements}.
-Rather than defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
-Table \ref{tab:nonFunctionalRequirements} presents the trainer's non-functional requirements.
+Instead of defining how the system works, the non-functional requirements describe how it should perform under specific conditions.
+The project's non-functional requirements are summarized in Table \ref{tab:nonFunctionalRequirements}.
 
 \begin{table}[!ht]
 \caption{Non-functional requirements}
 \label{tab:nonFunctionalRequirements}
 
 \small
-\begin{tabular}{|p{0.38\textwidth}|p{0.38\textwidth}|}
+\begin{tabular}{|p{0.47\textwidth}|p{0.47\textwidth}|}
 \hline
 
     %-
@@ -302,7 +302,7 @@ The presented diagram describes the use cases related to the trainee's movement 
 	\caption{Use case diagram for trainee movement}
 	\label{fig:movementDiagram}
 \end{figure}
-\noindent The use case descriptions for controlling the trainee's movement are detailed in the following subsections.
+\noindent The structured use case descriptions for controlling the trainee's movement are detailed in the following subsections.
 
 \subsubsection{Tracking VR controllers}
 \begin{itemize}
@@ -372,7 +372,7 @@ Figure \ref{fig:assemblyDiagram} illustrates the second use case diagram, descri
 	\label{fig:assemblyDiagram}
 \end{figure}
 
-\noindent The following subsections provide the descriptions for the use cases.
+\noindent The following subsections provide the structured descriptions for the use cases.
 \subsubsection{Detecting a holdable object}
 \begin{itemize}
 \item Actors: Trainee
@@ -585,13 +585,24 @@ Figure \ref{fig:ClassDiagram} provides a full class diagram created using UML.
 	\caption{Class diagram}
 	\label{fig:ClassDiagram}
 \end{figure}
-The Hand class \ref{fig:HandClass} is responsible for a virtual hand's movement and actions it performs.
+
+Figure \ref{fig:CameraClass} presents the VirtualCamera class, which represents the object responsible for updating the trainee's point of view within CAVE.
+Because of its role, it is independent from the other classes in the project.
+Its position and rotation are continuously updated along with the trainee's movement during application runtime.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.4\textwidth]{Images/CameraClass.png}
+	\caption{VirtualCamera class}
+	\label{fig:CameraClass}
+\end{figure}
+
+The Hand class (Figure \ref{fig:HandClass}) is responsible for a virtual hand's movement and actions it performs.
 Its key functionality is to freely move objects in the game scene, and to apply proper highlights into them.
 The virtual hand also serves as a controller to the game timer, starting it after its first interaction with a virtual computer component.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/HandClass.png}
-	\caption{Trainee-related classes}
+	\caption{Hand-related classes}
 	\label{fig:HandClass}
 \end{figure}
 A HoldableObject (Figure \ref{fig:HoldableComponentClasses}) is an abstract class, which describes each object, that can be manipulated by trainee by holding it and freely moving it around.
@@ -615,16 +626,16 @@ A diagram illustrated on Figure \ref{fig:HoldableObjectAbstraction} presents the
 
 Figure \ref{fig:ToolsRelatedClasses} presents the classes required for implementing the tools required for assembling a virtual computer.
 The objects of Screwdriver and Screw classes can be freely manipulated by the trainee and combined upon bringing them close enough to each other.
-A screw can be inserted into a ScrewSlot object when the trainee holds the connected pair of Screwdriver and Screw objects, moves their hand near the slot and performs the required hand rotation movement.
+A screw can be inserted into a ScrewSlot object when the trainee holds the connected pair of Screwdriver and Screw objects, moves their hand near the slot and performs the required hand rotation.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/ToolsRelatedClasses.png}
-	\caption{Tools-related classes}
+		\includegraphics[width=0.5\textwidth]{Images/ToolsRelatedClasses.png}
+	\caption{Tools classes}
 	\label{fig:ToolsRelatedClasses}
 \end{figure}
 
-The key objects designed for the virtual computer assembly process are the instances of ComputerComponent and ComponentSlot classes \ref{fig:ComputerRelatedClasses}.
+The key objects designed for the virtual computer assembly process are the instances of ComputerComponent and ComponentSlot classes (Figure \ref{fig:ComputerRelatedClasses}).
 Every computer component should be inserted into its corresponding slot.
 To provide a more realistic learning experience, every component and slot pair must be matched using enumerated values: 
 \begin{itemize}
@@ -637,11 +648,11 @@ Every component slot can be also highlighted to provide a visual support for the
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.7\textwidth]{Images/ComputerRelatedClasses.png}
-	\caption{Computer-related classes}
+	\caption{Classes related to computer components}
 	\label{fig:ComputerRelatedClasses}
 \end{figure}
 
-The BuildManager class \ref{fig:BuildManagerClasses} was designed to guide the trainee through the virtual computer assembly process and to track their overall progress.
+The BuildManager class (Figure \ref{fig:BuildManagerClasses}) was designed to guide the trainee through the virtual computer assembly process and to track their overall progress.
 Every connection established between the computer component and its corresponding slot can be tracked using a quest system.
 Each quest includes a specific description, progress counters used to track the trainee's actions, and flags determining whether the quest is finished or required for the virtual computer to work.
 The quests are also described by a specific enumerated value to make them easier to distinguish within the system.
