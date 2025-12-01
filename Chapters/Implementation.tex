@@ -154,7 +154,7 @@ The player's progress is tracked by a system called BuildManager, which is a spe
 The manager consists of 4 main parts:
 
 \begin{itemize}
-	\item 2 structures that define quests and their goals presented on \ref{fig:fgoalpic} and \ref{fig:fquestpic}.
+	\item 2 structures that define quests and their goals presented on figures \ref{fig:fgoalpic} and \ref{fig:fquestpic}.
 	\item An actor on the scene that allows for communication between the tracking system and PC components.
 	\item A data table containing quests and their goals
 \end{itemize}
@@ -174,8 +174,11 @@ The manager consists of 4 main parts:
 	\caption{Fgoal and FQuest structures used in BuildManager}
 \end{figure}
 
-\ref{fig:fgoalpic} presents the FGoal structure, which defines a goal of a quest.
+Figure \ref{fig:fgoalpic} presents the FGoal structure, which defines a goal of a quest.
 It consists of a goal description, that is to be displayed for the player, enumeration value Type which is used to identify goal as well as a boolean value IsOptional that signals whether certain goal is optional.
 The core fields for the system's operation during runtime are integer fields, TargetCount and CurrentCount.
 TargetCount defines threshold value that must be met for the goal to be completed, like number of components that need to be attached, while CurrentCount holds the current state value, which is updated reactively upon met conditions, defined by the system, for example number of RAM modules installed.
 
+Another important structure is, presented on figure \ref{fig:fquestpic}, FQuest, which far simpler in construction than FGoal.
+It defines a quest in the tracking system, and consists of array of FGoal structures symbolizing goals needed to complete the quest.
+Apart from that, it possesses description field, a text displayed to the player, and ID which is used identify particular FQuest instance, mainly for communication with component objects or GUI element displaying current game state.
