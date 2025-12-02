@@ -1,0 +1,14 @@
+\subsection{Controller Joystick Rotation Fixes (Jakub Jędrzejczyk)}
+
+The most raised issue by testers (as per subchapter \ref{sec:user-testing-results}) was the difficulty in rotating components using the joystick on the VR controllers.
+While the development team found the rotation mechanics to be a helpful part of the building process, the users found it unintuitive and cumbersome, often leading to frustration and mistakes, requiring a lot of trial and error to get the desired orientation of components.
+We believe this to be caused by the fact that most users chose this method of rotation over physically rotating their hands, and while a more in-depth tutorial on how to use the joystick rotation could help alleviate this issue, it may still be necessary to rework the rotation mechanics entirely.
+
+The current implementation uses rotation axes fixed to the objects, which mean that a held object's rotation changes relative to its current orientation.
+This means that if a user rotates an object 90 degrees on one axis, the other axes also change their orientation relative to the user, making further rotations possibly confusing.
+A better approach would most likely be to use world space axes for rotation, meaning that no matter the current orientation of the object, pushing the joystick up would always rotate the object around the world's X axis, pushing it right would always rotate it around the world's Y axis.
+Doing so would most likely require modification of the way a holdable object utilizes the RotatingMovement component, which by default uses local space axes for rotation.
+
+Once done, this feature ought to be tested again with users to verify that the new rotation mechanics meet their expectations.
+
+Additionally, it may be worth considering adding visual aids to help users understand the rotation mechanics better, particularly hinting about what direction the object should be rotated to fit into a slot.
