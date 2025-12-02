@@ -42,4 +42,52 @@ It could be assumed that gender of a slot (male or female) \cite{unwinMetaphorEx
 A graphic card's PCIe connector can be aptly described as a "male" one, given its protrusion, and the motherboard's PCIe slot as "female", given its receptacle nature, fitting the metaphor well.
 However, the same cannot be said about modern CPU sockets, which are most often LGA (Land Grid Array) type \cites{DefinitionLGA}{LandGridArray2025}, where the pins are located on the motherboard's side, and the CPU itself has flat contact points.
 Similarly, both SATA power and data connectors feature protrusions on the drive's side, while the cables have receptacles.
+As such it's basically impossible to limit the connection process to a more strict descriptor without possibly introducing inconsistencies, particularly as current UI elements utilize the internal variables of components for details displayed to the user.
 
+Once these events are bound, both of the component slots' \lstinline[language=C]|InContactWith| variables are set to references to each other,
+effectively locking them into a potential connection state, after which both slots' \lstinline[language=C]|UpdateParentHighlight()| function, shown in figure \ref{fig:UpdateParentHighlightBlueprint} with the \lstinline[language=C]|CloseEnough| boolean argument set to true, is called to update whichever item is being held with an overlay material separate to the highlighting one (as shown in figure \ref{fig:ComponentsCloseEnough}), indicating that the held object is in a valid position to be connected to another component.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/UpdateParentHighlightBlueprint.png}
+	\caption{ComponentSlot's UpdateParentHighlight function blueprint.}
+	\label{fig:UpdateParentHighlightBlueprint}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsCloseEnough-optimized.jpg}
+	\caption{Two valid component slots close enough to be connected - the held CPU is highlighted in green to indicate this.}
+	\label{fig:ComponentsCloseEnough}
+\end{figure}
+
+Should the object be moved away from the slot before being released, the \lstinline[language=C]|ActorEndOverlap| event will be triggered, which, assuming the other actor is also a \lstinline[language=C]|ComponentSlot|, will remove the previously described bindings, and once more calling the \lstinline[language=C]|UpdateParentHighlight()| function (this time with the argument set to false) to remove the special highlight from the held object, as per figure \ref{fig:ComponentsNotCloseEnough}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsNotCloseEnough-optimized.jpg}
+	\caption{Two valid component slots have been moved away, no longer close enough to be connected - the held CPU returns to standard hand highlight.}
+	\label{fig:ComponentsNotCloseEnough}
+\end{figure}
+
+If the object is instead released, the bound event calls \lstinline[language=C]|TryConnectComponents()| function, which handles the actual connection process.
+This function sets each slots' \lstinline[language=C]|ConnectedTo| properties to the opposite component slot's parent component, disables the visibility of both slots, and then disables the physics simulation on the component being connected (the one that was held by the user).
+This is done to ensure the object is not affected by any forces for the moment of connection itself, as without it, the object would drift away slightly before being snapped into place, which is not the intended behavior.
+Then the delta between the two slots' world position and rotation are calculated, and the component being connected is moved and rotated accordingly to align the two slots perfectly.
+Finally, the connected component's physics are re-enabled, its mesh is attached to the parent component's mesh using the \lstinline[language=C]|AttachComponentToComponent()| function provided by Unreal Engine (which welds the objects together), and the component itself is attached as a child actor to the parent component using the \lstinline[language=C]|AttachActorToActor()| function.
+
+Somewhat surprisingly, retaining a connected components' physics as enabled works even when its parent component is being held, and thus has its physics simulation disabled.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsConnected-optimized.jpg}
+	\caption{CPU and valid motherboard successfully connected together.}
+	\label{fig:ComponentsConnected}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.4\textwidth]{Images/ComponentsConnectedOutliner.png}
+	\caption{CPU and valid motherboard successfully connected together, as seen in Unreal Engine's Outliner.}
+	\label{fig:ComponentsConnectedOutliner}
+\end{figure}
