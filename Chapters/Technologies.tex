@@ -1,65 +1,105 @@
 \chapter{TECHNOLOGIES AND TOOLS (Mateusz Merda)}
 \label{chap:TechnologiesAndTools}
 
-Our project relies on a combination of collaborative technologies that cover a wide range of needs. These tools helped us streamline asset creation, enabled efficient teamwork, provided extensive programming capabilities, and allowed end users to interact with the virtual scene. The purpose of this chapter is to summarize what these tools are and how we used them throughout the entire process of creating our application.
+This project relied on a combination of technologies that supported asset creation, collaboration, programming, and user interaction with the virtual environment. This chapter summarizes the tools employed and their role in the development of the application.
 
 \section{Game engines}
 \label{sec:GameEngines}
 
-A game engine is a software framework that allows for easier creation of interactive 3D environments. By providing a suite of built-in capabilities such as rendering, physics, input handling, etc., it helped us construct a virtual scene without having to recreate core systems from scratch.
-
-Modern game engines are designed to work seamlessly with 3D models, making the process of importing assets and integrating them into different systems straightforward. This is a key feature that we relied on, as all of our assets representing computer components had to reliably interact with both the user and other virtual objects.
-
-\section{Game engine selection (Jakub Jędrzejczyk)}
-
-The engine our team has chosen is Unreal Engine 5 \cite{MostPowerfulRealtime} developed by Epic Games. Although there are many three-dimensional engines available, the most popular being Unity, Unreal Engine, and Godot \cite{BigGameEngines}, due to the requirement of the final product working within the CAVE environment, we were only able to choose between Unity and Unreal Engine. The main reason for choosing the latter of the two lies in better support for CAVE. Our consultant, Ivan Vakulko has informed us that Unity's latest versions are relatively less supported and are known to cause unexpected issues. With that in mind, the choice was made to proceed with the supposedly more stable Unreal Engine.
+A game engine is a software framework designed to support the development and runtime execution of interactive real-time applications. Traditionally, their usage was mostly limited to video games, but in recent years they have been increasingly adopted for other purposes, including but not limited to simulations, visualizations, VR experiences, architectural walkthroughs, and training tools. A game engine provides a multitude of ready-to-use subsystems such as rendering, physics, animation, audio, scripting, device input, or even lighting, such as in Figure~\ref{fig:ue5editor}. By using these built-in components, developers can assemble and configure assets and logic without implementing these systems from scratch, which would otherwise be time-consuming and prone to errors.
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.6\textwidth]{Images/UE5Editor.png}
-	\caption{Unreal Engine 5 editor interface (example image, not from this project)}
+		\includegraphics[width=0.8\textwidth]{Images/UE5Editor.png}
+	\caption{Unreal Engine 5 editor interface; the Outliner panel on the left shows the hierarchy of the scene, such as all the lighting-related objects (example not from this project).}
+    \label{fig:ue5editor}
 \end{figure}
+
+Modern game engines are designed to work seamlessly with 3D models, simplifying the process of importing assets and integrating them into different subsystems. This capability was crucial for our project, as all assets representing computer components had to interact reliably with both the user and other virtual objects.
+
+\section{Game engine selection (Jakub Jędrzejczyk)}
+
+The engine our team has chosen is Unreal Engine 5 \cite{MostPowerfulRealtime} developed by Epic Games. Although there are many three-dimensional engines available, the most popular being Unity, Unreal Engine, and Godot \cite{BigGameEngines}, due to the requirement of the final product working within the CAVE environment, we were only able to choose between Unity and Unreal Engine. The main reason for choosing the latter of the two lies in better support for CAVE. Our consultant, Ivan Vakulko, has informed us that Unity's latest versions are less well supported and are known to cause unexpected issues. With that in mind, the choice was made to proceed with the supposedly more stable Unreal Engine.
 
 \section{Movement tracking devices}
 \label{sec:MovementTrackingDevices}
 
-Movement tracking refers to capturing a user's physical motions and translating them into corresponding actions within the game engine. Using specialized input devices, we monitored the position and orientation of the user’s hands and eyes, enabling them to move through and interact with the virtual environment. This allowed the user to engage naturally with the world projected onto the surrounding screens, creating a deeper sense of immersion in the scene and ensuring that movements feel responsive and intuitive. 
+Movement tracking involves capturing a user's physical motions and translating them into corresponding actions within the game engine. By using specialized input devices, we monitored the position and orientation of the user's hands and eyes, enabling natural navigation and interaction within the virtual environment. This allowed the user to engage naturally with the world projected onto the surrounding screens, thereby creating a deeper sense of immersion in the scene and ensuring that movements felt responsive and intuitive. 
 
-In our setup, motion tracking was achieved using a flystick to track the user's hand, allowing precise pointing, selection and manipulation of virtual objects. For head tracking, the user wore glasses fitted with reflective tracking balls, which were detected by external sensors to calculate their position and orientation in real time.
+As shown in Figure~\ref{fig:cave}, hand tracking was achieved using a flystick, which allowed precise pointing, selection, and manipulation of virtual objects. Head tracking was performed using glasses fitted with reflective tracking markers, detected by external sensors to calculate the user's position and orientation in real time.
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.6\textwidth]{Images/CAVE.png}
-	\caption{Photo of the CAVE in operation. The person inside is wearing tracked glasses, which let them experience an illusion of a 3D environment.}
+		\includegraphics[width=0.7\textwidth]{Images/cave.png}
+	\caption{Photo of the CAVE in operation. The person on the left is wearing tracked 3D glasses, which let them experience an illusion of a 3D environment.}
+    \label{fig:cave}
 \end{figure}
 
-An important part of the setup was the ability to display the user’s real-time view across multiple screens with correct orientation of the virtual camera. In Unreal Engine 5 this can be achieved using the nDisplay plugin, which synchronizes rendering across a cluster of networked computers, with one acting as the primary node and others as secondary nodes. Each node runs an instance of the engine and drives one or more display devices. This meant that the user could be fully encompassed within the virtual scene, with each screen showing the correct perspective based on its physical position.
+A critical component of the setup was the ability to display the user's view across multiple screens with correct virtual camera orientation. In Unreal Engine 5, this functionality is provided by the nDisplay plugin, which synchronizes rendering across a cluster of networked computers, with one acting as the primary node and others as secondary nodes, as shown in Figure~\ref{fig:nDisplaySetup}. Each node runs an instance of the engine and drives one or more display devices, ensuring the user is fully encompassed within the virtual scene with correct perspective on each screen.
 
 \begin{figure}[!ht]
 	\centering
 		\includegraphics[width=0.6\textwidth]{Images/nDisplaySetup.png}
-	\caption{Example nDisplay setup from the official documentation \cite{nDisplayDocumentation}}
+	\caption{Example nDisplay setup from the official documentation \cite{nDisplayDocumentation}.}
+    \label{fig:nDisplaySetup}
 \end{figure}
 
 \section{3D modelling software}
 \label{sec:3DModellingSoftware}
 
-To create assets that were not otherwise available to us, we used a program called Blender. It offers a comprehensive set of tools for modeling, sculpting, and texturing 3D objects. These models can then be exported for use in other applications, such as Unreal Engine 5.
+Creating a coherent and functional 3D virtual environment relies heavily on the quality of the underlying assets. In our project, the majority of 3D models were sourced from \nameref{subsubsec:pcbsim1}. These assets provided a solid foundation, as they were already sufficiently detailed for our application. Leveraging pre-existing models significantly reduced development time, allowing us to focus on other aspects of the project instead of modelling every component from scratch.
+
+Nevertheless, some required components were not available, and no suitable equivalents could be repurposed. For these missing assets, we used \textbf{Blender}, an open-source 3D modelling tool widely adopted in professional and hobbyist workflows. Using Blender, we were able to model components as complex as a CPU cooler (Figure~\ref{fig:BlenderModel}) with limited prior experience in 3D modelling.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/Blender Model.png}
+	\caption{3D model of a CPU cooler created in Blender by Hubert Leszczyński.}
+    \label{fig:BlenderModel}
+\end{figure}
+
+\section{Importing 3D models into UE5}
+
+Blender's ability to export assets in formats commonly used by game engines, such as .glb, streamlined the process of importing 3D models into Unreal Engine 5. For that task we used the glTF Runtime 2.0 plugin, which allows .gltf and .glb files to be loaded directly at runtime.
+
+The primary advantage of this approach is the ability to add, update, or replace models without rebuilding the project. Exporting a new .glb from Blender was sufficient for the updated model to appear correctly in the application. In contrast, the standard UE5 import process requires reimporting the asset, generating engine-specific files, and packaging them with the project. The runtime approach significantly reduced iteration time and simplified asset management.
 
 \section{Programming environments}
 \label{sec:ProgrammingEnviroments}
 
-Programming in the project was carried out using a combination of visual scripting and traditional coding. The primary method was Unreal Engine’s Blueprint system, which provided an intuitive, node-based environment for implementing user interaction and interface logic. Blueprints allowed for rapid prototyping and straightforward development of the application's features.
+To implement interaction logic and realistic object behavior in the virtual environment, we relied on Unreal Engine's \textbf{Blueprint} system. Blueprints provide a visual scripting interface that allows developers to define gameplay logic using node-based graphs instead of traditional code, eliminating the need to modify C++ scripts directly. They also serve as the primary mechanism for configuring and combining assets within the editor, for example applying UV maps or heightmaps to a material, as shown in Figure~\ref{fig:blueprint}.
 
 \begin{figure}[!ht]
 	\centering
-		\includegraphics[width=0.6\textwidth]{Images/UE5Material.png}
-	\caption{UE5's material editor relies on blueprints for editing the materials)}
+		\includegraphics[width=0.7\textwidth]{Images/UE5Material.png}
+	\caption{UE5 uses blueprints in its material editor, amongst many others.}
+    \label{fig:blueprint}
 \end{figure}
 
-In some cases we had to resort to programming in C++ in combination with Blueprints. This was done through Visual Studio, a popular integrated development environment (or IDE) made by Microsoft.
+\section{Task organization and assignment}
+
+To manage workflow and coordinate responsibilities, we used \textbf{Vikunja}, an open-source task management platform. Vikunja provides a structured environment for organizing tasks into lists and assigning them to team members. Its features, including labels and Kanban views (Figure~\ref{fig:vikunja}), allowed us to categorize tasks and track progress efficiently, ensuring each stage of development was clearly defined while providing an overview of ongoing work.
+
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/vikunja.png}
+	\caption{Example of Vikunja's Kanban view \cite{MedevelVikunja}.}
+    \label{fig:vikunja}
+\end{figure}
 
 \section{Version control}
 \label{sec:VersionControl}
 
-Lastly, for version control we made use of two different systems suited to specific needs. GitHub was used to manage documents such as this one, providing an organized way for writing and editing for the whole team. For the Unreal Engine project itself, we relied on Diversion, a version control system designed to handle large binary files and engine assets more efficiently.
+Version control was essential for safe collaboration, keeping files organized and synchronized among team members. Because the project consisted of both written documentation and a large Unreal Engine 5 environment, two version control systems were used to accommodate different file types.
+
+\subsection{GitHub}
+
+For all thesis-related files, which are primarily text and figures, we used \textbf{GitHub}. GitHub's distributed version control model made it easy to simultaneously work on different sections of the thesis without interfering with one another's work. Its web interface also proved convenient for diff viewing and merging everyone's work into one master document, keeping all contributions organized throughout the writing process.
+
+\subsection{Diversion}
+
+For the Unreal Engine 5 portion of the project, we used \textbf{Diversion}, a version control system designed specifically for large binary files and game development workflows. UE5 projects contain numerous non-text assets, such as meshes, textures, and cooked data, which do not integrate well with traditional systems like Git. Diversion efficiently handled these assets and provided conflict prevention mechanisms tailored to game engines, allowing safe management as the project grew in size and complexity. This allowed us to safely manage the project as it grew in size and complexity, while avoiding issues caused by simultaneous modifications to the same binary files.
+
+\section{Diagram creation}
+
+For creating architectural diagrams used throughout the thesis, we employed \textbf{draw.io} (also known as diagrams.net), a free web-based diagramming tool. Its intuitive drag-and-drop interface was well suited for producing schematics documenting our system architecture. The tool's ability to export graphics in formats such as PNG, SVG, and PDF further facilitated seamless integration into the LaTeX document.
