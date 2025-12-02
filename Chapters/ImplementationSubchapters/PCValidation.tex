@@ -1,4 +1,5 @@
 \section{PC Validation (Jakub Jędrzejczyk)}
+\label{chap:PCValidation}
 
 Finalizing the assembly of the PC requires validating that all components have been connected correctly.
 A set of functions responsible for determining whether the current assembly state is valid has been implemented in a ValidationUtils blueprint function library.
@@ -41,3 +42,4 @@ If the check passes, a structure representing a valid PC assembly is created, co
 Notably, it is not necessary to check whether components are compatible with each other (for example, whether the CPU fits the motherboard socket), as the connection system implemented earlier prevents incompatible components from being connected in the first place.
 
 With this, it's possible to find all valid PC assemblies in the scene, and retrieve their components for further processing, such as updating the player's progress in the assembly quest.
+This functionality was used to detect valid PCs on each update of the quests within the BuildManager, stopping the clock counting time once a valid PC has been detected.

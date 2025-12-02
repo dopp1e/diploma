@@ -1,4 +1,5 @@
 \section{Connecting Components (Jakub Jędrzejczyk)}
+\label{chap:ConnectingComponents}
 
 The functionality of allowing components to be connected together is handled by a dedicated blueprint actor, the \lstinline[language=C]|ComponentSlot|.
 It is placed as a child actor within the components that are designed to have other components connected to them (e.g. the Motherboard has multiple slots for RAM sticks, a CPU socket, and PCIe slots for GPUs and other expansion cards) and represents a singular point of potential connection with another component.
