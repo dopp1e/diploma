@@ -143,6 +143,80 @@ Figure \ref{fig:GameScene} presents the completed design of the game scene.
 	\label{fig:GameScene}
 \end{figure}
 
+\section{Tracking progress (Jakub Kinder)}
+
+The player's progress is tracked by a system called BuildManager, which is a specialized Quest Manager based on a tutorial by Ryan Laley \cite{laley_making_2023}.
+Initially, progress tracking for individual PC components was considered for its development, however, unconstrained interaction with them made it difficult for given time constraints of the project, so global tracking approach was utilized instead.
+Nonetheless, the core architecture of the system remained mostly unchanged, and the manager consists of 4 main parts:
+
+\begin{itemize}
+	\item 2 structures that define quests and their goals presented on figures \ref{fig:fgoalpic} and \ref{fig:fquestpic}.
+	\item A persistent actor on the scene, bearing the same name as the system, that serves as the central state controller responsible for both communication with other objects and all progress tracking functionality.
+	\item A data table containing quests and their goals
+\end{itemize}
+
+
+\begin{figure}[h!]%
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.48\textwidth]{Images/FGoalParameters.png}
+		\label{fig:fgoalpic}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.48\textwidth]{Images/FQuestParameters.png}
+		\label{fig:fquestpic}
+	}
+	\caption{Fgoal and FQuest structures used in BuildManager}
+\end{figure}
+
+\subsubsection{Structures used in the tracking system}
+Figure \ref{fig:fgoalpic} presents the FGoal structure, which defines a goal of a quest.
+It consists of a goal description, that is to be displayed for the player, enumeration value Type which is used to identify goal as well as a boolean value IsOptional that signals whether certain goal is optional.
+The core fields for the system's operation during runtime are integer fields, TargetCount and CurrentCount.
+TargetCount defines threshold value that must be met for the goal to be completed, like number of components that need to be attached, while CurrentCount holds the current state value, which is updated reactively upon met conditions, defined by the system, for example number of RAM modules installed.
+
+Another important structure is FQuest, presented on figure \ref{fig:fquestpic}, which is far simpler in construction than FGoal.
+It defines a quest in the tracking system, and consists of an array of FGoal structures symbolizing goals needed to complete the quest.
+Apart from that, it possesses description field, a text displayed to the player, and ID which is used to identify particular FQuest instance, mainly for communication with component objects or GUI element displaying current game state.
+
+\subsubsection{Quest Data storage}
+Both of the aforementioned structures were used to create UE5 Data Table, named QuestTemplate, with purpose of housing quest templates for ease of modifying existing ones or creating brand-new quests.
+This approach provides other benefits - it simplifies the process of creating FQuest instances during runtime as well as ensures desired order of elements in FGoal array each time a template is copied.
+However, at the current stage of the developed application the data table holds only one quest, whose goals are individual steps of PC assembly explained in \autoref{sec:pcassembly}.
+
+\subsubsection{BuildManager actor}
+The core functional component of the progress tracking system is the actor on the scene, named BuildManager.
+It possesses 3 critical fields, Quest, containing a FQuest instance of currently executed by the user quest, QuestDataTable, which is a reference to mentioned above data table, and QuestLog, an instance of class BP\_QuestLog, that handles GUI element displaying current state of the quest to the player.
+
+At the start of the game BuildManager, creates an FQuest instance, by copying a template the data table and awaits signals from PC component connection events.
+Unlike most objects in the application, this manager does not utilize built-in event system as it is based on one dispatcher many listeners model.
+Instead, the connection events search for an actor of BuildManager class and call its SaveProgress function with appropriate parameters, GoalType, enumaration value describing type of goal, and ProgressValue indicating progress made as an integer value.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Images/bmfindgoal.png}
+	\caption{Piece of FindGoal function blueprint}
+	\label{fig:bmfindgoal}
+\end{figure}
+
+After SaveProgress is called, first it executes FindGoal function, whose piece is presented on figure \ref{fig:bmfindgoal}, with Quest's goal array and GoalType given in its parameters.
+The function then proceeds to iterate over the elements of the goal array using ForEach loop and checking if any of its elements is of requested type, then the function returns a copy of found goal with its index or null reference and index -1, depending on whether such goal exists or not.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/bmsaveprogress.png}
+	\caption{Piece of SaveProgress function blueprint}
+	\label{fig:bmsaveprogress}
+\end{figure}
+
+Next, the SaveProgress function, either ends execution or continues with valid FGoal instance and calls UpdateGoal function.
+This updates goal's CurrentCount field increasing it by ProgressValue, then proceeds to check if CurrentCount >= TargetCount and sets the result to IsCompleted field of the structure and returns it. 
+Afterward, SaveProgress saves the result back into the FGoal array of the quest, which is presented on figure \ref{fig:bmsaveprogress}.
+
+Furthermore, this function also calls UpdatePRogress function that belongs to instance referenced in the QuestLog field.
+This final call notifies the GUI handler object of a change in state and provides necessary data - the Quest's ID, the updated goal's index, and the ProgressValue - so that the GUI can be updated to provide the user with immediate and accurate feedback on their assembly progress.
+
 \input{Chapters/ImplementationSubchapters/ObjectHolding.tex}
 
 \input{Chapters/ImplementationSubchapters/Dtrack.tex}
