@@ -1,3 +1,117 @@
 \section{Graphical User Interface (Jakub Jędrzejczyk)}
+\label{chap:GUI}
 
-TBD
+The GUI of the application has been implemented using Unreal Engine's UMG (Unreal Motion Graphics) system.
+It currently consists of three elements:
+
+\begin{itemize}
+    \item A clock displaying the elapsed time since the start of the assembly task;
+    \item A list of assembly objectives, showing the player's current progress towards completing the PC assembly;
+    \item A floating preview of a highlighted, but not held component, showing its name and type.
+\end{itemize}
+
+An important consideration had to be taken into account for designing the interface application, which is that in VR applications, traditional 2D interfaces such as HUDs (heads-up displays) are not suitable, as they can cause discomfort and break immersion.
+A more fitting approach is to use elements which exist within the 3D world itself, allowing the user to interact with them naturally.
+While directly translating 2D interfaces into 3D space can be problematic \cite{mehmedovaVirtualRealityUser2025}, it was deemed acceptable for the purposes of this application, given the limited scope of the interface elements.
+
+The clock is a simple text display which provides a bit of abstraction by allowing to have the time set in hh:mm:ss format, additionally handling any overflows (if someone passed in more than 60 seconds, it would correctly increment the minutes counter, and so on).
+The default font Unreal Engine provides (Google's Roboto) for UMG widgets was found to cause this text element to shift in place as values changed, though, caused by different digits having different widths.
+To fix this, a monospaced font would fit this purpose better.
+An existing monospaced clock format exists in real life, in the form of seven segment displays \cite{SevensegmentDisplay2025} and its derivatives, and is quite universally recognized to represent time.
+Searching on Google and forums \cite{thunderbar7SegmentLCD2024} yielded a free font, aptly called Seven Segment \cite{SevenSegmentFont}, which makes the odd decision to not place the colon character (:) in  the middle of the height of the digits, but rather at the bottom.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/GUISevenSegmentPreview.png}
+	\caption{Preview of the Seven Segment font used for the clock display on dafont.com \cite{SevenSegmentFont}.}
+	\label{fig:SevenSegmentPreview}
+\end{figure}
+
+While working around that may be possible, the same post on Reddit also mentioned an open source alternative called DSEG \cite{keshikanKeshikanDSEG2025}, which places the colon correctly, and was thus chosen as the font for the clock display, as it also features an italic version of the font, which more closely resembles real seven segment displays.
+Using Unreal Engine's RichTextStyle system \cite{AdvancedTextStyling}, it was possible to create two separate styles for the clock display: a foreground style in red, and a background style in black, which simulates the appearance of turned off segments in a real seven segment display.
+The final widget uses two layers of Rich Text components, one for each style, to create a convincing seven segment display effect, as shown in figure \ref{fig:GUIClockPreview}.
+To display a UMG widget in 3D space, an actor with a Widget component is used, which can then be placed in the scene.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/GUIClockPreview.png}
+	\caption{Clock display using the DSEG font and layered Rich Text components to simulate a seven segment display, previewed in Unreal Engine's editor.}
+	\label{fig:GUIClockPreview}
+\end{figure}
+
+This actor features the ability to start, stop, and reset the clock.
+The start function has been tied to the hand, where picking up a computer component will start the clock.
+To better show the passage of time, the colons separating hours, minutes, and seconds are only on in the first half of each second, creating a blinking effect, as shown in \ref{fig:GUIClockWorking}, which further enhances the realism of the display.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIClockWorking1-optimized.jpg}
+		\label{fig:GUIClockWorking1}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIClockWorking2-optimized.jpg}
+		\label{fig:GUIClockWorking2}
+	}
+	\caption{(a) Clock display with colons on, for the first half of each second. (b) Clock display with colons off, lasting for the second half of each second, creating a blinking effect.}
+    \label{fig:GUIClockWorking}
+\end{figure}
+
+The component preview widget is a simple panel displaying the name and type of the highlighted component.
+Half a second after the user has been highlighting the same object, the panel is spawned above the user's hand, following its movement, and is destroyed once the user stops highlighting the object.
+Given a component reference, the widget can extract the necessary information from the component's data structure to display it.
+For this purpose, an example string was generated \cite{LoremIpsumAll} to fill in the size of the component, and all strings put into both the component name and type fields are truncated with an ellipsis if they exceed a certain length, to prevent the panel from growing too large.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/GUIComponentPreview.png}
+	\caption{Component preview panel displaying the name and type of the highlighted motherboard, as seen when using the application.}
+	\label{fig:GUIComponentPreview}
+\end{figure}
+
+Similarly to the clock, a separate actor blueprint was created containing the widget, which can be spawned and destroyed as needed.
+On creation, it finds any Virtual Camera actor on the scene, and saves a reference to it in an internal variable.
+As it is created by a hand highlighting an object, the hand also saves a reference to itself in the spawned actor.
+This way, each tick, the component preview actor can move itself to be right above the hand's position, while also facing the virtual camera, made possible by the FindLookAtRotation function provided by Unreal Engine \cite{FindLookRotation} which calculates the rotation between two vectors, ensuring the panel is always readable from the user's point of view.
+Thus, the user can see what kind of component they are highlighting without needing to pick it up and inspecting it closely.
+
+Lastly, the objectives panel displays a list of quests, and the goals they consist of (constructed as in figure \ref{fig:GUIQuestAndGoal}).
+Each quest consists of a name, description, and an array of goals, each of which has its own name, description, current progress value, and target progress value.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIQuest.png}
+		\label{fig:GUIQuest}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIGoal.png}
+		\label{fig:GUIGoal}
+	}
+	\caption{(a) Variables of the S\_Quest structure. (b) Variables of the S\_Goal structure.}
+    \label{fig:GUIQuestAndGoal}
+\end{figure}
+
+Through the use of abstractions, the QuestList automatically creates SingleQuest widgets for each quest in the list, and each SingleQuest widget creates SingleGoal widgets for each goal in its quest.
+This way, the entire list can be generated dynamically based on the data provided to it.
+When a goal's progress is updated, the QuestList widget is notified, and it updates the corresponding SingleGoal widget to reflect the new progress.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIQuestList1-optimized.jpg}
+		\label{fig:GUIQuestList1}
+	}
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/GUIQuestList2-optimized.jpg}
+		\label{fig:GUIQuestList2}
+	}
+	\caption{(a) Quest list before completing any goals. (b) Quest list after inserting a CPU, showing updated progress.}
+    \label{fig:GUIQuestLists}
+\end{figure}
+
+All of this functionality is once again encapsulated in a separate actor blueprint, which can be placed in the scene to provide the user with real-time feedback on their assembly progress.
+It features functions to add new quests to the list, update existing goals, and mark quests as completed.
