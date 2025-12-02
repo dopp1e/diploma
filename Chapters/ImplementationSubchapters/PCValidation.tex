@@ -1,3 +1,43 @@
 \section{PC Validation (Jakub Jędrzejczyk)}
 
-TBD
+Finalizing the assembly of the PC requires validating that all components have been connected correctly.
+A set of functions responsible for determining whether the current assembly state is valid has been implemented in a ValidationUtils blueprint function library.
+
+The main function, \lstinline[language=C]|findValidPCs()|, shown in figure \ref{fig:ValidationFindValidPCs} iterates through all PC components currently present in the scene, checking for each whether it is a part of a valid PC assembly.
+Given the fact that all components connected together make a tree-like structure, this functionality can be realized by first finding the root of three - by recursively traversing up the parent components (done by \lstinline[language=C]|findComponentTopParent()| function) - and then validating whether this root component constitutes a valid PC assembly (done by \lstinline[language=C]|isComponentParentOfPC()| function).
+For the sake of slight optimization, each checked component (the found parent and all its children) are stored in a set of already validated components, preventing redundant checks.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/ValidationFindValidPCs.png}
+	\caption{Function responsible for finding valid PC assemblies in the scene.}
+	\label{fig:ValidationFindValidPCs}
+\end{figure}
+
+The \lstinline[language=C]|isComponentParentOfPC()| function takes a single component as input, and checks whether it is the root of a valid PC assembly.
+This is done by first flattening the entire tree of components to an array by a recursive function which gets all children of a component and their children, and so on.
+Then, given an array of all components in the assembly, it is iterated through, saving each component type to a separate variable, as shown in figure \ref{fig:ValidationPCVariableAssignment}, representing a single instance of that type required to constitute a valid PC.
+A component appearing more than once in the assembly is usually not an issue in the current implementation, as all components capable of appearing a number of times greater than one (such as RAM sticks, storage drives, GPUs) do not invalidate a PC assembly by appearing multiple times.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/ValidationPCVariableAssignment.png}
+		\label{fig:ValidationPCVariableAssignment}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/ValidationCheck.png}
+		\label{fig:ValidationCheck}
+	}
+	\caption{(a) Assigning component instances to variables representing required PC parts. (b) Checking whether all required parts are present.}
+    \label{fig:ValidationDouble}
+\end{figure}
+
+Once this array has been fully iterated through, a simple check, as shown in figure \ref{fig:ValidationCheck} is performed to ensure the valid PC assembly contains at least one of each required component type.
+If not, the function returns false, and the list of all components iterated through, for the sake of previously mentioned optimization.
+If the check passes, a structure representing a valid PC assembly is created, containing references to all the components making up the PC, and the function returns true along with this structure and the list of iterated components.
+
+Notably, it is not necessary to check whether components are compatible with each other (for example, whether the CPU fits the motherboard socket), as the connection system implemented earlier prevents incompatible components from being connected in the first place.
+
+With this, it's possible to find all valid PC assemblies in the scene, and retrieve their components for further processing, such as updating the player's progress in the assembly quest.
