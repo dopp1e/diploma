@@ -23,9 +23,9 @@ The engine our team has chosen is Unreal Engine 5 \cite{MostPowerfulRealtime} de
 \section{Movement tracking devices}
 \label{sec:MovementTrackingDevices}
 
-Movement tracking involves capturing a user’s physical motions and translating them into corresponding actions within the game engine. By using specialized input devices, we monitored the position and orientation of the user’s hands and eyes, enabling natural navigation and interaction within the virtual environment. This allowed the user to engage naturally with the world projected onto the surrounding screens, thereby creating a deeper sense of immersion in the scene and ensuring that movements felt responsive and intuitive. 
+Movement tracking involves capturing a user's physical motions and translating them into corresponding actions within the game engine. By using specialized input devices, we monitored the position and orientation of the user's hands and eyes, enabling natural navigation and interaction within the virtual environment. This allowed the user to engage naturally with the world projected onto the surrounding screens, thereby creating a deeper sense of immersion in the scene and ensuring that movements felt responsive and intuitive. 
 
-In our setup, hand tracking was achieved using a flystick, which allowed precise pointing, selection, and manipulation of virtual objects. Head tracking was performed using glasses fitted with reflective tracking markers, detected by external sensors to calculate the user’s position and orientation in real time.
+In our setup, hand tracking was achieved using a flystick, which allowed precise pointing, selection, and manipulation of virtual objects. Head tracking was performed using glasses fitted with reflective tracking markers, detected by external sensors to calculate the user's position and orientation in real time.
 
 \begin{figure}[!ht]
 	\centering
@@ -33,7 +33,7 @@ In our setup, hand tracking was achieved using a flystick, which allowed precise
 	\caption{Photo of the CAVE in operation. The person on the left is wearing tracked 3D glasses, which let them experience an illusion of a 3D environment.}
 \end{figure}
 
-A critical component of the setup was the ability to display the user’s view across multiple screens with correct virtual camera orientation. In Unreal Engine 5, this functionality is provided by the nDisplay plugin, which synchronizes rendering across a cluster of networked computers, with one acting as the primary node and others as secondary nodes. Each node runs an instance of the engine and drives one or more display devices, ensuring the user is fully encompassed within the virtual scene with correct perspective on each screen.
+A critical component of the setup was the ability to display the user's view across multiple screens with correct virtual camera orientation. In Unreal Engine 5, this functionality is provided by the nDisplay plugin, which synchronizes rendering across a cluster of networked computers, with one acting as the primary node and others as secondary nodes. Each node runs an instance of the engine and drives one or more display devices, ensuring the user is fully encompassed within the virtual scene with correct perspective on each screen.
 
 \begin{figure}[!ht]
 	\centering
@@ -56,14 +56,14 @@ Nevertheless, some required components were not available, and no suitable equiv
 
 \section{Importing 3D models into UE5}
 
-Blender’s ability to export assets in formats commonly used by game engines, such as .glb, streamlined the process of importing 3D models into Unreal Engine 5. For that task we used the glTF Runtime 2.0 plugin, which allows .gltf and .glb files to be loaded directly at runtime.
+Blender's ability to export assets in formats commonly used by game engines, such as .glb, streamlined the process of importing 3D models into Unreal Engine 5. For that task we used the glTF Runtime 2.0 plugin, which allows .gltf and .glb files to be loaded directly at runtime.
 
 The primary advantage of this approach is the ability to add, update, or replace models without rebuilding the project. Exporting a new .glb from Blender was sufficient for the updated model to appear correctly in the application. In contrast, the standard UE5 import process requires reimporting the asset, generating engine-specific files, and packaging them with the project. The runtime approach significantly reduced iteration time and simplified asset management.
 
 \section{Programming environments}
 \label{sec:ProgrammingEnviroments}
 
-To implement interaction logic and realistic object behavior in the virtual environment, we relied on Unreal Engine’s \textbf{Blueprint} system. Blueprints provide a visual scripting interface that allows developers to define gameplay logic using node-based graphs instead of traditional code, eliminating the need to modify C++ scripts directly.
+To implement interaction logic and realistic object behavior in the virtual environment, we relied on Unreal Engine's \textbf{Blueprint} system. Blueprints provide a visual scripting interface that allows developers to define gameplay logic using node-based graphs instead of traditional code, eliminating the need to modify C++ scripts directly.
 
 \begin{figure}[!ht]
 	\centering
@@ -88,7 +88,7 @@ Version control was essential for safe collaboration, keeping files organized an
 
 \subsection{GitHub}
 
-For all thesis-related files, which are primarily text and figures, we used \textbf{GitHub}. GitHub’s distributed version control model made it easy to simultaneously work on different sections of the thesis without interfering with one another’s work. Its web interface also proved convenient for diff viewing and merging everyone's work into one master document, keeping all contributions organized throughout the writing process.
+For all thesis-related files, which are primarily text and figures, we used \textbf{GitHub}. GitHub's distributed version control model made it easy to simultaneously work on different sections of the thesis without interfering with one another's work. Its web interface also proved convenient for diff viewing and merging everyone's work into one master document, keeping all contributions organized throughout the writing process.
 
 \subsection{Diversion}
 
@@ -96,4 +96,4 @@ For the Unreal Engine 5 portion of the project, we used \textbf{Diversion}, a ve
 
 \section{Diagram creation}
 
-For creating architectural diagrams used throughout the thesis, we employed \textbf{draw.io} (also known as diagrams.net), a free web-based diagramming tool. Its intuitive drag-and-drop interface was well suited for producing schematics documenting our system architecture. The tool’s ability to export graphics in formats such as PNG, SVG, and PDF further facilitated seamless integration into the LaTeX document.
+For creating architectural diagrams used throughout the thesis, we employed \textbf{draw.io} (also known as diagrams.net), a free web-based diagramming tool. Its intuitive drag-and-drop interface was well suited for producing schematics documenting our system architecture. The tool's ability to export graphics in formats such as PNG, SVG, and PDF further facilitated seamless integration into the LaTeX document.
