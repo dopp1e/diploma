@@ -143,6 +143,12 @@ Figure \ref{fig:GameScene} presents the completed design of the game scene.
 	\label{fig:GameScene}
 \end{figure}
 
+\input{Chapters/ImplementationSubchapters/ObjectHolding.tex}
+
+\input{Chapters/ImplementationSubchapters/Dtrack.tex}
+
+\input{Chapters/ImplementationSubchapters/ConnectingComponents.tex}
+
 \section{Tracking progress (Jakub Kinder)}
 
 The player's progress is tracked by a system called BuildManager, which is a specialized Quest Manager based on a tutorial by Ryan Laley \cite{laley_making_2023}.
@@ -216,12 +222,6 @@ Afterward, SaveProgress saves the result back into the FGoal array of the quest,
 
 Furthermore, this function also calls UpdatePRogress function that belongs to instance referenced in the QuestLog field.
 This final call notifies the GUI handler object of a change in state and provides necessary data - the Quest's ID, the updated goal's index, and the ProgressValue - so that the GUI can be updated to provide the user with immediate and accurate feedback on their assembly progress.
-
-\input{Chapters/ImplementationSubchapters/ObjectHolding.tex}
-
-\input{Chapters/ImplementationSubchapters/Dtrack.tex}
-
-\input{Chapters/ImplementationSubchapters/ConnectingComponents.tex}
 
 \input{Chapters/ImplementationSubchapters/PCValidation.tex}
 

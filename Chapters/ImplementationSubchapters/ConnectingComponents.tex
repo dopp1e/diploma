@@ -76,7 +76,9 @@ This is done to ensure the object is not affected by any forces for the moment o
 Then the delta between the two slots' world position and rotation are calculated, and the component being connected is moved and rotated accordingly to align the two slots perfectly.
 Finally, the connected component's physics are re-enabled, its mesh is attached to the parent component's mesh using the \lstinline[language=C]|AttachComponentToComponent()| function provided by Unreal Engine (which welds the objects together), and the component itself is attached as a child actor to the parent component using the \lstinline[language=C]|AttachActorToActor()| function.
 
-Somewhat surprisingly, retaining a connected components' physics as enabled works even when its parent component is being held, and thus has its physics simulation disabled.
+Disabling the physics for a connected component made it remain in place after being connected.
+While its natural that simulated physics such as gravity would not affect it, it came as a surprise that the connected component would not follow its parent component's movement when being held.
+As such, a connected component's physics simulation is enabled, and thanks to the attachments made using Unreal Engine's built-in functions, it correctly follows the parent component's movement while only being affected by physics when the parent component itself is released.
 
 \begin{figure}[H]
 	\centering
@@ -91,3 +93,20 @@ Somewhat surprisingly, retaining a connected components' physics as enabled work
 	\caption{CPU and valid motherboard successfully connected together, as seen in Unreal Engine's Outliner.}
 	\label{fig:ComponentsConnectedOutliner}
 \end{figure}
+
+Crucially, once the two components have been connected, the same event unbinding takes place as if the two slots had been moved apart, ensuring no lingering bindings remain, as they could lead to unexpected behavior later on.
+
+Because of the independence of a single connection, multiple components can be connected together in succession using this system, and a set of components connected together will behave as a single object when held.
+Connecting new components builds a tree-like structure, where each component can have multiple other components connected to it, and the root of this tree can easily be added as a child actor to another component.
+
+To enhance user experience, a slight modification was made to the object holding system, which recursively selects the parent of the highlighted object when attempting to pick up any item.
+If the object has no parents (i.e. is not connected to any other components), the object itself is picked up as normal.
+However, if the object is connected to another component, the root parent of the entire connected structure ends up being selected instead, allowing the user to pick up and move entire assemblies of connected components with a single grab.
+
+Additionally, the last remaining free button on the controller was assigned to a "disconnect" action, which marks the next picking up of an object as an intent to disconnect it from its parent component.
+When the user picks up a connected component while the disconnect mode is active, the component is detached from its parent using Unreal Engine's \lstinline[language=C]|DetachFromActor()| function, and both the parent and child components' \lstinline[language=C]|ConnectedTo| properties are cleared.
+A potential omission in this functionality is that should a picked component not have a parent, the disconnect mode remains active, which could lead to confusion, though this has not emerged as a significant issue during testing.
+This functionality allows the user to easily remove components from assemblies they have built, and re-use them elsewhere as needed.
+
+With this system in place, users can now connect components together intuitively using VR controllers, allowing for the assembly of complex structures from individual parts.
+Should they make a mistake, they can easily disconnect components and reconfigure their assemblies as needed, enhancing the overall interactivity and flexibility of the VR experience.
