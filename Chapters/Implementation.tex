@@ -176,20 +176,20 @@ It consists of a goal description, that is to be displayed for the player, enume
 The core fields for the system's operation during runtime are integer fields, TargetCount and CurrentCount.
 TargetCount defines threshold value that must be met for the goal to be completed, like number of components that need to be attached, while CurrentCount holds the current state value, which is updated reactively upon met conditions, defined by the system, for example number of RAM modules installed.
 
-Another important structure is, presented on figure \ref{fig:fquestpic}, FQuest, which far simpler in construction than FGoal.
-It defines a quest in the tracking system, and consists of array of FGoal structures symbolizing goals needed to complete the quest.
-Apart from that, it possesses description field, a text displayed to the player, and ID which is used identify particular FQuest instance, mainly for communication with component objects or GUI element displaying current game state.
+Another important structure is FQuest, presented on figure \ref{fig:fquestpic}, which is far simpler in construction than FGoal.
+It defines a quest in the tracking system, and consists of an array of FGoal structures symbolizing goals needed to complete the quest.
+Apart from that, it possesses description field, a text displayed to the player, and ID which is used to identify particular FQuest instance, mainly for communication with component objects or GUI element displaying current game state.
 
 \subsubsection{Quest Data storage}
 Both of the aforementioned structures were used to create UE5 Data Table, named QuestTemplate, with purpose of housing quest templates for ease of modifying existing ones or creating brand-new quests.
-There are other benefit to this approach, it simplifies the process of creating FQuest instances during runtime as well as ensures desired order of elements in FGoal array each time a template is copied.
+There are other benefit to this approach - it simplifies the process of creating FQuest instances during runtime as well as ensures desired order of elements in FGoal array each time a template is copied.
 However, at the current stage of the developed application the data table holds only one quest, whose goals are individual steps of PC assembly explained in \autoref{sec:pcassembly}.
 
 \subsubsection{BuildManager actor}
 The core functional component of the progress tracking system is the actor on the scene, named BuildManager.
 It possesses 3 critical fields, Quest, containing a FQuest instance of currently executed by the user quest, QuestDataTable, which is a reference to mentioned above data table, and QuestLog, an instance of class BP\_QuestLog, that handles GUI element displaying current state of the quest to the player.
 
-At the start of the game BuildManager, creates a FQuest instance, by copying a template the data table and awaits signals from PC component connection events.
+At the start of the game BuildManager, creates an FQuest instance, by copying a template the data table and awaits signals from PC component connection events.
 Unlike most objects in the application, this manager does not utilize built-in event system as it is based on one dispatcher many listeners model.
 Instead, the connection events search for an actor of BuildManager class and call its SaveProgress function with appropriate parameters, GoalType, enumaration value describing type of goal, and ProgressValue indicating progress made as an integer value.
 
