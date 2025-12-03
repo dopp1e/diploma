@@ -97,6 +97,8 @@ Figure \ref{fig:ComponentConfiguration} presents a full configuration of a compu
 	\label{fig:ComponentConfiguration}
 \end{figure}
 
+\input{Chapters/ImplementationSubchapters/GUI.tex}
+
 \section{Game scene design (Hubert Leszczyński)}
 
 After completing the creation of 3D models and the game object configuration, the game scene was ready for design.
@@ -138,10 +140,16 @@ This division was required to help the trainee distinguish the virtual walls fro
 Figure \ref{fig:GameScene} presents the completed design of the game scene.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/GameScene.png}
+		\includegraphics[width=0.7\textwidth]{Images/GameScene-optimized.jpg}
 	\caption{Final design of the game scene}
 	\label{fig:GameScene}
 \end{figure}
+
+\input{Chapters/ImplementationSubchapters/ObjectHolding.tex}
+
+\input{Chapters/ImplementationSubchapters/Dtrack.tex}
+
+\input{Chapters/ImplementationSubchapters/ConnectingComponents.tex}
 
 \section{Tracking progress (Jakub Kinder)}
 \label{chap:buildmanager}
@@ -217,3 +225,5 @@ Afterward, SaveProgress saves the result back into the FGoal array of the quest,
 
 Furthermore, this function also calls UpdatePRogress function that belongs to instance referenced in the QuestLog field.
 This final call notifies the GUI handler object of a change in state and provides necessary data - the Quest's ID, the updated goal's index, and the ProgressValue - so that the GUI can be updated to provide the user with immediate and accurate feedback on their assembly progress.
+
+\input{Chapters/ImplementationSubchapters/PCValidation.tex}

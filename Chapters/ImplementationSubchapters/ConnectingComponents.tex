@@ -1,0 +1,113 @@
+\section{Connecting Components (Jakub Jędrzejczyk)}
+\label{chap:ConnectingComponents}
+
+The functionality of allowing components to be connected together is handled by a dedicated blueprint actor, the \lstinline[language=C]|ComponentSlot|.
+It is placed as a child actor within the components that are designed to have other components connected to them (e.g. the Motherboard has multiple slots for RAM sticks, a CPU socket, and PCIe slots for GPUs and other expansion cards) and represents a singular point of potential connection with another component.
+They base \lstinline[language=C]|ComponentSlot| features a red cuboid using a similar material as the overlay material used for highlighting objects, making it transparent, yet visually distinct.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.6\textwidth]{Images/MotherboardWithSlots.png}
+	\caption{Motherboard actor with visible ComponentSlot child actors.}
+	\label{fig:MotherboardWithSlots}
+\end{figure}
+
+A number of them can be placed within a single component, as per figure \ref{fig:MotherboardWithSlots}, always scaled to appropriately cover the area where another component is expected to be connected.
+
+Similarly to how the \lstinline[language=C]|Hand| actor handles highlighting objects, slots also use overlap events to detect collision and possibly begin the connection process.
+On overlap with another component, the slot does a series of checks (see fig. \ref{fig:ComponentSlotBlueprintPreliminary}) to ensure the other actor:
+
+\begin{itemize}
+    \item is also a ComponentSlot; 
+    \item that it's designed for the same component;
+    \item that their type matches (so that, for example, a DDR5 RAM stick can not connect to a DDR4 slot);
+    \item that the contacts (male or female) are not the same (so that e.g. two CPUs cannot be connected together);
+    \item that neither of the two ComponentSlots is already occupied, i.e. in use for another connection;
+    \item and (using the \lstinline[language=C]|AreSlotsCloseEnough()| function) that the two slots' rotation is within acceptable limits (up to 15 degrees of difference) for connection.
+\end{itemize}
+
+While the \lstinline[language=C]|AreSlotsCloseEnough()| function was originally used to ensure more accurate connection points by also checking the distance between ComponentSlots, this functionality was later deemed to be unnecessary, as the slots themselves can have their size modified to adjust the desired margins.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentSlotBlueprintPreliminary.png}
+	\caption{ComponentSlot's preliminary connection checks.}
+	\label{fig:ComponentSlotBlueprintPreliminary}
+\end{figure}
+
+To ensure the connection process only ever happens after a component has been released from the hand, assuming the checks have passed, the slot makes use of event binding \cite{BindingUnbindingEvents} to listen for the \lstinline[language=C]|ObjectChangeHeldState| event from either of the two ComponentSlots' parent components, and launching the \lstinline[language=C]|EitherIntersectingObjectReleased| event.
+To do so, two separate bindings are created, one for each of the two components involved in the potential connection.
+
+While it may seem redundant to create these two bindings, it's important to note that because of the abstraction of the ComponentSlot, we wish to avoid making any assumptions about the parent of which slot will be released by the user for the sake of connecting it to another component.
+It could be assumed that gender of a slot (male or female) \cite{unwinMetaphorExplorationMetaphorical2019} describes its functionality so that, for example, the connections will only ever occur with the male component slot being "relased into" the female slot, but this then introduces issues with describing different slots accordingly.
+A graphic card's PCIe connector can be aptly described as a "male" one, given its protrusion, and the motherboard's PCIe slot as "female", given its receptacle nature, fitting the metaphor well.
+However, the same cannot be said about modern CPU sockets, which are most often LGA type \cites{DefinitionLGA}{LandGridArray2025}, where the pins are located on the motherboard's side, and the CPU itself has flat contact points.
+Similarly, both SATA power and data connectors feature protrusions on the drive's side, while the cables have receptacles.
+As such it's basically impossible to limit the connection process to a more strict descriptor without possibly introducing inconsistencies, particularly as current UI elements utilize the internal variables of components for details displayed to the user.
+
+Once these events are bound, both of the component slots' \lstinline[language=C]|InContactWith| variables are set to references to each other,
+effectively locking them into a potential connection state, after which both slots' \lstinline[language=C]|UpdateParentHighlight()| function, shown in figure \ref{fig:UpdateParentHighlightBlueprint} with the \lstinline[language=C]|CloseEnough| boolean argument set to true, is called to update whichever item is being held with an overlay material separate to the highlighting one (as shown in figure \ref{fig:ComponentsCloseEnough}), indicating that the held object is in a valid position to be connected to another component.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/UpdateParentHighlightBlueprint.png}
+	\caption{ComponentSlot's UpdateParentHighlight function blueprint.}
+	\label{fig:UpdateParentHighlightBlueprint}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsCloseEnough-optimized.jpg}
+	\caption{Two valid component slots close enough to be connected - the held CPU is highlighted in green to indicate this.}
+	\label{fig:ComponentsCloseEnough}
+\end{figure}
+
+Should the object be moved away from the slot before being released, the \lstinline[language=C]|ActorEndOverlap| event will be triggered, which, assuming the other actor is also a \lstinline[language=C]|ComponentSlot|, will remove the previously described bindings, and once more calling the \lstinline[language=C]|UpdateParentHighlight()| function (this time with the argument set to false) to remove the special highlight from the held object, as per figure \ref{fig:ComponentsNotCloseEnough}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsNotCloseEnough-optimized.jpg}
+	\caption{Two valid component slots have been moved away, no longer close enough to be connected - the held CPU returns to standard hand highlight.}
+	\label{fig:ComponentsNotCloseEnough}
+\end{figure}
+
+If the object is instead released, the bound event calls \lstinline[language=C]|TryConnectComponents()| function, which handles the actual connection process.
+This function sets each slots' \lstinline[language=C]|ConnectedTo| properties to the opposite component slot's parent component, disables the visibility of both slots, and then disables the physics simulation on the component being connected (the one that was held by the user).
+This is done to ensure the object is not affected by any forces for the moment of connection itself, as without it, the object would drift away slightly before being snapped into place, which is not the intended behavior.
+Then the delta between the two slots' world position and rotation are calculated, and the component being connected is moved and rotated accordingly to align the two slots perfectly.
+Finally, the connected component's physics are re-enabled, its mesh is attached to the parent component's mesh using the \lstinline[language=C]|AttachComponentToComponent()| function provided by Unreal Engine (which welds the objects together), and the component itself is attached as a child actor to the parent component using the \lstinline[language=C]|AttachActorToActor()| function.
+
+Disabling the physics for a connected component made it remain in place after being connected.
+While its natural that simulated physics such as gravity would not affect it, it came as a surprise that the connected component would not follow its parent component's movement when being held.
+As such, a connected component's physics simulation is enabled, and thanks to the attachments made using Unreal Engine's built-in functions, it correctly follows the parent component's movement while only being affected by physics when the parent component itself is released.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.0\textwidth]{Images/ComponentsConnected-optimized.jpg}
+	\caption{CPU and valid motherboard successfully connected together.}
+	\label{fig:ComponentsConnected}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.4\textwidth]{Images/ComponentsConnectedOutliner.png}
+	\caption{CPU and valid motherboard successfully connected together, as seen in Unreal Engine's Outliner.}
+	\label{fig:ComponentsConnectedOutliner}
+\end{figure}
+
+Crucially, once the two components have been connected, the same event unbinding takes place as if the two slots had been moved apart, ensuring no lingering bindings remain, as they could lead to unexpected behavior later on.
+
+Because of the independence of a single connection, multiple components can be connected together in succession using this system, and a set of components connected together will behave as a single object when held.
+Connecting new components builds a tree-like structure, where each component can have multiple other components connected to it, and the root of this tree can easily be added as a child actor to another component.
+
+To enhance user experience, a slight modification was made to the object holding system, which recursively selects the parent of the highlighted object when attempting to pick up any item.
+If the object has no parents (i.e. is not connected to any other components), the object itself is picked up as normal.
+However, if the object is connected to another component, the root parent of the entire connected structure ends up being selected instead, allowing the user to pick up and move entire assemblies of connected components with a single grab.
+
+Additionally, the last remaining free button on the controller was assigned to a "disconnect" action, which marks the next picking up of an object as an intent to disconnect it from its parent component.
+When the user picks up a connected component while the disconnect mode is active, the component is detached from its parent using Unreal Engine's \lstinline[language=C]|DetachFromActor()| function, and both the parent and child components' \lstinline[language=C]|ConnectedTo| properties are cleared.
+A potential omission in this functionality is that should a picked component not have a parent, the disconnect mode remains active, which could lead to confusion, though this has not emerged as a significant issue during testing.
+This functionality allows the user to easily remove components from assemblies they have built, and re-use them elsewhere as needed.
+
+With this system in place, users can now connect components together intuitively using VR controllers, allowing for the assembly of complex structures from individual parts.
+Should they make a mistake, they can easily disconnect components and reconfigure their assemblies as needed, enhancing the overall interactivity and flexibility of the VR experience.

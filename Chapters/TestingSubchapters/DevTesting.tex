@@ -1,0 +1,41 @@
+\section{Development Testing}
+
+Testing during development consisted mostly of acceptance testing of individual features as they were implemented and regression testing to ensure that any new features did not break existing functionality \cite{anirbanSOFTWAREQUALITYASSURANCE2015}.
+
+\subsection{Feature Testing}
+
+Each component interaction was tested manually upon implementation to verify correct behavior.
+This included:
+
+\begin{itemize}
+    \item \textbf{Grabbing and releasing:} Ensuring objects could be picked up and dropped reliably using the VR controllers;
+    \item \textbf{Connection point detection:} Verifying that components would correctly identify valid mounting locations and snap into place when released within the acceptable tolerance;
+    \item \textbf{Rotation mechanics:} Testing that both physical hand rotation and joystick-based fine adjustments worked as intended;
+    \item \textbf{Audio and visual feedback:} Confirming that appropriate cues were triggered upon successful or failed placement attempts.
+\end{itemize}
+
+\subsection{Integration Testing}
+
+After individual features were verified, integration testing was performed to ensure the complete PC building workflow could be executed from start to finish.
+This involved building a complete PC configuration multiple times, verifying that:
+
+\begin{itemize}
+    \item Components could be installed in any order, but only valid connections could be made;
+    \item The task list updated correctly as each step was completed;
+    \item No component interactions interfered with previously placed parts.
+\end{itemize}
+
+\subsection{VR-Specific Considerations}
+
+Given the nature of VR applications, additional testing focused on platform-specific concerns:
+
+\begin{itemize}
+    \item \textbf{Position translation:} Ensuring that real world hand movements accurately translated to in-app controller positions and to object manipulation;
+    \item \textbf{Scale verification:} Ensuring component sizes matched real-world proportions to maintain immersion and educational accuracy during modelling.
+\end{itemize}
+
+\subsection{Limitations}
+
+Due to time constraints and team size, formal unit testing and automated test suites were not implemented.
+Testing was performed exclusively by the development team members, which may have introduced blind spots that were later identified during user testing (see Section \ref{sec:user-testing-results}).
+Additionally, testing was mostly done on the team's PCs, with 

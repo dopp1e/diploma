@@ -1,0 +1,141 @@
+\section{Object Holding (Jakub Jędrzejczyk)}
+\label{chap:ObjectHolding}
+
+For the sake of manipulating holdable objects within 3D space an actor blueprint called \lstinline[language=C]|Hand| was created.
+
+The hand is represented visually by a simple sphere mesh, as seen in figure \ref{fig:HandBlueprint}.
+It also includes a spline, which was planned to be used for interacting with virtual user interfaces, for example for user settings.
+The red arrow seen in the figure represents the forward vector of the hand, and is seen in debug view (e.g. within the editor), but not in the final application.
+As no directly interactive interfaces were implemented, this functionality was disabled in the final product.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/HandObject.png}
+	\caption{Hand blueprint within the editor.}
+	\label{fig:HandBlueprint}
+\end{figure}
+
+The hand's default color is pink, but this can be easily changed as the object's initialization includes modifying the material of the mesh and saving the reference to its material instance.
+The hand also exposes a function called \lstinline[language=C]|SetColor()|, which allows for changing the hand's color at runtime.
+
+While the previously described \lstinline[language=C]|Hand| blueprint represents a hand's logic, this logic was designed to be independent of which hand it represents.
+Given the anatomical constraint that users possess no more than two hands, they are distinguished using the \lstinline[language=C]|isLeft| boolean property.
+It is theoretically possible to further generalize this logic, but with the application only expecting one user at a time, this limitation was deemed acceptable.
+
+Thus, additional blueprints called \lstinline[language=C]|LeftHand| and \lstinline[language=C]|RightHand| were created, which inherit from the base \lstinline[language=C]|Hand| class.
+Their initialization includes setting the \lstinline[language=C]|isLeft| property accordingly, as well as changing the hand's color to orange for the left hand, and blue for the right hand.
+
+For the sake of discerning the hands, choosing a set of contrasting colors was deemed important.
+While research shows that red-green colors generally provide the highest contrast \cite{yaoMeasurementsHumanVision2011}, red and green, particularly in Europe, are often associated with negative and positive actions respectively \cite{grzybowskiWhatColorHow2019}.
+To avoid any subconscious associations, the second ranking set of colors, blue and yellow was chosen, though due to the perceived brightness of yellows in the CAVE, the yellow was shifted into a softer orange.
+
+The logic discussed further concerns the base \lstinline[language=C]|Hand| class, and thus applies to both hands.
+
+The hand most notably makes use of the \lstinline[language=C]|OnActorBeginOverlap| and \lstinline[language=C]|OnActorEndOverlap| events to determine when it is in contact with a holdable object.
+The hand includes an array of references to all currently overlapping holdable objects, the former of the events adding objects to it, and the latter removing them, highlighting one of these objects.
+
+For the sake of intuitiveness, ease of use, and ease of development, the hand only ever highlights one object at a time, prioritizing the smallest one.
+Additionally, an object can only be highlighted by one hand at a time - should both hands overlap with the same object, only the first hand to have overlapped with it will be able to highlight it.
+Should multiple objects be allowed to be highlighted at once, it would require further testing, on top of being potentially overwhelming and confusing for the user.
+This decision is based on the assumption that a smaller object will be more difficult to pick, particularly in a tight environment, which is often encountered when building a PC due to the components' sizes.
+Should the user instead mean to pick up a larger object, it should be relatively easy to find a spot where it is not overlapping with any smaller objects.
+
+The highlighting takes after the hand's color, adding a glowing effect to the object using a dynamic material instance.
+Originally, the plan was to add an outline effect to the object (see fig. \ref{fig:firsthighlighting}) \cite{unrealuniversityHowHightlightAny2024}, but due to the way it was rendered (adding planes expanded from each side of the object's mesh), this effect required fine-tuning of its arguments to produce visually appealing results for both small and large objects.
+This complexity was deemed unnecessary, so the choice was made to instead use a glowing overlay material (see fig. \ref{fig:currenthighlighting}) \cite{unrealartwithalirezaAmazingOverlayHighlight2025}, which only has one downside, of not visually "enlarging" small objects as the outline effect would.
+This trade-off was deemed acceptable.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/FirstHighlighting.png}
+		\label{fig:firsthighlighting}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.45\textwidth]{Images/CurrentHighlighting.png}
+		\label{fig:currenthighlighting}
+	}
+	\caption{Screenshots of the highlighting effect on a holdable object: (a) original outline effect, (b) current glowing effect.}
+    \label{fig:highlightingeffects}
+\end{figure}
+
+This glow effect makes use of a rounded sine wave to manipulate the intensity of the color being overlaid on the object, producing a smooth pulsing effect.
+A standard sine wave is not desired in this instance as it retains its edge values for too short a period of time, making the pulsing feel too abrupt.
+
+The hand also utilizes Unreal Engine's event dispatchers \cites{tylerserinoEventDispatchersUnreal2023}{EventDispatchersUnreal}, allowing other objects to subscribe to the hand's position updates.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.95\textwidth]{Images/HandPositionUpdate.png}
+	\caption{Blueprints sending events regarding hand position updates.}
+	\label{fig:HandPositionUpdate}
+\end{figure}
+
+Notable is the requirement of the rotation being converted from Euler angles (pitch, yaw, roll), described within Unreal Engine in the form of a struct called the rotator to a quaternion representation in an effort to avoid an occurrence known as Gimbal lock which happens when two rotation axes become aligned, causing loss of one rotational degree of freedom \cites{diebel2006representing}{diazQuaternionicApproachTeaching2025a}. 
+This effectively means that a simple subtraction of two sets of Euler angles may, in some cases, produce incorrect results.
+To combat this issue, after being converted to quaternions, the two quaternions are multiplied together, with one of them being conjugated (inverted).
+As multiplication of quaternions is not commutative \cite{kuipers1999quaternions}, it's important to note which quaternion is conjugated.
+With quaternion multiplication being equal to the composition of rotations \cite{kuipers1999quaternions}, and the latter of the two angles being inverted, the resulting quaternion effectively represents the difference between the two rotations, at which point it is converted back to Euler angles to be stored and used again in the next cycle.
+
+Once an object has been highlighted, the user can pick it up by pressing the trigger button on the controller (or the button H on the keyboard for testing purposes).
+The logic for the picking up is handled in the hand blueprint itself.
+It launches only when the highlighted object is valid (i.e., there is one), setting the hand's currently held object variable to a reference to the highlighted object and calls the object's \lstinline[language=C]|Follow()| function, passing a reference to itself (the hand) as an argument.
+
+This \lstinline[language=C]|Follow()| function, implemented in the holdable object's blueprint, sets the object's state to "being held", disabling physics simulation and attaching the object to the hand's position updates via the previously mentioned event dispatcher.
+Thus, the object "listens" for the hand's position updates, transforming its own position and rotation accordingly.
+The physics simulation needs to be disabled, as otherwise gravity would pull the object down, even while being held.
+It additionally serves the purpose of disabling collisions with other objects, which, somewhat counterintuitively, decreases the intuitiveness of the application.
+While retaining collisions would follow real-world physics, in this virtual environment there is no way to provide real feedback to the user when a collision occurs.
+Collisions in the virtual space would lead to the hand's and the held object's positions being separated, and even visual or audio feedback would most likely not be sufficient to convey the sensation of a collision.
+
+Tied to the same button but launching in alternating fashion with the \lstinline[language=C]|Follow()| function is the \lstinline[language=C]|StopFollowing()| function, which effectively nullifies the previously described behavior, clearing all references and re-enabling physics simulation.
+
+Once an object has been either picked up or dropped, an appropriate sound is played.
+This makes use of the \lstinline[language=C]|PlaySound2D()| function, which "plays a sound directly with no attenuation, perfect for UI sounds" \cite{PlaySound2D}.
+Unreal Engine provides a number of built-in sounds, many of which are used for interactions within the engine itself.
+In the list seen in figure \ref{fig:PickingSounds}, two sounds which were chosen for picking and dropping objects can be seen - the "Dockable\_Window\_Open" and "Dockable\_Window\_Close" sounds respectively.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.60\textwidth]{Images/PickingSounds.png}
+	\caption{Sound picking menu with the two sounds used for picking up and dropping holdable objects visible.}
+	\label{fig:PickingSounds}
+\end{figure}
+
+A transitive side effect of this throwing ability is that holdable objects can end their overlap with the hand much more abruptly than when simply being let go.
+Based on our observations, this speed can in fact be high enough to skip the \lstinline[language=C]|OnActorEndOverlap| event entirely, skipping the logic that would remove the object from the hand's overlapping objects array.
+This would lead to the hand highlighting an object placed somewhere else in the environment, potentially far away from the hand itself.
+Moreover, if the component was particularly small, due to the priority introduced, it could lead to the hand being unable to highlight any other object at all, requiring a restart of the application to fix.
+
+A crude, but effective solution to this issue was implemented, which ensures that the currently highlighted object is within distance equal to 2.5 times the size of the object in a given dimension each tick.
+Should a highlighted object leave this range, it is removed from the hand's overlapping objects array.
+By then using the standard \lstinline[language=C]|updateHighlight()| function, the highlight materials are also updated accordingly.
+This gives enough leeway for both fast movements (as object position updates lag behind just slightly) and the rotation in-place described later, while still removing objects that have, one way or another, managed to skip the end overlap event.
+
+This allows the user to pick up, move, and drop holdable objects at will,
+however preliminary development testing found a limitation in this system.
+
+Though the rotation of the hand was relayed to the held object, if this scope of available manipulation (dependant entirely on the physical hand's rotation) proved to be insufficient, the user would have to let go of the object and pick it up again at a different angle.
+This does represent how a real-world hand can't rotate an object indefinitely without letting go, but providing a way to rotate the object while holding it was deemed necessary and more intuitive in the virtual environment.
+
+For this purpose, a Rotating Movement component was added to the base holdable object.
+This component, as per Unreal Engine's documentation, "performs continuous rotation of a Component at a specific rotation rate" \cite{MovementComponentsUnreal}.
+By tying the movement of the controller's joystick to the action of setting the rotation rate of this component in the currently held object, it's possible to rotate the object around its local axes while holding it.
+Because a joystick provides two axes of input, only two axes of rotation can be controlled at once, with the third axis being left to the physical rotation of the hand.
+The choice was made to tie the joystick's X axis to the object's yaw (rotation around the vertical axis), and the joystick's Y axis to the object's roll (rotation around the forward axis), represented visually in figure \ref{fig:RotationAxes}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.4\textwidth]{Images/RotationAxes.png}
+	\caption{Intel CPU object with visualized available rotation axes when held, where blue represents the axis controlled by the joystick's X axis, and yellow represents the axis controlled by the joystick's Y axis.}
+	\label{fig:RotationAxes}
+\end{figure}
+
+Thus, the example CPU object visible in figure \ref{fig:RotationAxes} would be rotated around its vertical axis (blue) by pushing the joystick up or down, and around its forward axis (yellow) by pushing the joystick left or right, though the same axes are applicable to all holdable objects.
+As most of them are made lying down, similarly to the CPU, this mapping was deemed intuitive.
+
+While the usage of two hands in the application has been tested throughout the development process, these hands were largely separate.
+While it was possible to, for example, connect one component to another component held by the other hand, due to general preference of CAVE apps to only be used with one hand, and lack of interactions involving two hands (e.g. requiring both hands to pick up a large or otherwise heavy object), the second hand was removed from the final testing phase.
+
+% potencjalnie "komiks" z podnoszeniem przedmiotów
