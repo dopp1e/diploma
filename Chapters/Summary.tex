@@ -1,8 +1,28 @@
 \chapter{SUMMARY} 
+This chapter presents the final results of our project, descriptions of its current state, achieved goals, our conclusions, and future plans.
 
-\section{Results}
+\section{Results (Mateusz Merda, Jakub Kinder)}
+\label{sec:results}
+Through the course of this diploma project we have developed an application that is both functional and visually sound. It possesses the desired core functionalities while also being possible to extend it with new features in the future.
 
-\section{Conclusions}
+The application was succesfully integrated into the CAVE tracking and display systems. The nDisplay setup worked as desired, and we have encountered no significant issues with either the glasses or the flystick controller. The user is able to walk and look around in the CAVE and their motions are flawlessly translated into the virtual environment.
+
+We have also created our own 3D models, as described in \autoref{chap:models}. While at times lacking visual clarity, testers still rated them as sufficient for the purpose of teaching about PC assembly (\autoref{sec:user-testing-results}), and every important part of a computer was included in the application.
+
+In its current state, the application allows players to interact with provided PC components using Hand mechanics presented in \autoref{chap:ObjectHolding}. It possesses functional component connection mechanic described in \autoref{chap:ConnectingComponents} as well as a progress tracking system, \autoref{chap:buildmanager}.
+Furthermore, the trainer contains helpful GUI elements in the form of a clock that measures building time, a task list which guides novice PC builders through the most common PC building procedures, and an information panel for each PC part, described in-depth in \autoref{chap:GUI}.
+The application also features cables for connecting some components together, as described in more detail in \autoref{sec:cableconnector}, However, due to their late appearance in the project, they still need refinement.
+
+The goal of creating an effective training tool was fulfilled, as the knowledge gains observed in our application were comparable to those produced by using PC Building Simulator. According to our test results summarized in \autoref{sec:user-testing-summary}: "6 out of 7 users (86\%) preferred the VR simulator over PC Building Simulator". This should be seen as a success, as the latter is a popular commercial product, even if it was designed primarily for entertainment rather than formal instruction.
+
+\section{Conclusions (Mateusz Merda)}
+\label{sec:conclusions}
+
+From a developer's perspective, Unreal Engine 5 proved to be a satisfactory framework for implementing user interactions, real-time physics, and multi-display synchronization. The decision to create all 3D assets in Blender ensured consistency and compatibility, while the glTF runtime import workflow enabled easy iteration throughout the asset creation process. The implemented systems demonstrate the feasibility of building complex technical training tools entirely using UE5's blueprints.
+
+Integration with CAVE's tracking systems proceeded smoothly and no major tracking-related issues were encountered within the application itself. The minor problems that did arise can be attributed to limitations of the CAVE environment itself, such as reduced tracking accuracy near the walls. Despite these constraints, testers found the VR-based approach more intuitive and natural than interacting with a conventional computer game.
+
+The user evaluation further validates the design choices made during development. Participants' strong preference for the VR simulator demonstrates that the application successfully met its primary goal, and the results collectively prove that it is feasible to develop an effective educational tool for manual assembly training using immersive VR technologies.
 
 \section{Future plans (Jakub Jędrzejczyk)}
 \label{sec:FuturePlans}
