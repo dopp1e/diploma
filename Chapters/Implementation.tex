@@ -151,6 +151,57 @@ Figure \ref{fig:GameScene} presents the completed design of the game scene.
 
 \input{Chapters/ImplementationSubchapters/ConnectingComponents.tex}
 
+\section{Cable connector (Mateusz Merda)}
+
+In real-life PC assembly, several components are connected not through rigid slots but via cables. To maintain realism in our virtual environment, we incorporated this into the building process. Additional connector slots were therefore added to components such as the PSU, as shown in Figure~\ref{fig:PowerSupplyWithAtxPortConnector}.
+
+\begin{figure}
+	\centering
+		\includegraphics[width=0.7\textwidth]{Images/powersupply.png}
+	\caption{Power Supply Unit with slots added to the ATX (top), EPS (three on the left) and SATA (three on the right) ports.}
+	\label{fig:PowerSupplyWithAtxPortConnector}
+\end{figure}
+
+To represent the cables themselves, Unreal Engine’s built-in \textbf{Cable Component} was used. This component exposes several configuration parameters, the most important being width and the number of sides used to approximate the cable’s geometry. A width of 1cm and six sides produced a visually convincing result without introducing unnecessary performance overhead. Combined with a simple black material, the cable appears round while remaining lightweight to render.
+
+One of the main advantages of the Cable Component is its built-in collision system, something that a simple spline does not provide. A welcome side effect of enabling collisions is that cables naturally drape over nearby components and wrap around obstacles, resulting in behavior that closely mimics reality.
+
+After configuring the cable appearance, the next step was to attach it to the corresponding port components. Ideally, this would be done using standard attachment functions such as \texttt{AttachActorToComponent}, with the port serving as the parent. However, this only works reliably when the port’s static mesh is the root component of the actor. In our project, this was not the case, leading to an issue where the mesh responded to physics and gravity while the root remained fixed, causing the cable to detach visually. Changing root components at this stage risked breaking other parts of the application, so an alternative solution was implemented. As shown in the bottom half of Figure~\ref{fig:CableConnectorBlueprint}, the cable’s world location is updated every tick to match the location of the port’s static mesh. This ensures that the starting point of the cable correctly follows the port under all circumstances.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/cable-connector-blueprint.png}
+	\caption{Cable Connector's blueprint}
+	\label{fig:CableConnectorBlueprint}
+\end{figure}
+
+\subsubsection{Cable spawner}
+
+Unlike other spawners, which create a single object at a time, a cable involves two separate port components, each treated as its own object. For this reason, the spawning logic needed to be adapted so that the respawn timer only begins once \emph{both} ports have moved sufficiently far from their original positions, as illustrated in Figure~\ref{fig:CableSpawnerBlueprint}. In contrast, a standard \texttt{HoldableObjectSpawner} monitors the distance of only one object (Figure~\ref{fig:SpawnObject}).
+
+\begin{figure}
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/cable-spawner-blueprint.png}
+	\caption{Part of Cable Spawner's blueprint responsible for the respawn timer.}
+	\label{fig:CableSpawnerBlueprint}
+\end{figure}
+
+The Cable Spawner takes two references to \texttt{Port} class, as shown in Figure~\ref{fig:CableSpawnerParameters}. When the \texttt{spawnObject} method is called, it first spawns both ports with a small offset to prevent overlap. The Cable Connector is then created and attached to each port. Because the Cable Component has collisions enabled, the cable does not clip through surfaces such as shelves; instead, it rests naturally on top of them. The resulting cable setup is shown in Figure~\ref{fig:SpawnedCable}.
+
+\begin{figure}[h!]%
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.4\textwidth]{Images/cable-spawner-parameters.png}
+		\label{fig:CableSpawnerParameters}
+	}%
+	\hfil
+	\subfigure[]{
+		\includegraphics[width=0.48\textwidth]{Images/spawnedcable.png}
+		\label{fig:SpawnedCable}
+	}
+	\caption{Cable Spawner variables and the final result of creating a cable connected to a port on each end.}
+\end{figure}
+
 \section{Tracking progress (Jakub Kinder)}
 \label{chap:buildmanager}
 
