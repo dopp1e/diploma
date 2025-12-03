@@ -1,19 +1,31 @@
 \chapter{SUMMARY} 
-This chapter presents results of the project, descriptions of its current state, achieved goals, our conclusions and future plans.
+This chapter presents the final results of our project, descriptions of its current state, achieved goals, our conclusions, and future plans.
 
-\section{Results (Jakub Kinder)}
+\section{Results (Mateusz Merda, Jakub Kinder)}
 \label{sec:results}
-Through the course of this diploma project, we managed to complete most of our goals, notably we created a functional and visually pleasing PC building trainer for CAVE.
-It possesses the desired core functionalities and is made in a fashion that allows it to be scalable which is important for future improvements.
+Through the course of this diploma project, we managed to complete nearly all of our initial goals.
+Most notably, we have developed an application that is both functional and visually sound. It possesses the desired core functionalities while also being possible to extend it with new features in the future.
 
-In its current state, the developed application allows players to properly interact with provided PC components using Hand mechanics presented in \autoref{chap:ObjectHolding}.
-Also, it possesses correct component connection mechanic described in \autoref{chap:ConnectingComponents} as well as progress tracking system, \autoref{chap:buildmanager}.
-Furthermore, the trainer boasts helpful GUI elements in form of the clock measuring building time, task list, which guides novice PC builders through most common PC building procedure as well as information panel for each PC part, described in depth in \autoref{chap:GUI}.
-The application, also features cables, that are essential part of PC building, however, due to their late appearance in the project they still need refinement.
+The application was succesfully integrated into the CAVE tracking and display systems. The nDisplay setup worked as desired, and we have encountered no significant issues with either the glasses or the flystick. The user is able to walk and look around in the CAVE and their motions are flawlessly translated into the virtual environment.
 
+We have also created our own 3D models, as described in \autoref{chap:models}. While at times lacking visual clarity, they were still sufficient for the purpose of teaching about PC assembly, and every important part of a computer was included in the application.
 
+In its current state, the application allows players to interact with provided PC components using Hand mechanics presented in \autoref{chap:ObjectHolding}. It possesses functional component connection mechanic described in \autoref{chap:ConnectingComponents} as well as a progress tracking system, \autoref{chap:buildmanager}.
+Furthermore, the trainer contains helpful GUI elements in the form of a clock that measures building time, a task list which guides novice PC builders through the most common PC building procedures, and an information panel for each PC part, described in-depth in \autoref{chap:GUI}.
+The application also features cables for connecting some components together, as described in more detail in \autoref{sec:cableconnector}, However, due to their late appearance in the project, they still need refinement.
 
-\section{Conclusions}
+The goal of creating a trainer was largely fulfilled, as our application's impact on trainee knowledge was comparable to that of PC Building Simulator, a popular commercial product, althought created mostly as a fun video game and not a specialized trainer.
+
+The goal of creating an effective training tool was largely fulfilled, as the knowledge gains observed in our application were comparable to those produced by using PC Building Simulator. This should be seen as a success, as PCBSim is a popular commercial product, despite the latter being designed primarily for entertainment rather than formal instruction.
+
+\section{Conclusions (Mateusz Merda)}
+\label{sec:conclusions}
+
+From a developer's perspective, Unreal Engine 5 proved to be a satisfactory framework for implementing user interactions, real-time physics, and multi-display synchronization. The decision to create all 3D assets in Blender ensured consistency and compatibility, while the glTF runtime import workflow enabled easy iteration throughout the asset creation process. The implemented systems demonstrate the feasibility of building complex technical training tools entirely using UE5's blueprints.
+
+Integration with CAVE's tracking systems proceeded smoothly and no major tracking-related issues were encountered within the application itself. The minor problems that did arise can be attributed to limitations of the CAVE environment itself, such as reduced tracking accuracy near the walls. Despite these constraints, testers found the VR-based approach more intuitive and natural than interacting with a conventional computer game.
+
+The user evaluation further validates the design choices made during development. Participants' strong preference for the VR simulator demonstrates that the application successfully met its primary goal, and the results collectively prove that it is feasible to develop an effective educational tool for manual assembly training using immersive VR technologies.
 
 \section{Future plans (Jakub Jędrzejczyk)}
 \label{sec:FuturePlans}
