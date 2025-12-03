@@ -19,7 +19,7 @@ The hand's default color is pink, but this can be easily changed as the object's
 The hand also exposes a function called \lstinline[language=C]|SetColor()|, which allows for changing the hand's color at runtime.
 
 While the previously described \lstinline[language=C]|Hand| blueprint represents a hand's logic, this logic was designed to be independent of which hand it represents.
-A limitation, based on the fact that most, if not all, users only have up to two hands, is that the hands are distinguished by the \lstinline[language=C]|isLeft| boolean property.
+Given the anatomical constraint that users possess no more than two hands, they are distinguished using the \lstinline[language=C]|isLeft| boolean property.
 It is theoretically possible to further generalize this logic, but with the application only expecting one user at a time, this limitation was deemed acceptable.
 
 Thus, additional blueprints called \lstinline[language=C]|LeftHand| and \lstinline[language=C]|RightHand| were created, which inherit from the base \lstinline[language=C]|Hand| class.

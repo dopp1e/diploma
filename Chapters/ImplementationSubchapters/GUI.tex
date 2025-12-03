@@ -76,23 +76,8 @@ As it is created by a hand highlighting an object, the hand also saves a referen
 This way, each tick, the component preview actor can move itself to be right above the hand's position, while also facing the virtual camera, made possible by the FindLookAtRotation function provided by Unreal Engine \cite{FindLookRotation} which calculates the rotation between two vectors, ensuring the panel is always readable from the user's point of view.
 Thus, the user can see what kind of component they are highlighting without needing to pick it up and inspecting it closely.
 
-Lastly, the objectives panel displays a list of quests, and the goals they consist of (constructed as in figure \ref{fig:GUIQuestAndGoal}).
+Lastly, the objectives panel displays a list of quests, and the goals they consist of, using the same structures as in the BuildManager (see section \ref{chap:buildmanager}).
 Each quest consists of a name, description, and an array of goals, each of which has its own name, description, current progress value, and target progress value.
-
-\begin{figure}[H]
-	\centering
-	\subfigure[]{
-		\includegraphics[width=0.45\textwidth]{Images/GUIQuest.png}
-		\label{fig:GUIQuest}
-	}%
-	\hfil
-	\subfigure[]{
-		\includegraphics[width=0.45\textwidth]{Images/GUIGoal.png}
-		\label{fig:GUIGoal}
-	}
-	\caption{(a) Variables of the S\_Quest structure. (b) Variables of the S\_Goal structure.}
-    \label{fig:GUIQuestAndGoal}
-\end{figure}
 
 Through the use of abstractions, the QuestList automatically creates SingleQuest widgets for each quest in the list, and each SingleQuest widget creates SingleGoal widgets for each goal in its quest.
 This way, the entire list can be generated dynamically based on the data provided to it.
