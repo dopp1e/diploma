@@ -138,4 +138,20 @@ As most of them are made lying down, similarly to the CPU, this mapping was deem
 While the usage of two hands in the application has been tested throughout the development process, these hands were largely separate.
 While it was possible to, for example, connect one component to another component held by the other hand, due to general preference of CAVE apps to only be used with one hand, and lack of interactions involving two hands (e.g. requiring both hands to pick up a large or otherwise heavy object), the second hand was removed from the final testing phase.
 
+\subsection{Handling objects with both hands (Mateusz Merda)}
+\label{subsec:twohands}
+
+During development, we explored the possibility of introducing "heavy" objects that would require the use of both hands to pick up and manipulate. The idea was to make components such as the computer case or the PSU behave more realistically, reflecting the fact that handling these items with only one hand is significantly more difficult in real life than in the simulation.
+
+However, it quickly became apparent that supporting two-handed interactions would introduce substantial complexity into the logic of both the \texttt{Hand} and \texttt{HoldableObject} classes. Even in early stages of development, the blueprint structure grew unwieldy: as shown in Figure~\ref{fig:stopfollowingBothHands}, the \texttt{stopFollowing} method already contained several branching logic paths that were difficult to maintain and prone to bugs. As additional features were implemented, the number of edge cases increased rapidly, further complicating the system.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.8\textwidth]{Images/stopFollowing 1.png}
+	\caption{Blueprint of an early version of HoldableObject's stopFollowing method.}
+	\label{fig:stopfollowingBothHands}
+\end{figure}
+
+Given that two-handed interactions were not essential for the application, and that most CAVE-based systems are typically operated with a single hand, the team ultimately decided to discard this feature in order to keep the interaction model manageable.
+
 % potencjalnie "komiks" z podnoszeniem przedmiotów
