@@ -1,23 +1,35 @@
 \chapter*{Streszczenie}
 \thispagestyle{plain}
 
-Dzisiejszy rynek podzespołów komputerowych rozwija się w bardzo dynamiczny sposób, co przyczynia się do coraz większej ilości ich możliwych typów, modeli lub konfiguracji.
-Zbudowanie komputera osobistego może więc wydawać się skomplikowanym zadaniem, biorąc pod uwagę kompatybilność sprzętu, a także różnice w budowie poszczególnych modeli podzespołów.
-Jednym z rozwiązań tych problemów może być aplikacja wprowadzająca użytkowników w tematykę montażu komputera.
+Dzisiejszy rynek podzespołów komputerowych rozwija się w bardzo dynamiczny sposób, co przyczynia się do coraz większej liczby ich możliwych typów, modeli oraz konfiguracji.
+Zbudowanie komputera osobistego może więc wydawać się skomplikowanym zadaniem, biorąc pod uwagę kompatybilność sprzętu, a także różnice w budowie poszczególnych podzespołów.
+Nauka montażu komputera na rzeczywistym sprzęcie niesie również ryzyko uszkodzenia drogich komponentów, w szczególności podczas montażu delikatnych elementów, takich jak procesor.
+Tradycyjne metody nauki, takie jak książki i materiały wideo, nie zapewniają niezbędnej wiedzy oraz praktycznego doświadczenia.
+Prowadzi to do rosnącego zapotrzebowania na interaktywne środowisko edukacyjne, pozwalające na naukę budowy komputera bez ponoszenia ryzyka finansowego.
+Odpowiedzią na wymienione problemy może być aplikacja wykorzystująca technologię rzeczywistości wirtualnej, wprowadzająca użytkowników w tematykę montażu komputera.
 
-Celem niniejszej pracy inżynierskiej było zaprojektowanie oraz implementacja wirtualnego trenażera operującego na jaskiniach rzeczywistości wirtualnej, znajdujących się w Laboratorium Zanurzonej Wizualizacji Przestrzennej Politechniki Gdańskiej.
-W wyniku naszych prac powstał symulator budowy komputera, oferujący użytkownikom wirtualny montaż licznych konfiguracji sprzętowych, uwzględniając kompatybilność podzespołów oraz prowadząc go przez pełen proces w realistyczny sposób.
-Aplikacja zapewnia użytkownikowi immersję w środowisku przypominającym realny pokój.
-W trenażerze zaimplementowane zostały niezbędne mechaniki pełnej kontroli nad podzespołami komputerowymi, pozwalające na ich przenoszenie oraz łączenie.
-Po stworzeniu symulatora, został on dokładnie przetestowany w jaskiniach rzeczywistości wirtualnej, a także przeprowadzone zostały badania oceniające jego intuicyjność oraz wartość edukacyjną.
+Celem projektu inżynierskiego "Wirtualny montaż i wizualizacja działania komputera osobistego" było zaprojektowanie oraz implementacja wirtualnego trenażera operującego w jaskiniach rzeczywistości wirtualnej, znajdujących się w Laboratorium Zanurzonej Wizualizacji Przestrzennej Politechniki Gdańskiej.
+W wyniku prac powstał symulator budowy komputera, oferujący użytkownikom wirtualny montaż licznych konfiguracji sprzętowych, który uwzględnia kompatybilność podzespołów oraz prowadzi ich przez pełen proces w realistyczny sposób.
+Aplikacja zapewnia bezpieczne środowisko do nauki budowy komputera, w którym nie występuje ryzyko uszkodzenia drogich komponentów, a możliwość swobodnego powtarzania wykonanych czynności prowadzi do utrwalania nabytej wiedzy.
+Wykorzystanie technologii rzeczywistości wirtualnej pozwoliło na dokładne wykrywanie oraz odwzorowanie pozycji rąk i głowy użytkownika, zapewniając mu wysoki poziom immersji w utworzonym środowisku.
+W trenażerze zaimplementowane zostały niezbędne mechaniki pełnej kontroli nad podzespołami komputerowymi, pozwalające na ich swobodne przenoszenie oraz łączenie.
+Aby zapewnić wsparcie użytkownikowi, utworzone zostały elementy interfejsu aplikacji, które prowadzą go przez każdy etap budowy wirtualnego komputera w przystępny sposób.
+Symulator został wytworzony przy użyciu silnika gier Unreal Engine 5, który pozwolił na bezpośrednią współpracę z systemami śledzenia ruchu oraz synchronizacji wieloekranowej projekcji.
+
+Symulator został dokładnie przetestowany w jaskiniach rzeczywistości wirtualnej, a także przeprowadzone zostały badania oceniające jego intuicyjność oraz wartość edukacyjną.
+Testy z udziałem użytkowników wykazały ich wysoki poziom satysfakcji, potwierdzając skuteczność trenażera jako narzędzia edukacyjnego.
+Dodatkowo przeprowadzono badania porównawcze symulatora z dostępnym na rynku alternatywnym rozwiązaniem, które wykazały zbliżony lub wyższy poziom satysfakcji użytkowników aplikacji rzeczywistości wirtualnej.
+Uczestnicy badań pozytywnie ocenili intuicyjność trenażera oraz wykazali większą pewność siebie w zakresie samodzielnego montażu komputera.
 
 Praca inżynierska była realizowana przez zespół czterech studentów.
-Każdy członek zespołu był odpowiedzialny za wymienione elementy implementacji trenażera oraz relizacji pracy dyplomowej:
+Każdemu członkowi zespołu przypisane zostały następujące zadania podczas implementacji trenażera oraz realizacji pracy dyplomowej:
 \begin{itemize}
-    \item \textbf{Jakub Jędrzejczyk} - był odpowiedzialny za zarządzanie zespołem projektowym oraz implementację mechanik kontrolowania podzespołów i montażu komputera. Wytworzył również czytelny interfejs użytkownika. Był odpowiedzialny za realizację rozdziału \ref{chap:Testing} oraz podrozdziałów \ref{sec:GameEngineSelection}, \ref{chap:GUI}, \ref{chap:ObjectHolding}, \ref{chap:Dtrack}, \ref{chap:ConnectingComponents}, \ref{chap:PCValidation}, \ref{sec:FuturePlans}.
-    \item \textbf{Jakub Kinder} - był odpowiedzialny za zaprojektowanie i wytworzenie menedżera procesu budowy komputera, śledzącego jego postęp oraz walidującego utworzoną konfigurację. Jest autorem rozdziałów \ref{chap:Introduction} i \ref{chap:FieldIntroduction}, a także podrozdziałów \ref{chap:buildmanager}. 
-    \item \textbf{Hubert Leszczyński} - był odpowiedzialny za zaprojektowanie systemu, dekorację głównej sceny aplikacji, a także wytworzenie trójwymiarowych grafik. Zaimplementował również mechanizm dynamicznego tworzenia podzespołów. Jest autorem rozdziału \ref{chap:project} oraz podrozdziałów \ref{chap:models}, \ref{chap:spawners}, \ref{chap:objectConfig} i \ref{chap:sceneDesign}.
-    \item \textbf{Mateusz Merda} - był odpowiedzialny za wytworzenie elementów posiadających zaawansowane konfiguracje fizyki i kolizji. Jest autorem rozdziału 3, a także podrozdziałów \ref{subsec:twohands}, \ref{sec:cableconnector}, \ref{sec:results}, \ref{sec:conclusions}.
+    \item \textbf{Jakub Jędrzejczyk} - odpowiadał za zarządzanie zespołem projektowym oraz implementację mechanik kontrolowania podzespołów i montażu komputera oraz za stworzenie czytelnego interfejsu użytkownika. Jest autorem rozdziału \ref{chap:Testing} oraz podrozdziałów \ref{sec:GameEngineSelection}, \ref{chap:GUI}, \ref{chap:ObjectHolding}, \ref{chap:Dtrack}, \ref{chap:ConnectingComponents}, \ref{chap:PCValidation}, \ref{sec:FuturePlans}.
+    \item \textbf{Jakub Kinder} - odpowiadał za zaprojektowanie i wytworzenie menedżera procesu budowy komputera, śledzącego jego postęp oraz walidującego utworzoną konfigurację. Jest autorem rozdziałów \ref{chap:Introduction} i \ref{chap:FieldIntroduction}, a także podrozdziałów \ref{chap:buildmanager}. 
+    \item \textbf{Hubert Leszczyński} - odpowiadał za zaprojektowanie systemu, dekorację głównej sceny aplikacji, a także wytworzenie trójwymiarowych grafik. Zaimplementował również mechanizm dynamicznego tworzenia podzespołów. Jest autorem rozdziału \ref{chap:project} oraz podrozdziałów \ref{chap:models}, \ref{chap:spawners}, \ref{chap:objectConfig} i \ref{chap:sceneDesign}.
+    \item \textbf{Mateusz Merda} - odpowiadał za wytworzenie elementów posiadających zaawansowane konfiguracje fizyki i kolizji. Jest autorem rozdziału 3, a także podrozdziałów \ref{subsec:twohands}, \ref{sec:cableconnector}, \ref{sec:results}, \ref{sec:conclusions}.
 \end{itemize}
+
+W przyszłości projekt może zostać rozwinięty o dokładne mechanizmy wizualizacji działania komputera osobistego, a także o większą liczbę dostępnych podzespołów i konfiguracji sprzętowych.
 Słowa kluczowe: Rzeczywistość wirtualna, Wytwarzanie aplikacji, Wizualizacja, Budowa komputera
 Dziedzina nauki i techniki, zgodnie z wymogami OECD: 1.2 Nauki o komputerach i informatyka
