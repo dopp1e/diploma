@@ -35,7 +35,7 @@ A component appearing more than once in the assembly is usually not an issue in 
     \label{fig:ValidationDouble}
 \end{figure}
 
-Once this array has been fully iterated through, a simple check, as shown in figure \ref{fig:ValidationCheck} is performed to ensure the valid PC assembly contains at least one of each required component type.
+Once this array has been fully iterated through, a simple check, as shown in figure \ref{fig:ValidationCheck}, is performed to ensure the valid PC assembly contains at least one of each required component type.
 If not, the function returns false, and the list of all components iterated through, for the sake of previously mentioned optimization.
 If the check passes, a structure representing a valid PC assembly is created, containing references to all the components making up the PC, and the function returns true along with this structure and the list of iterated components.
 

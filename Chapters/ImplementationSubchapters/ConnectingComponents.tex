@@ -95,10 +95,10 @@ As such, a connected component's physics simulation is enabled, and thanks to th
 	\label{fig:ComponentsConnectedOutliner}
 \end{figure}
 
-Crucially, once the two components have been connected, the same event unbinding takes place as if the two slots had been moved apart, ensuring no lingering bindings remain, as they could lead to unexpected behavior later on.
+Crucially, once the two components have been connected, an example of which can be seen in \ref{fig:ComponentsConnected}, the same event unbinding takes place as if the two slots had been moved apart, ensuring no lingering bindings remain, as they could lead to unexpected behavior later on.
 
 Because of the independence of a single connection, multiple components can be connected together in succession using this system, and a set of components connected together will behave as a single object when held.
-Connecting new components builds a tree-like structure, where each component can have multiple other components connected to it, and the root of this tree can easily be added as a child actor to another component.
+Connecting new components builds a tree-like structure, a partial example of which can be seen in \ref{fig:ComponentsConnectedOutliner}, where each component can have multiple other components connected to it, and the root of this tree can easily be added as a child actor to another component.
 
 To enhance user experience, a slight modification was made to the object holding system, which recursively selects the parent of the highlighted object when attempting to pick up any item.
 If the object has no parents (i.e. is not connected to any other components), the object itself is picked up as normal.
