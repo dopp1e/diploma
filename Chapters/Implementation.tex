@@ -15,7 +15,7 @@ Figure \ref{fig:ModelExample} presents an example model of a computer component,
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.7\textwidth]{Images/3dmodel.png}
+		\includegraphics[width=0.6\textwidth]{Images/3dmodel.png}
 	\caption{Computer component model}
 	\label{fig:ModelExample}
 \end{figure}
@@ -68,7 +68,7 @@ As most of the game objects were created as static meshes, they are treated by U
 According to Millington, "Rigid-body engines treat objects as a whole and work out the way they move and rotate" \cite{MILLINGTON20071}.
 This functionality significantly simplified the process of physics setup, as it allowed UE5 to automatically perform most of the calculations.
 The gravity applied to the objects was adjusted to approximate Earth-like gravity, providing natural motion.
-To achieve is effect, it was required to assign the global project settings using built-in UE5 unit system \cite{UnitSystem}.
+To achieve this effect, it was required to assign the global project settings using built-in UE5 unit system \cite{UnitSystem}.
 The key parameter was Default Gravity Z \cite{PhysicsSettings}, which had to be set to -980 \,\text{cm}/\text{s}\textsuperscript{2} along the negative Z-axis to ensure a proper gravitational acceleration.
 
 To appropriately set up the collision parameters, it was required to define new collision objects in the project settings for hands, slots and holdable objects.
