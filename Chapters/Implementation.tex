@@ -280,7 +280,7 @@ Next, the SaveProgress function, either ends execution or continues with valid F
 This updates goal's CurrentCount field increasing it by ProgressValue, then proceeds to check if CurrentCount >= TargetCount and sets the result to IsCompleted field of the structure and returns it. 
 Afterward, SaveProgress saves the result back into the FGoal array of the quest, which is presented on figure \ref{fig:bmsaveprogress}.
 
-Furthermore, this function also calls UpdatePRogress function that belongs to instance referenced in the QuestLog field.
+Furthermore, this function also calls UpdateProgress function that belongs to instance referenced in the QuestLog field.
 This final call notifies the GUI handler object of a change in state and provides necessary data - the Quest's ID, the updated goal's index, and the ProgressValue - so that the GUI can be updated to provide the user with immediate and accurate feedback on their assembly progress.
 
 \input{Chapters/ImplementationSubchapters/PCValidation.tex}
